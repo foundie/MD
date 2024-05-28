@@ -5,6 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="backgroundColor">@color/backgroundLayout</item>
+        <item name="color">@color/neutral_500</item>
 
     </style>
 

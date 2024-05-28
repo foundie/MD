@@ -5,6 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
         <item name="colorPrimary">@color/primayColorDark</item>
         <item name="backgroundColor">@color/backgroundLayoutDark</item>
+        <item name="color">@color/neutral_300</item>
     </style>
 
     <style name="TextContent">
