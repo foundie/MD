@@ -87,5 +87,4 @@ dependencies {
     androidTestImplementation ("com.squareup.okhttp3:mockwebserver3:5.0.0-alpha.2")
     debugImplementation ("androidx.fragment:fragment-testing:1.4.1")
     implementation ("androidx.test.espresso:espresso-idling-resource:3.5.1")
-
 }

@@ -56,4 +56,19 @@
     <string name="facebook">facebook</string>
     <string name="apple">apple</string>
     <string name="or_continue_with">Or continue with</string>
+    <string name="create_an_account">Create an account!</string>
+    <string name="fill_your_information_below_or_register_with_your_social_account">Fill your information below or register with your social account</string>
+    <string name="name">Name</string>
+    <string name="input_your_name">Input your name</string>
+    <string name="input_your_email">Input your email</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="create_a_password">Create a password</string>
+    <string name="i_ve_read_and_agree_with_the">I\'ve read and agree with the</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="and_the"> and the </string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="login_now">Login now</string>
 </resources>
