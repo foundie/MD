@@ -71,4 +71,14 @@
     <string name="sign_up">Sign Up</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="login_now">Login now</string>
+    <string name="ERROR_EMAIL_INVALID_FORMAT">The email format entered is invalid</string>
+    <string name="ERROR_EMAIL_ALREADY_REGISTERED">This email is already registered</string>
+    <string name="ERROR_EMAIL_EMPTY">Email cannot be empty</string>
+    <string name="ERROR_NAME_EMPTY">Name cannot be empty</string>
+    <string name="ERROR_PASSWORD_EMPTY">Password cannot be empty</string>
+    <string name="ERROR_PASSWORD_LENGTH">Password must be at least 8 characters long</string>
+    <string name="ERROR_PASSWORD_MISMATCH">Password and confirm password do not match</string>
+    <string name="ERROR_PASSWORD_NOTSAME">The password or email you entered is incorrect</string>
+    <string name="ERROR_NAME_TOOLONG">Name cannot exceed 25 characters</string>
+    <string name="ERROR_EDITEXT_EMPTY">Please fill in all fields correctly</string>
 </resources>

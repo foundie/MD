@@ -11,6 +11,8 @@ class LoginViewModel(private val mainRepository: MainRepository) : ViewModel() {
 
     val isLoadingLogin: LiveData<Boolean> = mainRepository.isLoadingLogin
 
+    var isErrorLogin: Boolean = false
+
     init {
         loginStatus.observeForever { status ->
             isErrorLogin = status != "Welcome ${login.value?.loginResult?.name}, To Foundie"
