@@ -26,6 +26,7 @@ import com.foundie.id.settings.AuthViewModel
 import com.foundie.id.settings.SETTINGS_KEY
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.getCurrentDateTime
+import com.foundie.id.ui.SignUpActivity
 import com.google.android.material.snackbar.Snackbar
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = SETTINGS_KEY)
@@ -94,12 +95,8 @@ class LoginActivity : AppCompatActivity() {
         viewModel.loginStatus.observe(this) { loginStatus ->
             val isError = viewModel.isErrorLogin
 
-            if (isError && !loginStatus.isNullOrEmpty()) {
-                Snackbar.make(binding.root, loginStatus, Snackbar.LENGTH_SHORT).show()
-            }
-            if (isError && !loginStatus.isNullOrEmpty() && loginStatus == "User not found") {
-                Snackbar.make(binding.root, getString(R.string.ERROR_PASSWORD_NOTSAME), Snackbar.LENGTH_SHORT).show()
-            }
+            if (isError && !loginStatus.isNullOrEmpty()) Snackbar.make(binding.root, loginStatus, Snackbar.LENGTH_SHORT).show()
+            if (isError && !loginStatus.isNullOrEmpty() && loginStatus == "User not found") Snackbar.make(binding.root, getString(R.string.ERROR_PASSWORD_NOTSAME), Snackbar.LENGTH_SHORT).show()
             else if (!isError && !loginStatus.isNullOrEmpty()) {
                 val authLogin = viewModel.login.value
                 val email = binding.etEmailLogin.text.toString()
@@ -122,17 +119,13 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.etEmailLogin.text.toString()
             val password = binding.etPasswordLogin.text.toString()
 
-            val emailError = if (email.isEmpty()) {
-                getString(R.string.ERROR_EMAIL_EMPTY)
-            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                getString(R.string.ERROR_EMAIL_INVALID_FORMAT)
-            } else null
+            val emailError = if (email.isEmpty()) getString(R.string.ERROR_EMAIL_EMPTY)
+            else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) getString(R.string.ERROR_EMAIL_INVALID_FORMAT)
+            else null
 
-            val passwordError = if (password.isEmpty()) {
-                getString(R.string.ERROR_PASSWORD_EMPTY)
-            } else if (password.length < 8) {
-                getString(R.string.ERROR_PASSWORD_LENGTH)
-            } else null
+            val passwordError = if (password.isEmpty()) getString(R.string.ERROR_PASSWORD_EMPTY)
+            else if (password.length < 8) getString(R.string.ERROR_PASSWORD_LENGTH)
+            else null
 
             binding.etEmailLogin.error = emailError
             binding.etPasswordLogin.error = passwordError
@@ -149,6 +142,11 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 viewModel.login(email, password)
             }
+        }
+
+        binding.tvSignUpNow.setOnClickListener {
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
         }
     }
 

@@ -127,4 +127,9 @@ dependencies {
     androidTestImplementation ("com.squareup.okhttp3:mockwebserver3:5.0.0-alpha.2")
     debugImplementation ("androidx.fragment:fragment-testing:1.4.1")
     implementation ("androidx.test.espresso:espresso-idling-resource:3.5.1")
+
+    //Credential
+    implementation ("androidx.credentials:credentials:<latest version>")
+    implementation ("androidx.credentials:credentials-play-services-auth:<latest version>")
+    implementation ("com.google.android.libraries.identity.googleid:googleid:<latest version>")
 }

@@ -54,7 +54,7 @@ fun convertBitmap(context: Context, urlString: String): Bitmap {
         val input: InputStream = connection.inputStream
         BitmapFactory.decodeStream(input)
     } catch (e: IOException) {
-        BitmapFactory.decodeResource(context.resources, R.drawable.ic_logo)
+        BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher_logo)
     }
 }
 

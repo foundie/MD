@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp">
+        android:padding="24dp">
 
         <TextView
             android:id="@+id/tv_title"
@@ -22,11 +22,13 @@
         <TextView
             android:id="@+id/tv_title_description"
             style="@style/TextContent.BodyS"
-            android:layout_width="219dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="@string/fill_your_information_below_or_register_with_your_social_account"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/tv_name"
@@ -35,7 +37,7 @@
             android:text="@string/name"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title_description" />
+            app:layout_constraintTop_toBottomOf="@id/tv_title_description" />
 
         <EditText
             android:id="@+id/et_name_sign_up"
@@ -50,9 +52,8 @@
             android:padding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name"
-            app:layout_constraintWidth_default="spread"
-            app:layout_constraintWidth_percent="1" />
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
+            app:layout_constraintWidth_default="spread" />
 
         <TextView
             android:id="@+id/tv_email"
@@ -61,7 +62,7 @@
             android:text="@string/email"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_name_sign_up" />
+            app:layout_constraintTop_toBottomOf="@id/et_name_sign_up" />
 
         <EditText
             android:id="@+id/et_email_sign_up"
@@ -76,9 +77,8 @@
             android:padding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_email"
-            app:layout_constraintWidth_default="spread"
-            app:layout_constraintWidth_percent="1" />
+            app:layout_constraintTop_toBottomOf="@id/tv_email"
+            app:layout_constraintWidth_default="spread" />
 
         <TextView
             android:id="@+id/tv_password"
@@ -87,7 +87,7 @@
             android:text="@string/password"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_email_sign_up" />
+            app:layout_constraintTop_toBottomOf="@id/et_email_sign_up" />
 
         <EditText
             android:id="@+id/et_password_sign_up"
@@ -102,9 +102,8 @@
             android:padding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_password"
-            app:layout_constraintWidth_default="spread"
-            app:layout_constraintWidth_percent="1" />
+            app:layout_constraintTop_toBottomOf="@id/tv_password"
+            app:layout_constraintWidth_default="spread" />
 
         <EditText
             android:id="@+id/et_password_confirm_sign_up"
@@ -119,17 +118,17 @@
             android:padding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_password_sign_up"
-            app:layout_constraintWidth_default="spread"
-            app:layout_constraintWidth_percent="1" />
+            app:layout_constraintTop_toBottomOf="@id/et_password_sign_up"
+            app:layout_constraintWidth_default="spread" />
 
         <LinearLayout
             android:id="@+id/LL_privacy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_password_confirm_sign_up">
+            app:layout_constraintTop_toBottomOf="@id/et_password_confirm_sign_up">
 
             <CheckBox
                 android:id="@+id/cb_terms"
@@ -138,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="@string/i_ve_read_and_agree_with_the"
-                android:textColor="?attr/color" />
+                android:textColor="?attr/colorAccent" />
 
             <TextView
                 android:id="@+id/tv_terms_conditions"
@@ -158,7 +157,7 @@
             android:layout_marginTop="-14dp"
             android:gravity="start"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/LL_privacy">
+            app:layout_constraintTop_toBottomOf="@id/LL_privacy">
 
             <TextView
                 android:id="@+id/tv_and"
@@ -166,7 +165,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/and_the"
-                android:textColor="?attr/color" />
+                android:textColor="?attr/colorAccent" />
 
             <TextView
                 android:id="@+id/tv_privacy_policy"
@@ -187,9 +186,8 @@
             android:text="@string/sign_up"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/LL_privacy_two"
-            app:layout_constraintWidth_default="spread"
-            app:layout_constraintWidth_percent="1" />
+            app:layout_constraintTop_toBottomOf="@id/LL_privacy_two"
+            app:layout_constraintWidth_default="spread" />
 
         <LinearLayout
             android:id="@+id/LL_text_login"
@@ -199,16 +197,16 @@
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_sign_up">
+            app:layout_constraintTop_toBottomOf="@id/btn_sign_up">
 
             <TextView
                 android:id="@+id/tv_dont_have_account"
                 style="@style/TextContent.BodyS"
                 android:text="@string/already_have_an_account"
-                android:textColor="?attr/color" />
+                android:textColor="?attr/colorAccent" />
 
             <TextView
-                android:id="@+id/tv_sign_up_now"
+                android:id="@+id/tv_sign_in_now"
                 style="@style/TextContent.BodyS"
                 android:layout_marginStart="4dp"
                 android:text="@string/login_now"
@@ -221,12 +219,11 @@
             android:layout_width="0dp"
             android:layout_height="0.5dp"
             android:layout_marginTop="8dp"
-            android:background="?attr/color"
+            android:background="?attr/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/LL_text_login"
-            app:layout_constraintWidth_default="spread"
-            app:layout_constraintWidth_percent="1" />
+            app:layout_constraintTop_toBottomOf="@id/LL_text_login"
+            app:layout_constraintWidth_default="spread" />
 
         <TextView
             android:id="@+id/tv_account_sign_in"
@@ -235,23 +232,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/or_continue_with"
-            android:textColor="?attr/color"
+            android:textColor="?attr/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/v_horizontal_divider" />
+            app:layout_constraintTop_toBottomOf="@id/v_horizontal_divider" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
             android:background="@drawable/ic_background_edit_text"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_account_sign_in">
+            app:layout_constraintTop_toBottomOf="@id/tv_account_sign_in">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="40dp"
