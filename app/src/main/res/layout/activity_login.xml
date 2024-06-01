@@ -132,7 +132,6 @@
             android:id="@+id/v_horizontal_divider"
             android:layout_width="0dp"
             android:layout_height="0.5dp"
-            android:layout_marginTop="8dp"
             android:background="?attr/colorAccent"
 
             app:layout_constraintEnd_toEndOf="parent"

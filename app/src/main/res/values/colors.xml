@@ -11,6 +11,6 @@
     <color name="primaryColor">#DC2F91</color>
     <color name="backgroundLayout">#FFFFFF</color>
 
-    <color name="primayColorDark">#f297c1</color>
+    <color name="primayColorDark">#F297C1</color>
     <color name="backgroundLayoutDark">#121212</color>
 </resources>
