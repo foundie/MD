@@ -32,6 +32,7 @@ fun MainContent() {
     )
 }
 
+
 // Fungsi composable untuk mengatur NavHost yang mengelola navigasi antar composable
 @Composable
 fun NavigationHost(navController: NavHostController) {
@@ -52,6 +53,9 @@ fun NavigationHost(navController: NavHostController) {
 fun HomeScreen() {
     Text(text = "Home Screen")
 }
+
+
+
 
 @Composable
 fun CatalogScreen() {

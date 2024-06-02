@@ -3,12 +3,12 @@ package com.foundie.id.ui.login
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Html
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -57,12 +57,12 @@ class LoginActivity : AppCompatActivity() {
         // Gambar slider
         list.add(
             ImageDataResponse(
-                "https://i.pinimg.com/564x/fb/49/ea/fb49ea99fd92046c37f9f0fb192ce784.jpg"
+                "https://i.pinimg.com/564x/80/3e/d9/803ed9eaeeb0758b25c1a097aa2a07d2.jpg"
             )
         )
         list.add(
             ImageDataResponse(
-                "https://i.pinimg.com/564x/38/16/18/3816180c64273eeb2c75fce39d98cfb9.jpg"
+                "https://i.pinimg.com/564x/cf/8a/0e/cf8a0e9c6ac0921688a0722cc90039f3.jpg"
             )
         )
 

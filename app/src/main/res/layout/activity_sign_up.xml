@@ -16,6 +16,7 @@
             android:id="@+id/tv_title"
             style="@style/TextContent.TextHeading1"
             android:text="@string/create_an_account"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,9 +27,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="@string/fill_your_information_below_or_register_with_your_social_account"
+
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
         <TextView
             android:id="@+id/tv_name"
@@ -36,6 +38,7 @@
             android:layout_marginTop="32dp"
             android:text="@string/name"
             android:textStyle="bold"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title_description" />
 
@@ -46,10 +49,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/ic_background_edit_text"
+
             android:hint="@string/input_your_name"
             android:inputType="text"
             android:minHeight="48dp"
             android:padding="12dp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_name"
@@ -59,8 +64,10 @@
             android:id="@+id/tv_email"
             style="@style/TextContent.BodyS"
             android:layout_marginTop="16dp"
+
             android:text="@string/email"
             android:textStyle="bold"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_name_sign_up" />
 
@@ -71,10 +78,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/ic_background_edit_text"
+
             android:hint="@string/input_your_email"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:padding="12dp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_email"
@@ -84,8 +93,10 @@
             android:id="@+id/tv_password"
             style="@style/TextContent.BodyS"
             android:layout_marginTop="16dp"
+
             android:text="@string/password"
             android:textStyle="bold"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_email_sign_up" />
 
@@ -96,10 +107,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/ic_background_edit_text"
+
             android:hint="@string/create_a_password"
             android:inputType="textPassword"
             android:minHeight="48dp"
             android:padding="12dp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_password"
@@ -112,10 +125,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/ic_background_edit_text"
+
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:minHeight="48dp"
             android:padding="12dp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_password_sign_up"
@@ -125,8 +140,9 @@
             android:id="@+id/LL_privacy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start"
             android:layout_marginTop="16dp"
+            android:gravity="start"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_password_confirm_sign_up">
 
@@ -156,6 +172,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="-14dp"
             android:gravity="start"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/LL_privacy">
 
@@ -183,7 +200,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:background="@drawable/ic_background_button_sign_in_up"
+
             android:text="@string/sign_up"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/LL_privacy_two"
@@ -195,6 +214,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:padding="16dp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_sign_up">
@@ -220,6 +240,7 @@
             android:layout_height="0.5dp"
             android:layout_marginTop="8dp"
             android:background="?attr/colorAccent"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/LL_text_login"
@@ -231,8 +252,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+
             android:text="@string/or_continue_with"
             android:textColor="?attr/colorAccent"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/v_horizontal_divider" />
@@ -242,8 +265,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/ic_background_edit_text"
+
             android:gravity="center_horizontal"
             android:orientation="horizontal"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_account_sign_in">

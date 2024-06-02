@@ -81,4 +81,13 @@
     <string name="ERROR_PASSWORD_NOTSAME">The password or email you entered is incorrect</string>
     <string name="ERROR_NAME_TOOLONG">Name cannot exceed 25 characters</string>
     <string name="ERROR_EDITEXT_EMPTY">Please fill in all fields correctly</string>
+    <string name="makeup">MakeUp</string>
+    <string name="analysis">Analysis</string>
+    <string name="color">Color</string>
+    <string name="compare">Compare</string>
+    <string name="product">Product</string>
+    <string name="hot_products">Hot Products</string>
+    <string name="view_all">View all</string>
+    <string name="top_communities">Top Communities</string>
+    <string name="join">Join</string>
 </resources>
