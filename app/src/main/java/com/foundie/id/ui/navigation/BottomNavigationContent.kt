@@ -54,9 +54,6 @@ fun HomeScreen() {
     Text(text = "Home Screen")
 }
 
-
-
-
 @Composable
 fun CatalogScreen() {
     Text(text = "Catalog Screen")

@@ -90,4 +90,10 @@
     <string name="view_all">View all</string>
     <string name="top_communities">Top Communities</string>
     <string name="join">Join</string>
+    <string name="favorites">favorites</string>
+    <string name="search">search</string>
+    <string name="create_community">create community</string>
+    <string name="bookmarks">bookmarks</string>
+    <string name="notification">notification</string>
+    <string name="settings">settings</string>
 </resources>

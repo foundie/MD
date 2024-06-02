@@ -1,11 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Foundie" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.Foundie" parent="Theme.Material3.DayNight">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
         <item name="colorPrimary">@color/primayColorDark</item>
         <item name="backgroundColor">@color/backgroundLayoutDark</item>
         <item name="colorAccent">@color/neutral_200</item>
+        <item name="colorOnPrimary">@color/pink_000</item>
     </style>
 
     <style name="TextContent">
@@ -67,5 +68,5 @@
         <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
         <item name="android:textSize">10sp</item>
     </style>
-    
+
 </resources>
