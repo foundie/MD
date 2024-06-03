@@ -87,7 +87,7 @@ class SignUpActivity : ThemeActivity() {
             binding.etNameSignUp.error = getString(R.string.ERROR_NAME_TOOLONG)
             isValid = false
         } else {
-            binding.etNameSignUp.error = null // Clear error if valid
+            binding.etNameSignUp.error = null
         }
 
         if (email.isEmpty()) {
@@ -97,7 +97,7 @@ class SignUpActivity : ThemeActivity() {
             binding.etEmailSignUp.error = getString(R.string.ERROR_EMAIL_INVALID_FORMAT)
             isValid = false
         } else {
-            binding.etEmailSignUp.error = null // Clear error if valid
+            binding.etEmailSignUp.error = null
         }
 
         if (password.isEmpty()) {
@@ -107,7 +107,7 @@ class SignUpActivity : ThemeActivity() {
             binding.etPasswordSignUp.error = getString(R.string.ERROR_PASSWORD_LENGTH)
             isValid = false
         } else {
-            binding.etPasswordSignUp.error = null // Clear error if valid
+            binding.etPasswordSignUp.error = null
         }
 
         if (confirmPassword.isEmpty()) {
@@ -117,7 +117,7 @@ class SignUpActivity : ThemeActivity() {
             binding.etPasswordConfirmSignUp.error = getString(R.string.ERROR_PASSWORD_MISMATCH)
             isValid = false
         } else {
-            binding.etPasswordConfirmSignUp.error = null // Clear error if valid
+            binding.etPasswordConfirmSignUp.error = null
         }
 
         return isValid
