@@ -48,7 +48,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_product"
-            tools:text="Product Name" />
+            tools:text="@string/product_name" />
 
         <TextView
             android:id="@+id/tv_product_category"
@@ -59,7 +59,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_product_name"
-            tools:text="Product Category" />
+            tools:text="@string/product_category" />
 
         <TextView
             android:id="@+id/tv_product_season_one"
@@ -71,7 +71,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_product_category"
-            tools:text="#season" />
+            tools:text="@string/season" />
 
         <TextView
             android:id="@+id/tv_product_season_two"
@@ -83,7 +83,7 @@
 
             app:layout_constraintStart_toEndOf="@+id/tv_product_season_one"
             app:layout_constraintTop_toBottomOf="@+id/tv_product_category"
-            tools:text="#season" />
+            tools:text="@string/season" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

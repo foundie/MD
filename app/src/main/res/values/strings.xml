@@ -96,4 +96,11 @@
     <string name="bookmarks">bookmarks</string>
     <string name="notification">notification</string>
     <string name="settings">settings</string>
+    <string name="total_members">Total Members</string>
+    <string name="community_name">Community Name</string>
+    <string name="season">#season</string>
+    <string name="product_category">Product Category</string>
+    <string name="product_name">Product Name</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
 </resources>

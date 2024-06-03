@@ -7,6 +7,7 @@
         <item name="backgroundColor">@color/backgroundLayout</item>
         <item name="colorAccent">@color/neutral_500</item>
         <item name="colorOnPrimary">@color/pink_100</item>
+        <item name="colorContainer">@color/info_000</item>
 
     </style>
 

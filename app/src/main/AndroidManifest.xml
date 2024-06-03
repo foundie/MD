@@ -15,12 +15,13 @@
         android:theme="@style/Theme.Foundie"
         tools:targetApi="31">
 
-        <activity
-            android:name=".ui.splashscreen.SplashScreenActivity"
-            android:exported="false" />
+        <activity android:name=".ui.NotificationActivity" />
+        <activity android:name=".ui.login.LoginActivity" />
+        <activity android:name=".ui.SignUpActivity" />
+        <activity android:name=".ui.HomeActivity" />
 
         <activity
-            android:name=".ui.HomeActivity"
+            android:name=".ui.splashscreen.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,12 +30,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.login.LoginActivity" />
-
-        <activity android:name=".ui.SignUpActivity" />
-
         <activity
             android:name=".MainActivity"
             android:exported="false" />
     </application>
+
 </manifest>
