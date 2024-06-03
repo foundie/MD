@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "619995861806",
+    "project_id": "capstone-project-foundie",
+    "storage_bucket": "capstone-project-foundie.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:619995861806:android:c2f0b6aa4082bc6e4660bf",
+        "android_client_info": {
+          "package_name": "com.foundie.id"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "619995861806-ubqasdgoin5e92a34sopsdi5joqrsmbb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foundie.id",
+            "certificate_hash": "3983cb31dcea398bb3b768f3770f3729b0a929aa"
+          }
+        },
+        {
+          "client_id": "619995861806-l7ic89ei40ju8864s52oe61lhlomf4sd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBhE7S4htJqAeOO1BtQQhXmHDXHmBQiEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "619995861806-l7ic89ei40ju8864s52oe61lhlomf4sd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

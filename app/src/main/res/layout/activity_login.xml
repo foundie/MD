@@ -154,6 +154,7 @@
             app:layout_constraintTop_toBottomOf="@+id/v_horizontal_divider" />
 
         <LinearLayout
+            android:id="@+id/btn_loginGoogle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"

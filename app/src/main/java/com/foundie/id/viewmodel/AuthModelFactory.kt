@@ -1,7 +1,8 @@
-package com.foundie.id.settings
+package com.foundie.id.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.foundie.id.settings.SettingsPreferences
 
 class AuthModelFactory(private val prefen: SettingsPreferences) :
     ViewModelProvider.NewInstanceFactory() {

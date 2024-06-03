@@ -1,6 +1,7 @@
 package com.foundie.id.settings
 
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.StrictMode
@@ -17,10 +18,20 @@ import java.util.Locale
 import java.util.TimeZone
 
 const val SETTINGS_KEY = "settings"
+const val delayTime: Long = 1000
 
 fun lightStatusBar(window: Window, isLight: Boolean = true) {
     val wic = WindowInsetsControllerCompat(window, window.decorView)
     wic.isAppearanceLightStatusBars = isLight
+}
+
+fun updateStatusBarTheme(window: Window, config: Configuration) {
+    val isLight = when (config.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+        Configuration.UI_MODE_NIGHT_NO -> true
+        Configuration.UI_MODE_NIGHT_YES -> false
+        else -> true
+    }
+    lightStatusBar(window, isLight)
 }
 
 fun getCurrentDateTime(): String {

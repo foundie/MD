@@ -7,13 +7,22 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.ViewModelProvider
+import com.foundie.id.MainActivity
 import com.foundie.id.R
+import com.foundie.id.ThemeActivity
+import com.foundie.id.viewmodel.AuthModelFactory
+import com.foundie.id.viewmodel.AuthViewModel
+import com.foundie.id.settings.SettingsPreferences
+import com.foundie.id.settings.delayTime
+import com.foundie.id.ui.home.HomeActivity
 import com.foundie.id.ui.login.LoginActivity
+import com.foundie.id.ui.login.dataStore
+import com.foundie.id.ui.navigation.HomeScreen
 
 @SuppressLint("CustomSplashScreen")
-class SplashScreenActivity : AppCompatActivity() {
+open class SplashScreenActivity : ThemeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,10 +41,26 @@ class SplashScreenActivity : AppCompatActivity() {
             findViewById<View>(R.id.backgroundImageViewDark).visibility = View.GONE
         }
 
-        // Menambahkan delay selama 1 detik sebelum berpindah ke LoginActivity
-        Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        }, 1000)
+        val prefen = SettingsPreferences.getInstance(dataStore)
+        val authViewModel =
+            ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
+
+        authViewModel.getUserLoginSession().observe(this) { isLoggedIn ->
+            if (isLoggedIn) {
+                // Menambahkan delay selama 1 detik sebelum berpindah ke HomeActivity
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }, delayTime)
+            } else {
+                // Menambahkan delay selama 1 detik sebelum berpindah ke LoginActivity
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }, delayTime)
+            }
+        }
     }
 }

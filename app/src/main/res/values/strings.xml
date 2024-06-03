@@ -46,6 +46,7 @@
     <string name="logo_foundie">Logo Foundie</string>
     <string name="foundie">foundie.</string>
     <string name="welcome_gorgeous">Welcome, gorgeous!</string>
+    <string name="hi_gorgeous">Hi, gorgeous!</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="forgot_password">Forgot Password?</string>
@@ -81,6 +82,8 @@
     <string name="ERROR_PASSWORD_NOTSAME">The password or email you entered is incorrect</string>
     <string name="ERROR_NAME_TOOLONG">Name cannot exceed 25 characters</string>
     <string name="ERROR_EDITEXT_EMPTY">Please fill in all fields correctly</string>
+    <string name="ERROR_LOGIN_GOOGLE">An error occurred while trying to log in. Please try again</string>
+    <string name="ERROR_AGREEMENT_NOT_CHECKED">You must agree to the terms and conditions before registering.</string>
     <string name="makeup">MakeUp</string>
     <string name="analysis">Analysis</string>
     <string name="color">Color</string>

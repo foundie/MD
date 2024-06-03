@@ -1,4 +1,4 @@
-package com.foundie.id.ui
+package com.foundie.id.ui.notification
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

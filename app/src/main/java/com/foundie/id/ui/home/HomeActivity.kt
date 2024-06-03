@@ -1,10 +1,11 @@
-package com.foundie.id.ui
+package com.foundie.id.ui.home
 
 import android.os.Bundle
 import android.os.Handler
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.foundie.id.R
 import com.foundie.id.data.adapter.ImageSliderAdapter
 import com.foundie.id.data.local.response.ImageDataResponse
 import com.foundie.id.databinding.ActivityHomeBinding
@@ -27,6 +28,8 @@ class HomeActivity : AppCompatActivity() {
                 MainContent()
             }
         }
+
+        supportActionBar?.title =  getString(R.string.hi_gorgeous)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

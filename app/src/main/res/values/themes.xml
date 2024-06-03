@@ -11,6 +11,15 @@
 
     </style>
 
+    <style name="Theme.Foundie.NoActionBar" parent="Base.Theme.Foundie">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:fitsSystemWindows">false</item>
+    </style>
+
     <style name="Theme.Foundie" parent="Base.Theme.Foundie" />
 
     <style name="TextContent">

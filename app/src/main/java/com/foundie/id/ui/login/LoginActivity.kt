@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.foundie.id.ui.login
 
 import android.content.Context
@@ -8,37 +10,45 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Html
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
-import com.foundie.id.LoginViewModelFactory
+import com.foundie.id.viewmodel.LoginViewModelFactory
 import com.foundie.id.MainActivity
 import com.foundie.id.R
+import com.foundie.id.ThemeActivity
 import com.foundie.id.data.adapter.ImageSliderAdapter
 import com.foundie.id.data.local.response.ImageDataResponse
 import com.foundie.id.databinding.ActivityLoginBinding
-import com.foundie.id.settings.AuthModelFactory
-import com.foundie.id.settings.AuthViewModel
+import com.foundie.id.viewmodel.AuthModelFactory
+import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.settings.SETTINGS_KEY
 import com.foundie.id.settings.SettingsPreferences
+import com.foundie.id.settings.delayTime
 import com.foundie.id.settings.getCurrentDateTime
-import com.foundie.id.ui.SignUpActivity
+import com.foundie.id.settings.updateStatusBarTheme
+import com.foundie.id.ui.signup.SignUpActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = SETTINGS_KEY)
 @Suppress("DEPRECATION")
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : ThemeActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var adapter: ImageSliderAdapter
     private val list = ArrayList<ImageDataResponse>()
     private lateinit var dots: ArrayList<TextView>
     private var currentPage = 0
     private val slideInterval = 1000L // Durasi antara perpindahan slide (dalam milidetik)
-    private val delayTime: Long = 1000
+    private val signIn = 1001
     private val handler = Handler()
     private lateinit var runnable: Runnable
     private val viewModel: LoginViewModel by lazy {
@@ -49,10 +59,13 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        updateStatusBarTheme(window, resources.configuration)
+
 
         // Data Store
         val prefen = SettingsPreferences.getInstance(dataStore)
-        val authViewModel = ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
+        val authViewModel =
+            ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
 
         // Gambar slider
         list.add(
@@ -95,8 +108,16 @@ class LoginActivity : AppCompatActivity() {
         viewModel.loginStatus.observe(this) { loginStatus ->
             val isError = viewModel.isErrorLogin
 
-            if (isError && !loginStatus.isNullOrEmpty()) Snackbar.make(binding.root, loginStatus, Snackbar.LENGTH_SHORT).show()
-            if (isError && !loginStatus.isNullOrEmpty() && loginStatus == "User not found") Snackbar.make(binding.root, getString(R.string.ERROR_PASSWORD_NOTSAME), Snackbar.LENGTH_SHORT).show()
+            if (isError && !loginStatus.isNullOrEmpty()) Snackbar.make(
+                binding.root,
+                loginStatus,
+                Snackbar.LENGTH_SHORT
+            ).show()
+            if (isError && !loginStatus.isNullOrEmpty() && loginStatus == "User not found") Snackbar.make(
+                binding.root,
+                getString(R.string.ERROR_PASSWORD_NOTSAME),
+                Snackbar.LENGTH_SHORT
+            ).show()
             else if (!isError && !loginStatus.isNullOrEmpty()) {
                 val authLogin = viewModel.login.value
                 val email = binding.etEmailLogin.text.toString()
@@ -115,38 +136,53 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnLogin.setOnClickListener {
-            val email = binding.etEmailLogin.text.toString()
-            val password = binding.etPasswordLogin.text.toString()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .build()
+        val googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-            val emailError = if (email.isEmpty()) getString(R.string.ERROR_EMAIL_EMPTY)
-            else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) getString(R.string.ERROR_EMAIL_INVALID_FORMAT)
-            else null
+        binding.apply {
+            btnLogin.setOnClickListener {
+                val email = binding.etEmailLogin.text.toString()
+                val password = binding.etPasswordLogin.text.toString()
 
-            val passwordError = if (password.isEmpty()) getString(R.string.ERROR_PASSWORD_EMPTY)
-            else if (password.length < 8) getString(R.string.ERROR_PASSWORD_LENGTH)
-            else null
+                val emailError = if (email.isEmpty()) getString(R.string.ERROR_EMAIL_EMPTY)
+                else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email)
+                        .matches()
+                ) getString(R.string.ERROR_EMAIL_INVALID_FORMAT)
+                else null
 
-            binding.etEmailLogin.error = emailError
-            binding.etPasswordLogin.error = passwordError
+                val passwordError = if (password.isEmpty()) getString(R.string.ERROR_PASSWORD_EMPTY)
+                else if (password.length < 8) getString(R.string.ERROR_PASSWORD_LENGTH)
+                else null
 
-            val allErrors = listOf(emailError, passwordError)
-            val anyErrors = allErrors.any { it != null }
+                binding.etEmailLogin.error = emailError
+                binding.etPasswordLogin.error = passwordError
 
-            if (anyErrors) {
-                Snackbar.make(
-                    binding.root,
-                    getString(R.string.ERROR_EDITEXT_EMPTY),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            } else {
-                viewModel.login(email, password)
+                val allErrors = listOf(emailError, passwordError)
+                val anyErrors = allErrors.any { it != null }
+
+                if (anyErrors) {
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.ERROR_EDITEXT_EMPTY),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                } else {
+                    viewModel.login(email, password)
+                }
             }
-        }
 
-        binding.tvSignUpNow.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
+            tvSignUpNow.setOnClickListener {
+                val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
+                startActivity(intent)
+            }
+
+            btnLoginGoogle.setOnClickListener {
+                val signInIntent = googleSignInClient.signInIntent
+                startActivityForResult(signInIntent, signIn)
+            }
         }
     }
 
@@ -194,5 +230,46 @@ class LoginActivity : AppCompatActivity() {
         super.onDestroy()
         // Hentikan pemutaran slide otomatis saat aktivitas dihancurkan
         handler.removeCallbacks(runnable)
+    }
+
+    // Fungsi Penanganan Google
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == signIn) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        }
+    }
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account = completedTask.getResult(ApiException::class.java)
+            val email = account?.email
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }, delayTime)
+
+            // Lakukan sesuatu dengan informasi akun pengguna, misalnya validasi email
+            // validateEmail(email)
+        } catch (e: ApiException) {
+            when (e.statusCode) {
+                // Tambahkan case khusus jika diperlukan, contoh:
+                GoogleSignInStatusCodes.SIGN_IN_CANCELLED -> {
+                    Snackbar.make(binding.root, getString(R.string.ERROR_LOGIN_GOOGLE), Snackbar.LENGTH_SHORT).show()
+                }
+                else -> {
+                    Snackbar.make(
+                        binding.root,
+                        "Error ${e.statusCode}: ${e.localizedMessage}",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 }

@@ -1,9 +1,10 @@
-package com.foundie.id.settings
+package com.foundie.id.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.foundie.id.settings.SettingsPreferences
 import kotlinx.coroutines.launch
 
 class AuthViewModel(private val prefen: SettingsPreferences) : ViewModel() {
