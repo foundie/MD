@@ -11,6 +11,9 @@
     <color name="pink_100">#FFDAEF</color>
     <color name="pink_000">#FFF5FB</color>
 
+    <color name="bg_light">#FCEBF5</color>
+    <color name="bg_dark">#30262E</color>
+
     <color name="info_000">#F5F6FF</color>
     <color name="info_100">#e4e6fe</color>
 

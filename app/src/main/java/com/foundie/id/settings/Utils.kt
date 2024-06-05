@@ -19,6 +19,7 @@ import java.util.TimeZone
 
 const val SETTINGS_KEY = "settings"
 const val delayTime: Long = 1000
+const val delayTimeSlider: Long = 2000
 
 fun lightStatusBar(window: Window, isLight: Boolean = true) {
     val wic = WindowInsetsControllerCompat(window, window.decorView)

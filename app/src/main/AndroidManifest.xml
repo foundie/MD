@@ -21,10 +21,12 @@
             android:theme="@style/Theme.Foundie.NoActionBar"/>
         <activity android:name=".ui.signup.SignUpActivity"
             android:theme="@style/Theme.Foundie.NoActionBar"/>
-        <activity android:name=".ui.home.HomeActivity" />
-
         <activity
             android:name=".ui.splashscreen.SplashScreenActivity"
+            />
+
+        <activity
+            android:name=".MainActivity"
             android:theme="@style/Theme.Foundie.NoActionBar"
             android:exported="true">
             <intent-filter>
@@ -35,7 +37,7 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="false" />
     </application>
 
