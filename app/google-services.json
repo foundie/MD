@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "619995861806-8sgijt7642llvj83d0flbrf9l6diqe0v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foundie.id",
+            "certificate_hash": "950d3b15c183ab334567d0da04a499b0f1fc69e8"
+          }
+        },
+        {
           "client_id": "619995861806-ubqasdgoin5e92a34sopsdi5joqrsmbb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

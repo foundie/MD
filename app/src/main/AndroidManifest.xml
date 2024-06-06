@@ -21,12 +21,13 @@
             android:theme="@style/Theme.Foundie.NoActionBar"/>
         <activity android:name=".ui.signup.SignUpActivity"
             android:theme="@style/Theme.Foundie.NoActionBar"/>
+        <activity android:name=".ui.SetPasswordActivity"
+            android:theme="@style/Theme.Foundie.NoActionBar"/>
         <activity
-            android:name=".ui.splashscreen.SplashScreenActivity"
-            />
+            android:name=".MainActivity" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.splashscreen.SplashScreenActivity"
             android:theme="@style/Theme.Foundie.NoActionBar"
             android:exported="true">
             <intent-filter>

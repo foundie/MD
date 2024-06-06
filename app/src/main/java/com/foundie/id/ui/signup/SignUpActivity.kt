@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.Parcelable
 import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.lifecycle.ViewModelProvider
@@ -31,6 +32,11 @@ class SignUpActivity : ThemeActivity() {
         setContentView(binding.root)
 
         setupUI()
+
+//        val userDetail = intent.getStringExtra(EXTRA_DETAIL_USER)
+//        if (userDetail != null) {
+//            binding.etEmailSignUp.setText(userDetail)
+//        }
     }
 
     private fun setupUI() {
@@ -133,5 +139,9 @@ class SignUpActivity : ThemeActivity() {
         } else {
             vibrator.vibrate(500)
         }
+    }
+
+    companion object {
+        const val EXTRA_DETAIL_USER = "extra_detail_user"
     }
 }

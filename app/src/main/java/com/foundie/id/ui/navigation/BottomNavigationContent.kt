@@ -1,14 +1,19 @@
 package com.foundie.id.ui.navigation
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Handler
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -19,6 +24,7 @@ import com.foundie.id.R
 import com.foundie.id.data.adapter.ImageSliderAdapter
 import com.foundie.id.data.local.response.ImageDataResponse
 import com.foundie.id.settings.delayTimeSlider
+import kotlinx.coroutines.delay
 
 // Fungsi composable utama yang menyusun keseluruhan konten utama aplikasi
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -58,12 +64,17 @@ fun NavigationHost(navController: NavHostController) {
 
 @Composable
 fun HomeScreen() {
+    val context = LocalContext.current
+    val activity = context as? AppCompatActivity
+    val coroutineScope = rememberCoroutineScope()
+
     AndroidView(
         factory = { context ->
             val view = View.inflate(context, R.layout.activity_home, null)
 
+            activity?.supportActionBar?.title = context.getString(R.string.hi_gorgeous)
+
             val viewPager = view.findViewById<ViewPager2>(R.id.view_pager)
-            val handler = Handler()
             val list = ArrayList<ImageDataResponse>()
             val adapter = ImageSliderAdapter(list)
 
@@ -72,31 +83,29 @@ fun HomeScreen() {
 
             viewPager.adapter = adapter
 
-            val runnable = object : Runnable {
-                var currentPage = 0
-                override fun run() {
-                    if (currentPage == list.size) {
-                        currentPage = 0
-                    }
-                    viewPager.setCurrentItem(currentPage++, true)
-                    handler.postDelayed(this, delayTimeSlider) // slideInterval
-                }
-            }
-
-            handler.postDelayed(runnable, delayTimeSlider) // slideInterval
-
-            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    runnable.currentPage = position
-                }
-            })
-
             view
         },
         modifier = Modifier.fillMaxSize()
     )
+
+    LaunchedEffect(Unit) {
+        val delayTimeSlider: Long = 3000 // Set slide interval
+
+        var currentPage = 0
+
+        while (true) {
+            delay(delayTimeSlider)
+            val viewPager = (context as? Activity)?.findViewById<ViewPager2>(R.id.view_pager)
+            if (viewPager != null) {
+                if (currentPage == viewPager.adapter?.itemCount) {
+                    currentPage = 0
+                }
+                viewPager.setCurrentItem(currentPage++, true)
+            }
+        }
+    }
 }
+
 
 
 @Composable

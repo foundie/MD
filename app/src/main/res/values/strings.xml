@@ -64,6 +64,7 @@
     <string name="input_your_email">Input your email</string>
     <string name="confirm_password">Confirm password</string>
     <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="fill_password">Please fill in your password</string>
     <string name="create_a_password">Create a password</string>
     <string name="i_ve_read_and_agree_with_the">I\'ve read and agree with the</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
@@ -83,7 +84,8 @@
     <string name="ERROR_NAME_TOOLONG">Name cannot exceed 25 characters</string>
     <string name="ERROR_EDITEXT_EMPTY">Please fill in all fields correctly</string>
     <string name="ERROR_LOGIN_GOOGLE">An error occurred while trying to log in. Please try again</string>
-    <string name="ERROR_AGREEMENT_NOT_CHECKED">You must agree to the terms and conditions before registering.</string>
+    <string name="ERROR_AGREEMENT_NOT_CHECKED">You must agree to the terms and conditions before registering</string>
+    <string name="SUCCESS_LOGIN_GOOGLE">Successfully logged in with Google</string>
     <string name="makeup">MakeUp</string>
     <string name="analysis">Analysis</string>
     <string name="color">Color</string>

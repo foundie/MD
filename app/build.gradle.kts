@@ -24,6 +24,7 @@ android {
         }
 
         buildConfigField("String", "BASE_URL", "\"https://foundie-backend-dev-b3pq7ueuta-uc.a.run.app/\"")
+        buildConfigField("String", "BASE_URL_2", "\"https://foundie-backend-hapijs-dev-b3pq7ueuta-uc.a.run.app/\"")
     }
 
     buildTypes {

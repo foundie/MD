@@ -49,7 +49,7 @@ open class SplashScreenActivity : ThemeActivity() {
             if (isLoggedIn) {
                 // Menambahkan delay selama 1 detik sebelum berpindah ke HomeActivity
                 Handler(Looper.getMainLooper()).postDelayed({
-                    val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
+                    val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }, delayTime)

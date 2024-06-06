@@ -29,17 +29,18 @@ import com.foundie.id.settings.SETTINGS_KEY
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.delayTime
 import com.foundie.id.settings.getCurrentDateTime
-import com.foundie.id.settings.updateStatusBarTheme
+import com.foundie.id.ui.password.SetPasswordActivity
 import com.foundie.id.ui.signup.SignUpActivity
+import com.foundie.id.viewmodel.VerifyViewModelFactory
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = SETTINGS_KEY)
+
 @Suppress("DEPRECATION")
 class LoginActivity : ThemeActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -54,13 +55,14 @@ class LoginActivity : ThemeActivity() {
     private val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this, LoginViewModelFactory(this))[LoginViewModel::class.java]
     }
+    private val verifyModel: VerifyViewModel by lazy {
+        ViewModelProvider(this, VerifyViewModelFactory(this))[VerifyViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        updateStatusBarTheme(window, resources.configuration)
-
 
         // Data Store
         val prefen = SettingsPreferences.getInstance(dataStore)
@@ -113,6 +115,7 @@ class LoginActivity : ThemeActivity() {
                 loginStatus,
                 Snackbar.LENGTH_SHORT
             ).show()
+
             if (isError && !loginStatus.isNullOrEmpty() && loginStatus == "User not found") Snackbar.make(
                 binding.root,
                 getString(R.string.ERROR_PASSWORD_NOTSAME),
@@ -130,6 +133,50 @@ class LoginActivity : ThemeActivity() {
                 Snackbar.make(binding.root, loginStatus, Snackbar.LENGTH_SHORT).show()
                 Handler(Looper.getMainLooper()).postDelayed({
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }, delayTime)
+            }
+        }
+
+        // Verify Login Google
+        verifyModel.verifyStatus.observe(this) { verifyStatus ->
+            val isError = verifyModel.isErrorVerify
+            val verifyResponse = verifyModel.verify.value
+
+            if (isError && !verifyStatus.isNullOrEmpty()) {
+                Snackbar.make(binding.root, verifyStatus, Snackbar.LENGTH_SHORT).show()
+            }
+
+            if (isError && !verifyStatus.isNullOrEmpty() && verifyStatus == "Invalid Google token") {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.ERROR_PASSWORD_NOTSAME),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+
+            if (!isError && !verifyStatus.isNullOrEmpty() && verifyResponse?.setPassword == true) {
+                Snackbar.make(binding.root, verifyStatus, Snackbar.LENGTH_SHORT).show()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }, delayTime)
+            } else if (!isError && !verifyStatus.isNullOrEmpty() && verifyResponse?.setPassword == false) {
+                val verifyLogin = verifyResponse.loginGoogleResult
+                authViewModel.saveUserLoginSession(true)
+                authViewModel.saveUserLoginToken(verifyLogin.token)
+                authViewModel.saveUserLoginName(verifyLogin.name)
+                authViewModel.saveUserLoginEmail(verifyLogin.email)
+                authViewModel.saveUserLastLoginSession(getCurrentDateTime())
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.fill_password),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val intent = Intent(this@LoginActivity, SetPasswordActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }, delayTime)
@@ -157,8 +204,10 @@ class LoginActivity : ThemeActivity() {
                 else if (password.length < 8) getString(R.string.ERROR_PASSWORD_LENGTH)
                 else null
 
-                binding.etEmailLogin.error = emailError
-                binding.etPasswordLogin.error = passwordError
+                binding.apply {
+                    etEmailLogin.error = emailError
+                    etPasswordLogin.error = passwordError
+                }
 
                 val allErrors = listOf(emailError, passwordError)
                 val anyErrors = allErrors.any { it != null }
@@ -246,22 +295,10 @@ class LoginActivity : ThemeActivity() {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            val email = account?.email
-
-            Handler(Looper.getMainLooper()).postDelayed({
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            }, delayTime)
-
-            // Lakukan sesuatu dengan informasi akun pengguna, misalnya validasi email
-            // validateEmail(email)
+            val idtoken = account?.idToken
+            idtoken?.let { verifyModel.verification(it) }
         } catch (e: ApiException) {
             when (e.statusCode) {
-                // Tambahkan case khusus jika diperlukan, contoh:
-                GoogleSignInStatusCodes.SIGN_IN_CANCELLED -> {
-                    Snackbar.make(binding.root, getString(R.string.ERROR_LOGIN_GOOGLE), Snackbar.LENGTH_SHORT).show()
-                }
                 else -> {
                     Snackbar.make(
                         binding.root,
