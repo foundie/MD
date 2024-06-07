@@ -1,8 +1,10 @@
+@file:Suppress("NAME_SHADOWING")
+
 package com.foundie.id.ui.navigation
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.os.Handler
+import android.support.annotation.StringRes
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +13,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
@@ -24,6 +25,10 @@ import com.foundie.id.R
 import com.foundie.id.data.adapter.ImageSliderAdapter
 import com.foundie.id.data.local.response.ImageDataResponse
 import com.foundie.id.settings.delayTimeSlider
+import com.foundie.id.ui.catalog.CatalogPagerAdapter
+import com.foundie.id.ui.community.CommunityPagerAdapter
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.delay
 
 // Fungsi composable utama yang menyusun keseluruhan konten utama aplikasi
@@ -66,7 +71,6 @@ fun NavigationHost(navController: NavHostController) {
 fun HomeScreen() {
     val context = LocalContext.current
     val activity = context as? AppCompatActivity
-    val coroutineScope = rememberCoroutineScope()
 
     AndroidView(
         factory = { context ->
@@ -89,8 +93,6 @@ fun HomeScreen() {
     )
 
     LaunchedEffect(Unit) {
-        val delayTimeSlider: Long = 3000 // Set slide interval
-
         var currentPage = 0
 
         while (true) {
@@ -110,13 +112,77 @@ fun HomeScreen() {
 
 @Composable
 fun CatalogScreen() {
-    Text(text = "Catalog Screen")
+    AndroidView(
+        factory = { context ->
+            // Ensure the context is an instance of AppCompatActivity
+            val activity = context as AppCompatActivity
+
+            // Inflate the view
+            val view = View.inflate(activity, R.layout.activity_catalog, null)
+
+            // Initialize components
+            val catalogPagerAdapter = CatalogPagerAdapter(activity)
+            val viewPager: ViewPager2 = view.findViewById(R.id.view_pager)
+            val tabs: TabLayout = view.findViewById(R.id.tabs)
+            viewPager.adapter = catalogPagerAdapter
+
+            // Set up TabLayoutMediator
+            TabLayoutMediator(tabs, viewPager) { tab, position ->
+                tab.text = activity.resources.getString(TAB_TITLES_CATALOG[position])
+            }.attach()
+
+            // Set action bar elevation
+            activity.supportActionBar?.elevation = 0f
+
+            view
+        },
+        modifier = Modifier.fillMaxSize()
+    )
 }
+
+@StringRes
+private val TAB_TITLES_CATALOG = intArrayOf(
+    R.string.all,
+    R.string.popular
+)
 
 @Composable
 fun CommunityScreen() {
-    Text(text = "Community Screen")
+    AndroidView(
+        factory = { context ->
+            // Ensure the context is an instance of AppCompatActivity
+            val activity = context as AppCompatActivity
+
+            // Inflate the view
+            val view = View.inflate(activity, R.layout.activity_community, null)
+
+            // Initialize components
+            val communityPagerAdapter = CommunityPagerAdapter(activity)
+            val viewPager: ViewPager2 = view.findViewById(R.id.view_pager)
+            val tabs: TabLayout = view.findViewById(R.id.tabs)
+            viewPager.adapter = communityPagerAdapter
+
+            // Set up TabLayoutMediator
+            TabLayoutMediator(tabs, viewPager) { tab, position ->
+                tab.text = activity.resources.getString(TAB_TITLES_COMMUNITY[position])
+            }.attach()
+
+            // Set action bar elevation
+            activity.supportActionBar?.elevation = 0f
+
+            view
+        },
+        modifier = Modifier.fillMaxSize()
+    )
 }
+
+@StringRes
+private val TAB_TITLES_COMMUNITY = intArrayOf(
+    R.string.all,
+    R.string.joined,
+    R.string.popular
+)
+
 
 @Composable
 fun NotificationScreen() {

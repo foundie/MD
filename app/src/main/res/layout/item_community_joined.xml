@@ -2,7 +2,6 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_community"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -10,17 +9,18 @@
     android:orientation="horizontal"
     android:padding="8dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    android:id="@+id/item_community_joined">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_community"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp">
+        android:id="@+id/cl_community_joined"
+        android:layout_width="162dp"
+        android:layout_height="121dp">
 
         <ImageView
             android:id="@+id/iv_community"
-            android:layout_width="144dp"
-            android:layout_height="130dp"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -47,33 +47,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_community"
             tools:text="@string/community_name" />
-
-        <TextView
-            android:id="@+id/tv_total_members"
-            style="@style/TextContent.BodyXS"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="12dp"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_community_name"
-            tools:text="@string/total_members" />
-
-        <TextView
-            android:id="@+id/btn_login"
-            style="@style/TextContent.BodyXS"
-            android:layout_width="48dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="12dp"
-            android:background="@drawable/ic_background_tag"
-
-            android:gravity="center"
-            android:padding="2dp"
-            android:text="@string/join"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_total_members" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -108,4 +108,15 @@
     <string name="product_name">Product Name</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="all">All</string>
+    <string name="joined">Joined</string>
+    <string name="popular">Popular</string>
+    <string name="you_have_not_joined_any_communities_yet">You have not joined any communities yet</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="post_title">Post Title</string>
+    <string name="post_description">post description</string>
+
 </resources>
