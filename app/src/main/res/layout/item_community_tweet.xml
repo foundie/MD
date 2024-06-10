@@ -15,52 +15,76 @@
         android:layout_height="wrap_content"
         android:layout_margin="24dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_community"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+        <ImageView
+            android:id="@+id/iv_community"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="24dp"
+            android:src="@drawable/baseline_people_24"
 
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_community_name"
+            style="@style/TextContent.BodyXS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:padding="2dp"
+            android:textColor="?attr/colorAccent"
+            android:textStyle="bold"
+
+            app:layout_constraintStart_toEndOf="@+id/iv_community"
             app:layout_constraintTop_toTopOf="parent"
+
+            tools:text="@string/community_name" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_user"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="6dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_community"
 
             tools:ignore="ContentDescription"
             tools:src="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/tv_community_name"
-            style="@style/TextContent.TextHeading5"
+            android:id="@+id/tv_username"
+            style="@style/TextContent.TextHeading4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:padding="9dp"
             android:textStyle="bold"
 
-            app:layout_constraintStart_toEndOf="@+id/img_community"
-            app:layout_constraintTop_toTopOf="parent"
-
-            tools:text="@string/community_name" />
-
-        <TextView
-            android:id="@+id/tv_post_title"
-            style="@style/TextContent.TextHeading5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textStyle="bold"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_community"
-            tools:text="@string/post_title" />
+            app:layout_constraintStart_toEndOf="@+id/img_user"
+            app:layout_constraintTop_toBottomOf="@+id/iv_community"
+            tools:text="@string/username" />
 
         <TextView
             android:id="@+id/tv_post_description"
-            style="@style/TextContent.BodyXS"
+            style="@style/TextContent.BodyS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
 
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_post_title"
+            app:layout_constraintTop_toBottomOf="@+id/img_user"
             tools:text="@string/post_description" />
+
+        <TextView
+            android:id="@+id/tv_timestamp"
+            style="@style/TextContent.BodyXS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_community"
+            tools:text="time posted" />
 
         <ImageView
             android:id="@+id/iv_replied"

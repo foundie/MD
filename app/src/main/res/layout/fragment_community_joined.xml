@@ -15,8 +15,10 @@
             android:id="@+id/rv_list_community_joined"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -28,23 +30,29 @@
             android:layout_width="0dp"
             android:layout_height="0.5dp"
             android:background="?attr/colorAccent"
+            android:visibility="gone"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rv_list_community_joined"
             app:layout_constraintWidth_default="spread"
-            app:layout_constraintWidth_percent="0.9" />
+            app:layout_constraintWidth_percent="0.9"
+            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_list_community"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_list_community_joined"
+
             app:reverseLayout="false"
             tools:listitem="@layout/item_community_tweet" />
 
