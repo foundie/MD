@@ -9,17 +9,15 @@ import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
-import com.foundie.id.MainActivity
+import com.foundie.id.ui.navigation.FragmentActivity
 import com.foundie.id.R
 import com.foundie.id.ThemeActivity
 import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.delayTime
-import com.foundie.id.ui.home.HomeActivity
 import com.foundie.id.ui.login.LoginActivity
 import com.foundie.id.ui.login.dataStore
-import com.foundie.id.ui.navigation.HomeScreen
 
 @SuppressLint("CustomSplashScreen")
 open class SplashScreenActivity : ThemeActivity() {
@@ -49,7 +47,7 @@ open class SplashScreenActivity : ThemeActivity() {
             if (isLoggedIn) {
                 // Menambahkan delay selama 1 detik sebelum berpindah ke HomeActivity
                 Handler(Looper.getMainLooper()).postDelayed({
-                    val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
+                    val intent = Intent(this@SplashScreenActivity, FragmentActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }, delayTime)

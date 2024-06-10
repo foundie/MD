@@ -44,6 +44,11 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="logo_foundie">Logo Foundie</string>
+    <string name="Home">Home</string>
+    <string name="Catalog">Catalog</string>
+    <string name="Community">Comunnity</string>
+    <string name="Notification">Notification</string>
+    <string name="Profile">Profile</string>
     <string name="foundie">foundie.</string>
     <string name="welcome_gorgeous">Welcome, gorgeous!</string>
     <string name="hi_gorgeous">Hi, gorgeous!</string>

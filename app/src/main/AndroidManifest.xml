@@ -13,16 +13,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Foundie"
         tools:targetApi="31">
-        <activity
-            android:name=".ui.catalog.CatalogActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.community.CommunityActivity"
-            android:exported="false" />
-        <activity android:name=".ui.notification.NotificationActivity" />
-        <activity
+               <activity
             android:name=".ui.login.LoginActivity"
             android:theme="@style/Theme.Foundie.NoActionBar" />
         <activity
@@ -31,7 +25,7 @@
         <activity
             android:name=".ui.password.SetPasswordActivity"
             android:theme="@style/Theme.Foundie.NoActionBar" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.navigation.FragmentActivity" />
         <activity
             android:name=".ui.splashscreen.SplashScreenActivity"
             android:exported="true"

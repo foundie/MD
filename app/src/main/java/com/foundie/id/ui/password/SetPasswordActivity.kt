@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.ViewModelProvider
-import com.foundie.id.MainActivity
+import com.foundie.id.ui.navigation.FragmentActivity
 import com.foundie.id.R
 import com.foundie.id.ThemeActivity
 import com.foundie.id.databinding.ActivityPasswordBinding
@@ -52,7 +52,7 @@ class SetPasswordActivity : ThemeActivity() {
             if (!isError) {
                 Handler(Looper.getMainLooper()).postDelayed({
                     startActivity(
-                        Intent(this@SetPasswordActivity, MainActivity::class.java)
+                        Intent(this@SetPasswordActivity, FragmentActivity::class.java)
                         .apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK })
                 }, delayTime)
             }

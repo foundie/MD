@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.foundie.id.data.local.response.AddPasswordResponse
 import com.foundie.id.data.local.response.LoginGoogleResponse
 import com.foundie.id.data.local.response.LoginResponse
-import com.foundie.id.data.local.response.MakeUpStyleResponse
+import com.foundie.id.data.local.response.PredictResponse
 import com.foundie.id.data.local.response.RegisterResponse
 import com.foundie.id.data.local.retrofit.ApiService
 import com.foundie.id.settings.wrapEspressoIdlingResource
@@ -46,10 +46,12 @@ class MainRepository(private val apiService: ApiService) {
     val verifyUser: LiveData<LoginGoogleResponse> = _verify
     var isErrorVerify: Boolean = false
 
-    private val _predict = MutableLiveData<String>()
-    val predict: LiveData<String> = _predict
+    private val _predictStatus = MutableLiveData<String>()
+    val predictStatus: LiveData<String> = _predictStatus
     private val _isLoadingpredict = MutableLiveData<Boolean>()
     val isLoadingpredict: LiveData<Boolean> = _isLoadingpredict
+    private val _makeupStyle = MutableLiveData<PredictResponse>()
+    val predict: LiveData<PredictResponse> = _makeupStyle
     var isErrorpredict: Boolean = false
 
 
@@ -110,6 +112,7 @@ class MainRepository(private val apiService: ApiService) {
                         isErrorLogin = true
                         when (response.code()) {
                             401 -> _loginStatus.value = "User not found"
+                            403 -> _loginStatus.value = "You have reached the maximum number of login attempts. Please try again later."
                             500 -> _loginStatus.value = "Server not found. Please try again later."
                             else -> {
                                 _loginStatus.value = response.message()
@@ -204,32 +207,39 @@ class MainRepository(private val apiService: ApiService) {
 
     fun styleMakeup(token: String, photo: MultipartBody.Part) {
         _isLoadingpredict.value = true
-        val service = ApiConfig.getApiServiceML().styleMakeup(
+        val service = ApiConfig.getApiService().styleMakeup(
             "Bearer $token", photo)
-        service.enqueue(object : Callback<MakeUpStyleResponse> {
+        service.enqueue(object : Callback<PredictResponse> {
             override fun onResponse(
-                call: Call<MakeUpStyleResponse>,
-                response: Response<MakeUpStyleResponse>
+                call: Call<PredictResponse>,
+                response: Response<PredictResponse>
             ) {
+                val responseBody = response.body()
                 _isLoadingpredict.value = false
                 if (response.isSuccessful) {
                     isErrorpredict = false
-                    val responseBody = response.body()
-                    if (responseBody != null && !responseBody.error) {
-                        _predict.value = responseBody.message
-                    }
+                    _makeupStyle.value = responseBody!!
+                    _predictStatus.value =
+                        "Success Get MakeUpStyle Recomendation"
                 } else {
                     isErrorpredict = true
-                    _predict.value = response.message()
-
+                    when (response.code()) {
+                        401 -> _predictStatus.value = "Data not found"
+                        408 -> _passwordStatus.value = "Your internet connection is slow, please try again"
+                        500 -> _predictStatus.value = "Server not found. Please try again later."
+                        else -> {
+                            _predictStatus.value = response.message()
+                        }
+                    }
                 }
             }
 
-            override fun onFailure(call: Call<MakeUpStyleResponse>, t: Throwable) {
-                _isLoadingpredict.value = false
+            override fun onFailure(call: Call<PredictResponse>, t: Throwable) {
                 isErrorpredict = true
-                _predict.value = t.message
+                _isLoadingpredict.value = false
+                _predictStatus.value = t.message.toString()
             }
+
         })
     }
 }

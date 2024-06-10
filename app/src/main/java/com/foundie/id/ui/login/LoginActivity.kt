@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Html
+import android.util.Log
+import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
@@ -16,8 +18,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
+import com.foundie.id.ui.navigation.FragmentActivity
 import com.foundie.id.viewmodel.LoginViewModelFactory
-import com.foundie.id.MainActivity
 import com.foundie.id.R
 import com.foundie.id.ThemeActivity
 import com.foundie.id.data.adapter.ImageSliderAdapter
@@ -41,7 +43,6 @@ import com.google.android.material.snackbar.Snackbar
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = SETTINGS_KEY)
 
-@Suppress("DEPRECATION")
 class LoginActivity : ThemeActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var adapter: ImageSliderAdapter
@@ -106,6 +107,14 @@ class LoginActivity : ThemeActivity() {
             }
         })
 
+        viewModel.isLoadingLogin.observe(this) {
+            showLoading(it)
+        }
+
+        verifyModel.isLoadingVerify.observe(this) {
+            showLoading(it)
+        }
+
         // Login
         viewModel.loginStatus.observe(this) { loginStatus ->
             val isError = viewModel.isErrorLogin
@@ -123,16 +132,17 @@ class LoginActivity : ThemeActivity() {
             ).show()
             else if (!isError && !loginStatus.isNullOrEmpty()) {
                 val authLogin = viewModel.login.value
-                val email = binding.etEmailLogin.text.toString()
-                authViewModel.saveUserLoginSession(true)
-                authViewModel.saveUserLoginToken(authLogin?.loginResult!!.token)
-                authViewModel.saveUserLoginName(authLogin.loginResult.name)
-                authViewModel.saveUserLoginRole(authLogin.loginResult.role)
-                authViewModel.saveUserLoginEmail(email)
-                authViewModel.saveUserLastLoginSession(getCurrentDateTime())
+                authViewModel.apply {
+                    saveUserLoginSession(true)
+                    saveUserLoginToken(authLogin?.loginResult!!.token)
+                    saveUserLoginName(authLogin.loginResult.name)
+                    saveUserLoginRole(authLogin.loginResult.role)
+                    saveUserLoginEmail(authLogin.loginResult.email)
+                    saveUserLastLoginSession(getCurrentDateTime())
+                }
                 Snackbar.make(binding.root, loginStatus, Snackbar.LENGTH_SHORT).show()
                 Handler(Looper.getMainLooper()).postDelayed({
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    val intent = Intent(this@LoginActivity, FragmentActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }, delayTime)
@@ -157,19 +167,29 @@ class LoginActivity : ThemeActivity() {
             }
 
             if (!isError && !verifyStatus.isNullOrEmpty() && verifyResponse?.setPassword == true) {
+                val verifyLogin = verifyResponse.loginGoogleResult
+                authViewModel.apply {
+                    saveUserLoginSession(true)
+                    saveUserLoginToken(verifyLogin.token)
+                    saveUserLoginName(verifyLogin.name)
+                    saveUserLoginEmail(verifyLogin.email)
+                    saveUserLastLoginSession(getCurrentDateTime())
+                }
                 Snackbar.make(binding.root, verifyStatus, Snackbar.LENGTH_SHORT).show()
                 Handler(Looper.getMainLooper()).postDelayed({
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    val intent = Intent(this@LoginActivity, FragmentActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }, delayTime)
             } else if (!isError && !verifyStatus.isNullOrEmpty() && verifyResponse?.setPassword == false) {
                 val verifyLogin = verifyResponse.loginGoogleResult
-                authViewModel.saveUserLoginSession(true)
-                authViewModel.saveUserLoginToken(verifyLogin.token)
-                authViewModel.saveUserLoginName(verifyLogin.name)
-                authViewModel.saveUserLoginEmail(verifyLogin.email)
-                authViewModel.saveUserLastLoginSession(getCurrentDateTime())
+                authViewModel.apply {
+                    saveUserLoginSession(true)
+                    saveUserLoginToken(verifyLogin.token)
+                    saveUserLoginName(verifyLogin.name)
+                    saveUserLoginEmail(verifyLogin.email)
+                    saveUserLastLoginSession(getCurrentDateTime())
+                }
                 Snackbar.make(
                     binding.root,
                     getString(R.string.fill_password),
@@ -237,7 +257,7 @@ class LoginActivity : ThemeActivity() {
 
     // Fungsi untuk mengatur posisi dots slider berdasarkan gambarnya
     private fun selectedDot(position: Int) {
-        val selectedColor = if (isDarkTheme()) ContextCompat.getColor(this, R.color.primayColorDark)
+        val selectedColor = if (isDarkTheme()) ContextCompat.getColor(this, R.color.primaryColor)
         else ContextCompat.getColor(this, R.color.primaryColor)
 
         for (i in 0 until list.size) {
@@ -281,6 +301,10 @@ class LoginActivity : ThemeActivity() {
         handler.removeCallbacks(runnable)
     }
 
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
     // Fungsi Penanganan Google
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -300,11 +324,7 @@ class LoginActivity : ThemeActivity() {
         } catch (e: ApiException) {
             when (e.statusCode) {
                 else -> {
-                    Snackbar.make(
-                        binding.root,
-                        "Error ${e.statusCode}: ${e.localizedMessage}",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    Log.d("Error Login Gogle","${e.statusCode}: ${e.localizedMessage}")
                 }
             }
         }

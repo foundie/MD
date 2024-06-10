@@ -3,12 +3,13 @@
     <style name="Base.Theme.Foundie" parent="Theme.Material3.DayNight">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-        <item name="colorPrimary">@color/primayColorDark</item>
-        <item name="backgroundColor">@color/backgroundLayoutDark</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="backgroundColor">@color/backgroundLayout</item>
+        <item name="colorOnSurface">@color/white</item>
         <item name="colorAccent">@color/neutral_200</item>
         <item name="colorOnPrimary">@color/pink_000</item>
         <item name="colorContainer">@color/info_100</item>
-        <item name="colorOnContainer">@color/bg_dark</item>
+        <item name="colorOnContainer">@color/backgroundNav</item>
     </style>
 
     <style name="Theme.Foundie.NoActionBar" parent="Base.Theme.Foundie">

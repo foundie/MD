@@ -3,7 +3,7 @@ package com.foundie.id.data.local.retrofit
 import com.foundie.id.data.local.response.AddPasswordResponse
 import com.foundie.id.data.local.response.LoginGoogleResponse
 import com.foundie.id.data.local.response.LoginResponse
-import com.foundie.id.data.local.response.MakeUpStyleResponse
+import com.foundie.id.data.local.response.PredictResponse
 import com.foundie.id.data.local.response.RegisterResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -50,10 +50,10 @@ interface ApiService {
     ): Call<AddPasswordResponse>
 
     @Multipart
-    @POST("predict")
+    @POST("predict/face")
     fun styleMakeup(
         @Header("Authorization") token: String,
         @Part file: MultipartBody.Part,
-    ): Call<MakeUpStyleResponse>
+    ): Call<PredictResponse>
 
 }

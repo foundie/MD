@@ -11,11 +11,11 @@
     <color name="pink_100">#FFDAEF</color>
     <color name="pink_000">#FFF5FB</color>
 
-    <color name="backgroundNav">#FCEBF5</color>
+    <color name="backgroundNav">#30262E</color>
 
     <color name="info_000">#F5F6FF</color>
     <color name="info_100">#e4e6fe</color>
 
-    <color name="primaryColor">#DC2F91</color>
-    <color name="backgroundLayout">#FFFFFF</color>
+    <color name="primaryColor">#F297C1</color>
+    <color name="backgroundLayout">#121212</color>
 </resources>
