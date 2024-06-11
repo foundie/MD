@@ -9,18 +9,15 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.foundie.id.R
-import com.foundie.id.databinding.FragmentCommunityBinding
-import com.google.android.material.tabs.TabLayoutMediator
+import com.foundie.id.databinding.FragmentCommunityDetailBinding
 
-class CommunityFragment : Fragment() {
+class CommunityDetailFragment : Fragment() {
 
-    private var _binding: FragmentCommunityBinding? = null
+    private var _binding: FragmentCommunityDetailBinding? = null
     private val binding get() = _binding!!
 
     private var extraSearch: String? = null
@@ -30,23 +27,14 @@ class CommunityFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCommunityBinding.inflate(inflater, container, false)
+        _binding = FragmentCommunityDetailBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
-//        activity?.title = getString(R.string.community)
+        activity?.title = getString(R.string.community) //ini bisa ga sih dihilangin, jadi cuma ada search aja iconnya di action bar
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val communityPagerAdapter = CommunityPagerAdapter(requireActivity())
-        binding.viewPager.adapter = communityPagerAdapter
-
-        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
-            tab.text = resources.getString(TAB_TITLES_COMMUNITY[position])
-        }.attach()
-
-        (activity as? AppCompatActivity)?.supportActionBar?.elevation = 0f
     }
 
     override fun onDestroyView() {
@@ -56,7 +44,7 @@ class CommunityFragment : Fragment() {
 
     //Actionbar
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_community, menu)
+        inflater.inflate(R.menu.menu_detail_community, menu)
         super.onCreateOptionsMenu(menu, inflater)
 
         val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
@@ -96,14 +84,5 @@ class CommunityFragment : Fragment() {
             val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
-    }
-
-    companion object {
-        @StringRes
-        private val TAB_TITLES_COMMUNITY = intArrayOf(
-            R.string.all,
-            R.string.joined,
-            R.string.popular
-        )
     }
 }

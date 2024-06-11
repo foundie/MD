@@ -130,5 +130,6 @@
     <string name="community">Community</string>
 
     <string name="search_hint">Search...</string>
+    <string name="location">location</string>
 
 </resources>
