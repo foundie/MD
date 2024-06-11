@@ -32,7 +32,7 @@ class CommunityFragment : Fragment() {
     ): View {
         _binding = FragmentCommunityBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
-//        activity?.title = getString(R.string.community)
+        activity?.title = getString(R.string.community)
         return binding.root
     }
 
