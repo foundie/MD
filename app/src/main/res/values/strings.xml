@@ -138,5 +138,18 @@
     <string name="community_s_description">Community\'s Description</string>
     <string name="community_s_topic">Community\'s Topic</string>
     <string name="input_your_community_s_topic">Input your community\'s topic</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="followers">Followers :</string>
+    <string name="total_followers">Total Followers</string>
+    <string name="total_following">total following</string>
+    <string name="following">Following :</string>
+    <string name="make_up_style_result">Make Up Style Result</string>
+    <string name="skin_tone_result">Skin Tone Result</string>
+    <string name="color_analysis_result">Color Analysis Result</string>
+    
+    <string name="post">Post</string>
+    <string name="review">Review</string>
+    <string name="you_have_not_write_any_post_yet">you have not write any post yet</string>
+    <string name="you_have_not_write_any_review_yet">you have not write any review yet</string>
 
 </resources>

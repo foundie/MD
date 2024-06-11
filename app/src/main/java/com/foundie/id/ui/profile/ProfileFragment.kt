@@ -6,9 +6,12 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.foundie.id.R
 import com.foundie.id.databinding.FragmentProfileBinding
+import com.google.android.material.tabs.TabLayoutMediator
 
 class ProfileFragment : Fragment() {
 
@@ -27,7 +30,15 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Initialize your UI components here using binding
+
+        val profilePagerAdapter = ProfilePagerAdapter(requireActivity())
+        binding.viewPager.adapter = profilePagerAdapter
+
+        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES_PROFILE[position])
+        }.attach()
+
+        (activity as? AppCompatActivity)?.supportActionBar?.elevation = 0f
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -38,5 +49,13 @@ class ProfileFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        @StringRes
+        private val TAB_TITLES_PROFILE = intArrayOf(
+            R.string.post,
+            R.string.review,
+        )
     }
 }
