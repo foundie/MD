@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.foundie.id.R
 import com.foundie.id.data.adapter.ImageSliderAdapter
 import com.foundie.id.data.local.response.ImageDataResponse
 import com.foundie.id.databinding.FragmentHomeBinding
@@ -28,6 +29,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
+        activity?.title = getString(R.string.gergous)
         return binding.root
     }
 
@@ -75,4 +78,14 @@ class HomeFragment : Fragment() {
         handler.removeCallbacks(runnable)
         _binding = null
     }
+
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            R.id.action_community -> {
+//                // Handle community action here
+//                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 }

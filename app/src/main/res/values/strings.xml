@@ -125,4 +125,10 @@
     <string name="post_description">post description</string>
     <string name="username">Username</string>
 
+    <string name="gergous">Hi! Gergous</string>
+    <string name="catalog">Catalog</string>
+    <string name="community">Community</string>
+
+    <string name="search_hint">Search...</string>
+
 </resources>
