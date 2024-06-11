@@ -146,10 +146,12 @@
     <string name="make_up_style_result">Make Up Style Result</string>
     <string name="skin_tone_result">Skin Tone Result</string>
     <string name="color_analysis_result">Color Analysis Result</string>
-    
+
     <string name="post">Post</string>
     <string name="review">Review</string>
     <string name="you_have_not_write_any_post_yet">you have not write any post yet</string>
     <string name="you_have_not_write_any_review_yet">you have not write any review yet</string>
+    <string name="update">Update...</string>
+    <string name="save">Save</string>
 
 </resources>
