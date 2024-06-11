@@ -103,6 +103,8 @@
     <string name="favorites">favorites</string>
     <string name="search">search</string>
     <string name="create_community">create community</string>
+    <string name="Create_Community">Create Community</string>
+    <string name="Create_New_Community">Create New Community</string>
     <string name="bookmarks">bookmarks</string>
     <string name="notification">notification</string>
     <string name="settings">settings</string>
@@ -131,5 +133,10 @@
 
     <string name="search_hint">Search...</string>
     <string name="location">location</string>
+    <string name="input_your_community_name">Input your community name</string>
+    <string name="input_your_community_s_description">Input your community\'s description</string>
+    <string name="community_s_description">Community\'s Description</string>
+    <string name="community_s_topic">Community\'s Topic</string>
+    <string name="input_your_community_s_topic">Input your community\'s topic</string>
 
 </resources>

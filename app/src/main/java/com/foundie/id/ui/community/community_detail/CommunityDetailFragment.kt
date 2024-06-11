@@ -1,4 +1,4 @@
-package com.foundie.id.ui.community
+package com.foundie.id.ui.community.community_detail
 
 import android.app.SearchManager
 import android.content.Context
