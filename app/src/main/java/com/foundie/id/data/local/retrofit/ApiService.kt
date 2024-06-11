@@ -4,15 +4,19 @@ import com.foundie.id.data.local.response.AddPasswordResponse
 import com.foundie.id.data.local.response.LoginGoogleResponse
 import com.foundie.id.data.local.response.LoginResponse
 import com.foundie.id.data.local.response.PredictResponse
+import com.foundie.id.data.local.response.ProductResponse
 import com.foundie.id.data.local.response.RegisterResponse
+import com.foundie.id.data.local.response.UserResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -48,6 +52,17 @@ interface ApiService {
         @Field("email") email: String,
         @Field("password") password: String,
     ): Call<AddPasswordResponse>
+
+    // Get Biodata User
+    @GET("/biodata/me")
+    fun getBiodata(
+        @Header("Authorization") token: String,
+    ): Call<UserResponse>
+
+    // Get Biodata
+    @GET("products")
+    fun getProduct(
+    ): Call<ProductResponse>
 
     @Multipart
     @POST("predict/face")

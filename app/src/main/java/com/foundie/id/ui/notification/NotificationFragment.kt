@@ -1,12 +1,12 @@
 package com.foundie.id.ui.notification
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
+import com.foundie.id.R
 import com.foundie.id.databinding.FragmentNotificationBinding
 
+@Suppress("DEPRECATION")
 class NotificationFragment : Fragment() {
 
     private var _binding: FragmentNotificationBinding? = null
@@ -20,9 +20,21 @@ class NotificationFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        // Initialize your UI components here using binding
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_notification, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.notification -> {
+                // Perform refresh action here
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {

@@ -8,6 +8,8 @@ import com.foundie.id.data.local.response.LoginGoogleResponse
 import com.foundie.id.data.local.response.LoginResponse
 import com.foundie.id.data.local.response.PredictResponse
 import com.foundie.id.data.local.response.RegisterResponse
+import com.foundie.id.data.local.response.User
+import com.foundie.id.data.local.response.UserResponse
 import com.foundie.id.data.local.retrofit.ApiService
 import com.foundie.id.settings.wrapEspressoIdlingResource
 import com.foundie.id.data.local.retrofit.ApiConfig
@@ -53,6 +55,13 @@ class MainRepository(private val apiService: ApiService) {
     private val _makeupStyle = MutableLiveData<PredictResponse>()
     val predict: LiveData<PredictResponse> = _makeupStyle
     var isErrorpredict: Boolean = false
+
+    var stories: List<User> = listOf()
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String> = _message
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+    var isError: Boolean = false
 
 
     fun register(name: String, email: String, password: String) {
@@ -203,6 +212,34 @@ class MainRepository(private val apiService: ApiService) {
 
             })
         }
+    }
+
+    fun getBiodata(token: String) {
+        _isLoading.value = true
+        val api = ApiConfig.getApiService().getBiodata("Bearer $token")
+        api.enqueue(object : retrofit2.Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    isError = false
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        stories = responseBody.user
+                    }
+                    _message.value = responseBody?.message.toString()
+
+                } else {
+                    isError = true
+                    _message.value = response.message()
+                }
+            }
+
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                _isLoading.value = false
+                isError = true
+                _message.value = t.message.toString()
+            }
+        })
     }
 
     fun styleMakeup(token: String, photo: MultipartBody.Part) {

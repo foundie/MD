@@ -25,7 +25,9 @@
         <activity
             android:name=".ui.password.SetPasswordActivity"
             android:theme="@style/Theme.Foundie.NoActionBar" />
-        <activity android:name=".ui.navigation.FragmentActivity" />
+
+        <activity android:name=".ui.navigation.FragmentActivity"
+            android:theme="@style/Theme.Foundie.NoActionBar"/>
         <activity
             android:name=".ui.splashscreen.SplashScreenActivity"
             android:exported="true"
