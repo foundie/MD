@@ -10,6 +10,7 @@
         <item name="colorOnPrimary">@color/pink_100</item>
         <item name="colorContainer">@color/info_000</item>
         <item name="colorOnContainer">@color/backgroundNav</item>
+        <item name="colorSurface">@color/danger_300</item>
     </style>
 
     <style name="Theme.Foundie.NoActionBar" parent="Base.Theme.Foundie">
