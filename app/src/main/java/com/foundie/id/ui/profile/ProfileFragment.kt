@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -18,10 +20,12 @@ import com.foundie.id.databinding.FragmentProfileBinding
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.ui.login.dataStore
 import com.foundie.id.ui.profile.profile_edit.ProfileEditFragment
+import com.foundie.id.ui.profile.settings.SettingFragment
 import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.ProfileViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator
+import com.squareup.picasso.Picasso
 
 class ProfileFragment : Fragment() {
 
@@ -71,6 +75,20 @@ class ProfileFragment : Fragment() {
             showLoading(it)
         }
 
+        viewModel.biodata.observe(viewLifecycleOwner) { biodata ->
+            if (biodata != null) {
+                binding.apply {
+                    tvUsername.text = biodata.name
+                    tvLocation.text = biodata.location
+                    tvGender.text = biodata.gender
+                    tvFollowed.text = "Followed: 7"
+                    tvFollowers.text = "Followers: 1000000"
+                    ivUser.loadImage(biodata.profileImageUrl)
+                    ivBackgroundUser.loadImage(biodata.coverImageUrl)
+                }
+            }
+        }
+
         viewModel.profileStatus.observe(viewLifecycleOwner) { profileStatus ->
             if (profileStatus.isNullOrEmpty()) return@observe
 
@@ -80,29 +98,7 @@ class ProfileFragment : Fragment() {
             } else {
                 profileStatus
             }
-
             Log.d("ProfileFragment", message)
-
-            viewModel.biodata.observe(viewLifecycleOwner) { biodata ->
-                biodata?.let {
-                    binding.apply {
-                        tvUsername.text = it.name
-                        tvLocation.text = it.location
-                        tvDescription.text = "IT TEAM FOUNDIE"
-                        tvFollowed.text = "Followed: 7"
-                        tvFollowers.text = "Followers: 1000000"
-                        val glide = Glide.with(this@ProfileFragment)
-                        glide.load(it.profileImageUrl)
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .skipMemoryCache(true)
-                            .into(ivUser)
-                        glide.load(it.coverImageUrl)
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .skipMemoryCache(true)
-                            .into(ivBackgroundUser)
-                    }
-                }
-            }
         }
 
         binding.ivEditProfile.setOnClickListener{
@@ -114,10 +110,35 @@ class ProfileFragment : Fragment() {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
+//   private fun ImageView.loadImage(url: String) {
+//       Glide.with(this)
+//           .load(url)
+//           .diskCacheStrategy(DiskCacheStrategy.NONE)
+//           .skipMemoryCache(true)
+//           .into(this)
+//   }
+
+    fun ImageView.loadImage(url: String?) {
+        url?.let {
+            Picasso.get().load(it).into(this)
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_profile, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_settings -> {
+                replaceFragment(SettingFragment())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
     private fun replaceFragment(fragment: Fragment) {
         parentFragmentManager.beginTransaction()

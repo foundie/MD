@@ -3,6 +3,7 @@ package com.foundie.id.ui.profile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.foundie.id.data.local.repository.MainRepository
+import com.foundie.id.data.local.response.ProductData
 import com.foundie.id.data.local.response.User
 import okhttp3.MultipartBody
 
@@ -23,7 +24,7 @@ class ProfileViewModel(private val mainRepository: MainRepository) : ViewModel()
         }
     }
 
-    val biodata: LiveData<User> = mainRepository.biodata
+    val biodata:  LiveData<User> = mainRepository.biodata
 
     fun getBiodata(token: String) {
         mainRepository.getBiodata(token)

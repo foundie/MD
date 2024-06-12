@@ -9,6 +9,7 @@ import android.os.Looper
 import android.os.Parcelable
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.foundie.id.R
 import com.foundie.id.viewmodel.SignUpViewModelFactory
@@ -55,6 +56,10 @@ class SignUpActivity : ThemeActivity() {
             tvSignInNow.setOnClickListener {
                 startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
             }
+        }
+
+        viewModel.isLoadingRegister.observe(this) {
+            showLoading(it)
         }
 
     viewModel.registerStatus.observe(this) { registerStatus ->
@@ -134,6 +139,10 @@ class SignUpActivity : ThemeActivity() {
         } else {
             vibrator.vibrate(500)
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {

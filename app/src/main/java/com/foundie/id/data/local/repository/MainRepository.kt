@@ -77,9 +77,9 @@ class MainRepository(private val apiService: ApiService) {
 
 
     private val _biodata = MutableLiveData<User>()
+    val biodata: LiveData<User> = _biodata
     //var product: List<ProductData> = listOf()
     var isError: Boolean = false
-    val biodata: LiveData<User> = _biodata
 
 
     fun register(name: String, email: String, password: String) {
@@ -242,7 +242,7 @@ class MainRepository(private val apiService: ApiService) {
                     isError = false
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        _biodata.postValue(responseBody.user)
+                        _biodata.value = responseBody.user
                     }
                     _message.value = responseBody?.message.toString()
                 } else {
@@ -300,7 +300,6 @@ class MainRepository(private val apiService: ApiService) {
                 if (response.isSuccessful) {
                     isError = false
                     val responseBody = response.body()
-                    Log.d("MainRepository", "Response Body: $responseBody")
                     if (responseBody != null) {
                         _product.value = responseBody.data
                     }

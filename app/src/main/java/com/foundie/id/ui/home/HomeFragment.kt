@@ -2,13 +2,12 @@ package com.foundie.id.ui.home
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.foundie.id.R
 import com.foundie.id.data.adapter.CatalogAdapter
@@ -33,7 +32,10 @@ class HomeFragment : Fragment() {
     private lateinit var runnable: Runnable
     private lateinit var catalogAdapter: CatalogAdapter
     private val viewModel: CatalogViewModel by lazy {
-        ViewModelProvider(this, CatalogViewModelFactory(requireContext()))[CatalogViewModel::class.java]
+        ViewModelProvider(
+            this,
+            CatalogViewModelFactory(requireContext())
+        )[CatalogViewModel::class.java]
     }
 
 
@@ -50,7 +52,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         catalogAdapter = CatalogAdapter()
-        showRecyclerView()
+        val layoutManager = LinearLayoutManager(requireContext())
+        binding.rvListCatalog.layoutManager = layoutManager
+        binding.rvListCatalog.setHasFixedSize(true)
+        binding.rvListCatalog.adapter = catalogAdapter
 
         viewModel.isLoadingProduct.observe(viewLifecycleOwner) {
             showLoading(it)
@@ -110,7 +115,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun showRecyclerView() {
-        val layoutManager = GridLayoutManager(requireContext(), 2)
+        val layoutManager = LinearLayoutManager(requireContext())
         binding.rvListCatalog.layoutManager = layoutManager
         binding.rvListCatalog.setHasFixedSize(true)
         binding.rvListCatalog.adapter = catalogAdapter
@@ -119,24 +124,13 @@ class HomeFragment : Fragment() {
 //                //selectedStory(data)
 //            }
 //        })
-        Log.d("HomeFragment", "RecyclerView is visible: ${binding.rvListCatalog.visibility == View.VISIBLE}")
     }
 
     private fun setProductData(productList: List<ProductData>) {
         if (::catalogAdapter.isInitialized) {
             if (productList.isNotEmpty()) {
-                Log.d("HomeFragment","data tidak kosong")
                 catalogAdapter.setData(productList)
-                Log.d("HomeFragment", "Product data set successfully")
-                // Mencetak data produk ke dalam log
-                for (product in productList) {
-                    Log.d("HomeFragment", "Product ID: ${product.brand}, Name: ${product.variantName}, Price: ${product.season1Name}")
-                }
-            } else {
-                Log.d("HomeFragment", "Product data is empty")
             }
-        } else {
-            Log.e("HomeFragment", "CatalogAdapter is not initialized")
         }
     }
 
@@ -150,6 +144,7 @@ class HomeFragment : Fragment() {
         handler.removeCallbacks(runnable)
         _binding = null
     }
+}
 
 //    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 //        return when (item.itemId) {
@@ -160,4 +155,3 @@ class HomeFragment : Fragment() {
 //            else -> super.onOptionsItemSelected(item)
 //        }
 //    }
-}
