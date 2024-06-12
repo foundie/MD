@@ -25,6 +25,7 @@ import com.foundie.id.ui.login.dataStore
 import com.foundie.id.ui.navigation.FragmentActivity
 import com.foundie.id.ui.profile.ProfileFragment
 import com.foundie.id.ui.profile.ProfilePagerAdapter
+
 import com.foundie.id.ui.profile.ProfileViewModel
 import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
