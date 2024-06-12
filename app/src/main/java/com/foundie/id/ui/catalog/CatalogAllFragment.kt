@@ -1,16 +1,19 @@
 package com.foundie.id.ui.catalog
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.foundie.id.data.adapter.CatalogAdapter
 import com.foundie.id.data.local.response.ProductData
 import com.foundie.id.databinding.FragmentCatalogAllBinding
 import com.foundie.id.viewmodel.CatalogViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
 class  CatalogAllFragment : Fragment() {
     private var _binding: FragmentCatalogAllBinding? = null
@@ -36,28 +39,30 @@ class  CatalogAllFragment : Fragment() {
         adapter = CatalogAdapter()
         showRecyclerView()
 
-        viewModel.getProduct()
         viewModel.isLoadingProduct.observe(viewLifecycleOwner) {
             showLoading(it)
         }
+
+        viewModel.product.observe(viewLifecycleOwner) { productList ->
+            setProductData(productList)
+        }
+        viewModel.getProduct()
 
         viewModel.productStatus.observe(viewLifecycleOwner) { productStatus ->
             val isError = viewModel.isErrorProduct
 
             if (isError && !productStatus.isNullOrEmpty()) {
                 binding.rvListCatalog.visibility = View.VISIBLE
-                setProductData(viewModel.product)
-//                Snackbar.make(binding.root, productStatus, Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, productStatus, Snackbar.LENGTH_SHORT).show()
 
             } else if (!isError && !productStatus.isNullOrEmpty()) {
                 binding.rvListCatalog.visibility = View.VISIBLE
-                setProductData(viewModel.product)
             }
         }
     }
 
     private fun showRecyclerView() {
-        val layoutManager = LinearLayoutManager(requireContext())
+        val layoutManager = GridLayoutManager(requireContext(), 2)
         binding.rvListCatalog.layoutManager = layoutManager
         binding.rvListCatalog.setHasFixedSize(true)
         binding.rvListCatalog.adapter = adapter
@@ -68,17 +73,21 @@ class  CatalogAllFragment : Fragment() {
 //        })
     }
 
-    private fun setProductData(ProductList: List<ProductData>) {
+    private fun setProductData(productList: List<ProductData>) {
         if (::adapter.isInitialized) {
-            if (ProductList.isNotEmpty()) {
-//                binding.tvNotfound.visibility = View.GONE
-//                binding.imgNotfound.visibility = View.GONE
-                adapter.submitList(ProductList)
+            if (productList.isNotEmpty()) {
+                Log.d("HomeFragment","data tidak kosong")
+                adapter.setData(productList)
+                Log.d("HomeFragment", "Product data set successfully")
+                // Mencetak data produk ke dalam log
+                for (product in productList) {
+                    Log.d("HomeFragment", "Product ID: ${product.brand}, Name: ${product.variantName}, Price: ${product.season1Name}")
+                }
             } else {
-//                binding.rvStory.visibility = View.GONE
-//                binding.tvNotfound.visibility = View.VISIBLE
-//                binding.imgNotfound.visibility = View.VISIBLE
+                Log.d("HomeFragment", "Product data is empty")
             }
+        } else {
+            Log.e("HomeFragment", "CatalogAdapter is not initialized")
         }
     }
 

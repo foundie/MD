@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.foundie.id.R
 import com.foundie.id.data.adapter.CatalogAdapter
@@ -21,7 +20,7 @@ import com.foundie.id.ui.catalog.CatalogViewModel
 import com.foundie.id.viewmodel.CatalogViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
-class FragmentHome : Fragment() {
+class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!

@@ -1,6 +1,7 @@
 package com.foundie.id.data.local.repository
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.foundie.id.data.local.response.AddPasswordResponse
@@ -66,15 +67,19 @@ class MainRepository(private val apiService: ApiService) {
     var isErroreditBiodata: Boolean = false
 
 
+    private val _product = MutableLiveData<List<ProductData>>()
+    val product: LiveData<List<ProductData>> = _product
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> = _message
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
-    private val _biodata = MutableLiveData<User>()
-    val biodata: LiveData<User> = _biodata
 
-    var product: List<ProductData> = listOf()
+
+
+    private val _biodata = MutableLiveData<User>()
+    //var product: List<ProductData> = listOf()
     var isError: Boolean = false
+    val biodata: LiveData<User> = _biodata
 
 
     fun register(name: String, email: String, password: String) {
@@ -288,18 +293,18 @@ class MainRepository(private val apiService: ApiService) {
 
     fun getProduct() {
         _isLoading.value = true
-        val api = ApiConfig.getApiService().getProduct()
+        val api = ApiConfig.getApiService2().getProduct()
         api.enqueue(object : retrofit2.Callback<ProductResponse> {
             override fun onResponse(call: Call<ProductResponse>, response: Response<ProductResponse>) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     isError = false
                     val responseBody = response.body()
+                    Log.d("MainRepository", "Response Body: $responseBody")
                     if (responseBody != null) {
-                        product = responseBody.data
+                        _product.value = responseBody.data
                     }
                     _message.value = responseBody?.message.toString()
-
                 } else {
                     isError = true
                     _message.value = response.message()

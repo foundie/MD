@@ -1,13 +1,17 @@
 package com.foundie.id.ui.profile.profile_edit
 
+import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -36,6 +40,11 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class ProfileEditFragment : Fragment() {
 
@@ -44,6 +53,12 @@ class ProfileEditFragment : Fragment() {
     private lateinit var prefen: SettingsPreferences
     private lateinit var token: String
     private var currentImageUri: Uri? = null
+    private var getFileUriStory: File? = null
+    private lateinit var fileImage: File
+    private val timeStamp: String = SimpleDateFormat(
+        FILENAME_FORMAT,
+        Locale.US
+    ).format(System.currentTimeMillis())
     private val viewModel: ProfileViewModel by lazy {
         ViewModelProvider(
             this,
@@ -56,6 +71,9 @@ class ProfileEditFragment : Fragment() {
         if (uri != null) {
             this.currentImageUri = uri
             binding.ivBackgroundProfile.setImageURI(null)
+            val myFile = uriToFile(uri,requireContext())
+            getFileUriStory = myFile
+            showImage()
         } else {
             Snackbar.make(
                 binding.root, getString(R.string.IMAGE_SHOW_FAILED), Snackbar.LENGTH_SHORT
@@ -76,7 +94,7 @@ class ProfileEditFragment : Fragment() {
         prefen = SettingsPreferences.getInstance(requireContext().dataStore)
 
         (activity as? AppCompatActivity)?.supportActionBar?.elevation = 0f
-
+        btnClick()
         val authViewModel =
             ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
         authViewModel.getUserLoginToken().observe(viewLifecycleOwner) {
@@ -88,8 +106,8 @@ class ProfileEditFragment : Fragment() {
             showLoading(it)
         }
 
-        viewModel.editprofileStatus.observe(this) { editprofileStatus ->
-            if (!editprofileStatus.isNullOrEmpty() && editprofileStatus == "Story created successfully") {
+        viewModel.editprofileStatus.observe(viewLifecycleOwner) { editprofileStatus ->
+            if (!editprofileStatus.isNullOrEmpty() && editprofileStatus == "Biodata updated successfully") {
                 Snackbar.make(
                     binding.root, getString(R.string.IMAGE_UPLOAD_SUCCESS), Snackbar.LENGTH_SHORT
                 ).show()
@@ -107,21 +125,6 @@ class ProfileEditFragment : Fragment() {
     private fun btnClick() {
         binding.apply {
             btnSave.setOnClickListener {
-
-                if (requireActivity().currentImageUri == null) {
-                    Snackbar.make(
-                        binding.root, getString(R.string.IMAGE_UPLOAD_EMPTY), Snackbar.LENGTH_SHORT
-                    ).show()
-                    return@setOnClickListener
-                }
-
-                val name = binding.tvName.text.toString().trim()
-
-                if (caption.isEmpty()) {
-                    binding.tvCaption.error = resources.getString(R.string.CAPTION_UPLOAD_EMPTY)
-                    return@setOnClickListener
-                }
-
                 lifecycleScope.launch {
                     withContext(Dispatchers.IO) {
                         val file = getFileUriStory as File
@@ -130,7 +133,7 @@ class ProfileEditFragment : Fragment() {
                         var compressedFileSize = file.length()
                         while (compressedFileSize > 1 * 1024 * 1024) {
                             compressedFile = withContext(Dispatchers.Default) {
-                                Compressor.compress(applicationContext, file)
+                                Compressor.compress(requireContext().applicationContext , file)
                             }
                             compressedFileSize = compressedFile.length()
                         }
@@ -141,22 +144,67 @@ class ProfileEditFragment : Fragment() {
 
                     val imageCompressFile =
                         fileImage.asRequestBody("image/jpeg".toMediaTypeOrNull())
-                    val image: MultipartBody.Part = MultipartBody.Part.createFormData(
-                        "photo", fileImage.name, imageCompressFile
+                    val profile: MultipartBody.Part = MultipartBody.Part.createFormData(
+                        "photoProfile", fileImage.name, imageCompressFile
                     )
-                    val caption = caption.toRequestBody("text/plain".toMediaType())
-                    viewModel.uploadStory(
-                        token, image, caption, latlng?.latitude, latlng?.longitude
+                    val cover: MultipartBody.Part = MultipartBody.Part.createFormData(
+                        "photoCover", fileImage.name, imageCompressFile
                     )
+                    val name = binding.tvName.text.toString().trim()
+                    val phone = binding.tvName.text.toString().trim()
+                    val location = binding.tvName.text.toString().trim()
+                    val gender = binding.tvName.text.toString().trim()
+
+                    viewModel.editBiodata(token, cover, profile, name, phone, location, gender)
                 }
             }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+                ivBackgroundProfile.setOnClickListener {
+                    startGallery()
+                }
+        }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun startGallery() {
+        launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
-}
+
+    private fun createCustomTempFile(context: Context): File {
+        val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(timeStamp, ".jpg", storageDir)
+    }
+
+    private fun uriToFile(selectedImg: Uri, context: Context): File {
+        val contentResolver: ContentResolver = context.contentResolver
+        val myFile = createCustomTempFile(context)
+
+        val inputStream = contentResolver.openInputStream(selectedImg) as InputStream
+        val outputStream: OutputStream = FileOutputStream(myFile)
+        val buf = ByteArray(1024)
+        var len: Int
+        while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
+        outputStream.close()
+        inputStream.close()
+
+        return myFile
+    }
+
+    private fun showImage() {
+        this.currentImageUri?.let {
+            binding.ivBackgroundProfile.setImageURI(it)
+        }
+    }
+
+        private fun showLoading(isLoading: Boolean) {
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+        override fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
+        }
+
+    companion object {
+        const val FILENAME_FORMAT = "MMddyyyy"
+    }
+
+    }
