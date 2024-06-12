@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.foundie.id.data.local.response.AddPasswordResponse
+import com.foundie.id.data.local.response.EditProfileResponse
 import com.foundie.id.data.local.response.LoginGoogleResponse
 import com.foundie.id.data.local.response.LoginResponse
 import com.foundie.id.data.local.response.PredictResponse
+import com.foundie.id.data.local.response.ProductData
+import com.foundie.id.data.local.response.ProductResponse
 import com.foundie.id.data.local.response.RegisterResponse
 import com.foundie.id.data.local.response.User
 import com.foundie.id.data.local.response.UserResponse
@@ -56,11 +59,21 @@ class MainRepository(private val apiService: ApiService) {
     val predict: LiveData<PredictResponse> = _makeupStyle
     var isErrorpredict: Boolean = false
 
-    var stories: List<User> = listOf()
+    private val _editbiodatastatus = MutableLiveData<String>()
+    val editbiodatastatus: LiveData<String> = _editbiodatastatus
+    private val _isLoadingeditBiodata = MutableLiveData<Boolean>()
+    val isLoadingeditBiodata: LiveData<Boolean> = _isLoadingeditBiodata
+    var isErroreditBiodata: Boolean = false
+
+
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> = _message
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
+    private val _biodata = MutableLiveData<User>()
+    val biodata: LiveData<User> = _biodata
+
+    var product: List<ProductData> = listOf()
     var isError: Boolean = false
 
 
@@ -224,7 +237,66 @@ class MainRepository(private val apiService: ApiService) {
                     isError = false
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        stories = responseBody.user
+                        _biodata.postValue(responseBody.user)
+                    }
+                    _message.value = responseBody?.message.toString()
+                } else {
+                    isError = true
+                    _message.value = response.message()
+                }
+            }
+
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                _isLoading.value = false
+                isError = true
+                _message.value = t.message.toString()
+            }
+        })
+    }
+
+    fun editBiodata(token: String, coverImage: MultipartBody.Part, profileImage: MultipartBody.Part, name: String, phone: String, location: String, gender: String) {
+        _isLoadingeditBiodata.value = true
+        val service = ApiConfig.getApiService().editBiodata(
+            "Bearer $token", coverImage, profileImage,name,phone,location,gender
+        )
+        service.enqueue(object : Callback<EditProfileResponse> {
+            override fun onResponse(
+                call: Call<EditProfileResponse>,
+                response: Response<EditProfileResponse>
+            ) {
+                _isLoadingeditBiodata.value = false
+                if (response.isSuccessful) {
+                    isErroreditBiodata = false
+                    val responseBody = response.body()
+                    if (responseBody != null && !responseBody.error) {
+                        _editbiodatastatus.value = responseBody.message
+                    }
+                } else {
+                    isErroreditBiodata = true
+                    _editbiodatastatus.value = response.message()
+
+                }
+            }
+
+            override fun onFailure(call: Call<EditProfileResponse>, t: Throwable) {
+                _isLoadingeditBiodata.value = false
+                isErroreditBiodata = true
+                _editbiodatastatus.value = t.message
+            }
+        })
+    }
+
+    fun getProduct() {
+        _isLoading.value = true
+        val api = ApiConfig.getApiService().getProduct()
+        api.enqueue(object : retrofit2.Callback<ProductResponse> {
+            override fun onResponse(call: Call<ProductResponse>, response: Response<ProductResponse>) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    isError = false
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        product = responseBody.data
                     }
                     _message.value = responseBody?.message.toString()
 
@@ -234,7 +306,7 @@ class MainRepository(private val apiService: ApiService) {
                 }
             }
 
-            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+            override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
                 _isLoading.value = false
                 isError = true
                 _message.value = t.message.toString()

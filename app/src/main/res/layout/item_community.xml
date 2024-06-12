@@ -28,7 +28,7 @@
             tools:src="@tools:sample/avatars" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_community"
+            android:id="@+id/iv_user"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="8dp"
@@ -61,7 +61,7 @@
             tools:text="@string/total_members" />
 
         <TextView
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_save"
             style="@style/TextContent.BodyXS"
             android:layout_width="48dp"
             android:layout_marginStart="12dp"

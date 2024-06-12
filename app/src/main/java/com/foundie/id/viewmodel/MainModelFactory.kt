@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.foundie.id.di.Injection
+import com.foundie.id.ui.catalog.CatalogViewModel
 import com.foundie.id.ui.password.PassViewModel
 import com.foundie.id.ui.login.LoginViewModel
 import com.foundie.id.ui.login.VerifyViewModel
+import com.foundie.id.ui.profile.ProfileViewModel
 import com.foundie.id.ui.signup.SignUpViewModel
 
 class SignUpViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
@@ -44,6 +46,26 @@ class PassViewModelFactory(private val context: Context) : ViewModelProvider.Fac
         if (modelClass.isAssignableFrom(PassViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return PassViewModel(Injection.provideRepository(context)) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+
+class CatalogViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(CatalogViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return CatalogViewModel(Injection.provideRepository(context)) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+
+class ProfileViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return ProfileViewModel(Injection.provideRepository(context)) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

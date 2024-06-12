@@ -90,7 +90,11 @@
     <string name="ERROR_EDITEXT_EMPTY">Please fill in all fields correctly</string>
     <string name="ERROR_LOGIN_GOOGLE">An error occurred while trying to log in. Please try again</string>
     <string name="ERROR_AGREEMENT_NOT_CHECKED">You must agree to the terms and conditions before registering</string>
+    <string name="ERROR_UNAUTHORIZED">Sorry Your Account Unauthorized</string>
     <string name="SUCCESS_LOGIN_GOOGLE">Successfully logged in with Google</string>
+    <string name="IMAGE_SHOW_FAILED">Show Image failed to initialize. See error logs for details</string>
+    <string name="IMAGE_CAPTURE_FAILED">Capture Image failed to initialize. See error logs for details</string>
+    <string name="IMAGE_UPLOAD_SUCCESS">Biodata Updated Successfully</string>
     <string name="makeup">MakeUp</string>
     <string name="analysis">Analysis</string>
     <string name="color">Color</string>
@@ -116,23 +120,20 @@
     <string name="title">Title</string>
     <string name="description">Description</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="all">All</string>
     <string name="joined">Joined</string>
     <string name="popular">Popular</string>
     <string name="you_have_not_joined_any_communities_yet">You have not joined any communities yet</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="post_title">Post Title</string>
     <string name="post_description">post description</string>
     <string name="username">Username</string>
 
-    <string name="gergous">Hi! Gergous</string>
     <string name="catalog">Catalog</string>
     <string name="community">Community</string>
 
     <string name="search_hint">Search...</string>
-    <string name="location">location</string>
+    <string name="location">Location</string>
     <string name="input_your_community_name">Input your community name</string>
     <string name="input_your_community_s_description">Input your community\'s description</string>
     <string name="community_s_description">Community\'s Description</string>

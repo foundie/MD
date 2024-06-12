@@ -1,6 +1,7 @@
 package com.foundie.id.data.local.retrofit
 
 import com.foundie.id.data.local.response.AddPasswordResponse
+import com.foundie.id.data.local.response.EditProfileResponse
 import com.foundie.id.data.local.response.LoginGoogleResponse
 import com.foundie.id.data.local.response.LoginResponse
 import com.foundie.id.data.local.response.PredictResponse
@@ -8,6 +9,7 @@ import com.foundie.id.data.local.response.ProductResponse
 import com.foundie.id.data.local.response.RegisterResponse
 import com.foundie.id.data.local.response.UserResponse
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -45,7 +47,7 @@ interface ApiService {
     ): Call<LoginGoogleResponse>
 
     // Set Password Login Google
-    @POST("/biodata/add-password")
+    @POST("biodata/add-password")
     @FormUrlEncoded
     fun setPassword(
         @Header("Authorization") token: String,
@@ -54,12 +56,24 @@ interface ApiService {
     ): Call<AddPasswordResponse>
 
     // Get Biodata User
-    @GET("/biodata/me")
+    @GET("biodata/me")
     fun getBiodata(
         @Header("Authorization") token: String,
     ): Call<UserResponse>
 
-    // Get Biodata
+    @Multipart
+    @POST("biodata/add")
+    fun editBiodata(
+        @Header("Authorization") token: String,
+        @Part coverImage: MultipartBody.Part,
+        @Part profileImage: MultipartBody.Part,
+        @Part("name") name: String?,
+        @Part("phone") phone: String?,
+        @Part("location") location: String?,
+        @Part("gender") gender: String?,
+    ): Call<EditProfileResponse>
+
+    // Get Products
     @GET("products")
     fun getProduct(
     ): Call<ProductResponse>

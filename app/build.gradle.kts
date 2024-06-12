@@ -23,7 +23,7 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "BASE_URL", "\"http://34.36.174.255/\"")
+        buildConfigField("String", "BASE_URL", "\"https://foundie-backend-dev-b3pq7ueuta-uc.a.run.app/\"")
     }
 
     buildTypes {

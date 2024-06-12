@@ -5,56 +5,84 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.foundie.id.R
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.foundie.id.data.adapter.CatalogAdapter
+import com.foundie.id.data.local.response.ProductData
+import com.foundie.id.databinding.FragmentCatalogAllBinding
+import com.foundie.id.viewmodel.CatalogViewModelFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CatalogAllFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class  CatalogAllFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentCatalogAllBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private lateinit var adapter: CatalogAdapter
+    private val viewModel: CatalogViewModel by lazy {
+        ViewModelProvider(this, CatalogViewModelFactory(requireContext()))[CatalogViewModel::class.java]
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_catalog_all, container, false)
+    ): View {
+        _binding = FragmentCatalogAllBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CatalogAllFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CatalogAllFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        adapter = CatalogAdapter()
+        showRecyclerView()
+
+        viewModel.getProduct()
+        viewModel.isLoadingProduct.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
+        viewModel.productStatus.observe(viewLifecycleOwner) { productStatus ->
+            val isError = viewModel.isErrorProduct
+
+            if (isError && !productStatus.isNullOrEmpty()) {
+                binding.rvListCatalog.visibility = View.VISIBLE
+                setProductData(viewModel.product)
+//                Snackbar.make(binding.root, productStatus, Snackbar.LENGTH_SHORT).show()
+
+            } else if (!isError && !productStatus.isNullOrEmpty()) {
+                binding.rvListCatalog.visibility = View.VISIBLE
+                setProductData(viewModel.product)
             }
+        }
+    }
+
+    private fun showRecyclerView() {
+        val layoutManager = LinearLayoutManager(requireContext())
+        binding.rvListCatalog.layoutManager = layoutManager
+        binding.rvListCatalog.setHasFixedSize(true)
+        binding.rvListCatalog.adapter = adapter
+//        adapter.setOnItemClickCallback(object : CatalogAdapter.OnItemClickCallback {
+//            override fun onItemClicked(data: ProductData) {
+//                //selectedStory(data)
+//            }
+//        })
+    }
+
+    private fun setProductData(ProductList: List<ProductData>) {
+        if (::adapter.isInitialized) {
+            if (ProductList.isNotEmpty()) {
+//                binding.tvNotfound.visibility = View.GONE
+//                binding.imgNotfound.visibility = View.GONE
+                adapter.submitList(ProductList)
+            } else {
+//                binding.rvStory.visibility = View.GONE
+//                binding.tvNotfound.visibility = View.VISIBLE
+//                binding.imgNotfound.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

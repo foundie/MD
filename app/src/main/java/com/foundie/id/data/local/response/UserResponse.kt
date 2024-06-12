@@ -9,7 +9,7 @@ data class UserResponse(
     val message: String,
 
     @field:SerializedName("user")
-    val user: List<User>,
+    val user: User,
 
     @field:SerializedName("error")
     val error: Boolean

@@ -32,11 +32,6 @@ class SignUpActivity : ThemeActivity() {
         setContentView(binding.root)
 
         setupUI()
-
-//        val userDetail = intent.getStringExtra(EXTRA_DETAIL_USER)
-//        if (userDetail != null) {
-//            binding.etEmailSignUp.setText(userDetail)
-//        }
     }
 
     private fun setupUI() {

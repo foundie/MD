@@ -16,7 +16,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/iv_background_community"
+                android:id="@+id/iv_background_user"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:scaleType="centerCrop"
@@ -27,7 +27,7 @@
                 tools:src="@tools:sample/avatars" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img_community"
+                android:id="@+id/iv_user"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="32dp"
@@ -46,7 +46,7 @@
                 android:src="@drawable/ic_button_share"
 
                 app:layout_constraintEnd_toStartOf="@+id/tv_join"
-                app:layout_constraintTop_toBottomOf="@+id/img_community" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_user" />
 
             <TextView
                 android:id="@+id/tv_join"
@@ -61,7 +61,7 @@
                 android:textColor="@color/backgroundLayout"
 
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img_community" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_user" />
 
             <TextView
                 android:id="@+id/tv_community_name"

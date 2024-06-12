@@ -1,19 +1,25 @@
 package com.foundie.id.data.local.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 data class ProductResponse(
     @field:SerializedName("error")
     val error: Boolean,
 
     @field:SerializedName("status")
-    val status: String,
+    val message: String,
 
     @field:SerializedName("data")
-    val data: ProductData
+    val data: List<ProductData>
 )
 
+@Parcelize
 data class ProductData(
+    @field:SerializedName("Image")
+    val image: String,
+
     @field:SerializedName("Brand")
     val brand: String,
 
@@ -52,4 +58,4 @@ data class ProductData(
 
     @field:SerializedName("Product URL")
     val productURL: String
-)
+) : Parcelable

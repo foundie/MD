@@ -1,6 +1,7 @@
 package com.foundie.id.ui.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,14 +10,32 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.foundie.id.R
 import com.foundie.id.databinding.FragmentProfileBinding
+import com.foundie.id.settings.SettingsPreferences
+import com.foundie.id.ui.login.dataStore
+import com.foundie.id.ui.profile.profile_edit.ProfileEditFragment
+import com.foundie.id.viewmodel.AuthModelFactory
+import com.foundie.id.viewmodel.AuthViewModel
+import com.foundie.id.viewmodel.ProfileViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+    private lateinit var prefen: SettingsPreferences
+    private lateinit var token: String
+    private val viewModel: ProfileViewModel by lazy {
+        ViewModelProvider(
+            this,
+            ProfileViewModelFactory(requireContext())
+        )[ProfileViewModel::class.java]
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +49,7 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        prefen = SettingsPreferences.getInstance(requireContext().dataStore)
 
         val profilePagerAdapter = ProfilePagerAdapter(requireActivity())
         binding.viewPager.adapter = profilePagerAdapter
@@ -39,11 +59,70 @@ class ProfileFragment : Fragment() {
         }.attach()
 
         (activity as? AppCompatActivity)?.supportActionBar?.elevation = 0f
+
+        val authViewModel =
+            ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
+        authViewModel.getUserLoginToken().observe(viewLifecycleOwner) {
+            token = it
+            viewModel.getBiodata(token)
+        }
+
+        viewModel.isLoadingProfile.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
+        viewModel.profileStatus.observe(viewLifecycleOwner) { profileStatus ->
+            if (profileStatus.isNullOrEmpty()) return@observe
+
+            val isError = viewModel.isErrorProfile
+            val message = if (isError && profileStatus == "Unauthorized") {
+                getString(R.string.ERROR_UNAUTHORIZED)
+            } else {
+                profileStatus
+            }
+
+            Log.d("ProfileFragment", message)
+
+            viewModel.biodata.observe(viewLifecycleOwner) { biodata ->
+                biodata?.let {
+                    binding.apply {
+                        tvUsername.text = it.name
+                        tvLocation.text = it.location
+                        tvDescription.text = "IT TEAM FOUNDIE"
+                        tvFollowed.text = "Followed: 7"
+                        tvFollowers.text = "Followers: 1000000"
+                        val glide = Glide.with(this@ProfileFragment)
+                        glide.load(it.profileImageUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
+                            .into(ivUser)
+                        glide.load(it.coverImageUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
+                            .into(ivBackgroundUser)
+                    }
+                }
+            }
+        }
+
+        binding.ivEditProfile.setOnClickListener{
+            replaceFragment(ProfileEditFragment())
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_profile, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout, fragment)
+            .commit()
     }
 
     override fun onDestroyView() {
