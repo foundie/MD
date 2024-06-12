@@ -206,5 +206,4 @@ class ProfileEditFragment : Fragment() {
     companion object {
         const val FILENAME_FORMAT = "MMddyyyy"
     }
-
-    }
+}
