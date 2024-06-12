@@ -67,10 +67,10 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Part coverImage: MultipartBody.Part,
         @Part profileImage: MultipartBody.Part,
-        @Part("name") name: String?,
-        @Part("phone") phone: String?,
-        @Part("location") location: String?,
-        @Part("gender") gender: String?,
+        @Part("name") name: RequestBody,
+        @Part("phone") phone: RequestBody,
+        @Part("location") location: RequestBody,
+        @Part("gender") gender: RequestBody,
     ): Call<EditProfileResponse>
 
     // Get Products

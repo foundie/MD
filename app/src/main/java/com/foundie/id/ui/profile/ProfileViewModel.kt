@@ -6,6 +6,7 @@ import com.foundie.id.data.local.repository.MainRepository
 import com.foundie.id.data.local.response.ProductData
 import com.foundie.id.data.local.response.User
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class ProfileViewModel(private val mainRepository: MainRepository) : ViewModel() {
 
@@ -34,10 +35,10 @@ class ProfileViewModel(private val mainRepository: MainRepository) : ViewModel()
         token: String,
         coverImage: MultipartBody.Part,
         profileImage: MultipartBody.Part,
-        name: String,
-        phone: String,
-        location: String,
-        gender: String,
+        name: RequestBody,
+        phone:RequestBody,
+        location: RequestBody,
+        gender: RequestBody,
     ) {
         mainRepository.editBiodata(token, coverImage, profileImage , name, phone, location, gender)
     }

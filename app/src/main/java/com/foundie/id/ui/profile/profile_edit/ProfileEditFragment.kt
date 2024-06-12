@@ -39,9 +39,11 @@ import id.zelory.compressor.Compressor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -141,6 +143,11 @@ class ProfileEditFragment : Fragment() {
     private fun btnClick() {
         binding.apply {
             btnSave.setOnClickListener {
+                val name = binding.etName.text.toString().trim()
+                val phone = binding.etEmail.text.toString().trim()
+                val location = binding.etLocation.text.toString().trim()
+                val gender = binding.etDescriptionProfile.text.toString().trim()
+
                 lifecycleScope.launch {
                     withContext(Dispatchers.IO) {
                         val file = getFileUriStory as File
@@ -165,10 +172,10 @@ class ProfileEditFragment : Fragment() {
                     val cover: MultipartBody.Part = MultipartBody.Part.createFormData(
                         "coverImage", fileImage.name, imageCompressFile
                     )
-                    val name = binding.etName.text.toString().trim()
-                    val phone = binding.etEmail.text.toString().trim()
-                    val location = binding.etLocation.text.toString().trim()
-                    val gender = binding.etDescriptionProfile.text.toString().trim()
+                    val phone = phone.toRequestBody("text/plain".toMediaType())
+                    val location = location.toRequestBody("text/plain".toMediaType())
+                    val gender = gender.toRequestBody("text/plain".toMediaType())
+                    val name = name.toRequestBody("text/plain".toMediaType())
 
                     viewModel.editBiodata(token, cover, profile, name, phone, location, gender)
                 }

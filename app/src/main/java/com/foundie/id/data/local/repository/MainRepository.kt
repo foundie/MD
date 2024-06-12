@@ -18,6 +18,7 @@ import com.foundie.id.data.local.retrofit.ApiService
 import com.foundie.id.settings.wrapEspressoIdlingResource
 import com.foundie.id.data.local.retrofit.ApiConfig
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -259,7 +260,7 @@ class MainRepository(private val apiService: ApiService) {
         })
     }
 
-    fun editBiodata(token: String, coverImage: MultipartBody.Part, profileImage: MultipartBody.Part, name: String, phone: String, location: String, gender: String) {
+    fun editBiodata(token: String, coverImage: MultipartBody.Part, profileImage: MultipartBody.Part, name: RequestBody, phone: RequestBody, location: RequestBody, gender: RequestBody) {
         _isLoadingeditBiodata.value = true
         val service = ApiConfig.getApiService().editBiodata(
             "Bearer $token", coverImage, profileImage,name,phone,location,gender
