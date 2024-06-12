@@ -11,6 +11,10 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -23,20 +27,15 @@ import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.delayTime
 import com.foundie.id.ui.login.dataStore
 import com.foundie.id.ui.navigation.FragmentActivity
-import com.foundie.id.ui.profile.ProfileFragment
-import com.foundie.id.ui.profile.ProfilePagerAdapter
-
 import com.foundie.id.ui.profile.ProfileViewModel
 import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.ProfileViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.tabs.TabLayoutMediator
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -72,7 +71,7 @@ class ProfileEditFragment : Fragment() {
         if (uri != null) {
             this.currentImageUri = uri
             binding.ivBackgroundProfile.setImageURI(null)
-            val myFile = uriToFile(uri,requireContext())
+            val myFile = uriToFile(uri, requireContext())
             getFileUriStory = myFile
             showImage()
         } else {
@@ -82,11 +81,25 @@ class ProfileEditFragment : Fragment() {
         }
     }
 
+    private val items = arrayOf("Male", "Female", "Prefer not to say")
+    private lateinit var autoCompleteTextView: AutoCompleteTextView
+    private lateinit var adapterItems: ArrayAdapter<String>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileEditBinding.inflate(inflater, container, false)
+
+        autoCompleteTextView = binding.actvGender
+        adapterItems = ArrayAdapter(requireContext(), R.layout.item_list, items)
+        autoCompleteTextView.setAdapter(adapterItems)
+
+        autoCompleteTextView.onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
+            val item = parent.getItemAtPosition(position).toString()
+            Toast.makeText(requireContext(), "Selected: $item", Toast.LENGTH_SHORT).show()
+        }
+
         return binding.root
     }
 
@@ -134,13 +147,12 @@ class ProfileEditFragment : Fragment() {
                         var compressedFileSize = file.length()
                         while (compressedFileSize > 1 * 1024 * 1024) {
                             compressedFile = withContext(Dispatchers.Default) {
-                                Compressor.compress(requireContext().applicationContext , file)
+                                Compressor.compress(requireContext().applicationContext, file)
                             }
                             compressedFileSize = compressedFile.length()
                         }
 
                         fileImage = compressedFile ?: file
-
                     }
 
                     val imageCompressFile =
@@ -159,9 +171,9 @@ class ProfileEditFragment : Fragment() {
                     viewModel.editBiodata(token, cover, profile, name, phone, location, gender)
                 }
             }
-                ivBackgroundProfile.setOnClickListener {
-                    startGallery()
-                }
+            ivBackgroundProfile.setOnClickListener {
+                startGallery()
+            }
         }
     }
 
@@ -195,14 +207,15 @@ class ProfileEditFragment : Fragment() {
         }
     }
 
-        private fun showLoading(isLoading: Boolean) {
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        }
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
 
-        override fun onDestroyView() {
-            super.onDestroyView()
-            _binding = null
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as? AppCompatActivity)?.supportActionBar?.show()
+        _binding = null
+    }
 
     companion object {
         const val FILENAME_FORMAT = "MMddyyyy"

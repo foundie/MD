@@ -21,15 +21,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
 
-        <ImageView
-            android:id="@+id/iv_edit_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:src="@drawable/ic_button_edit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_user"
             android:layout_width="60dp"
@@ -40,6 +31,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/iv_edit_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:src="@drawable/ic_button_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_username"
@@ -52,16 +52,6 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_user"
             tools:text="@string/username" />
 
-        <TextView
-            android:id="@+id/tv_description"
-            style="@style/TextContent.BodyS"
-            android:layout_marginTop="8dp"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_username"
-            tools:text="@string/description" />
-
         <LinearLayout
             android:id="@+id/LL_location"
             android:layout_width="wrap_content"
@@ -71,7 +61,7 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_description">
+            app:layout_constraintTop_toBottomOf="@+id/tv_username">
 
             <ImageView
                 android:id="@+id/iv_location"
@@ -83,8 +73,26 @@
                 android:id="@+id/tv_location"
                 style="@style/TextContent.BodyXS"
                 android:layout_marginStart="4dp"
-                tools:text="@string/location" />
+                tools:text="@string/Location" />
 
+            <View
+                android:id="@+id/v_vertical_divider_one"
+                android:layout_width="1dp"
+                android:layout_height="12dp"
+                android:layout_margin="8dp"
+                android:background="?attr/colorAccent" />
+
+            <ImageView
+                android:id="@+id/iv_gender"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_button_gender" />
+
+            <TextView
+                android:id="@+id/tv_gender"
+                style="@style/TextContent.BodyXS"
+                android:layout_marginStart="4dp"
+                tools:text="@string/gender" />
 
         </LinearLayout>
 
@@ -111,7 +119,7 @@
                 tools:text="@string/total_followers" />
 
             <View
-                android:id="@+id/v_vertical_divider"
+                android:id="@+id/v_vertical_divider_two"
                 android:layout_width="1dp"
                 android:layout_height="12dp"
                 android:layout_margin="8dp"

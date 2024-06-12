@@ -43,16 +43,6 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_user"
             tools:text="@string/username" />
 
-        <TextView
-            android:id="@+id/tv_description"
-            style="@style/TextContent.BodyS"
-            android:layout_marginTop="8dp"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_username"
-            tools:text="@string/description" />
-
         <LinearLayout
             android:id="@+id/LL_location"
             android:layout_width="wrap_content"
@@ -62,7 +52,7 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_description">
+            app:layout_constraintTop_toBottomOf="@+id/tv_username">
 
             <ImageView
                 android:id="@+id/iv_location"
@@ -75,6 +65,25 @@
                 style="@style/TextContent.BodyXS"
                 android:layout_marginStart="4dp"
                 tools:text="@string/location" />
+
+            <View
+                android:id="@+id/v_vertical_divider_one"
+                android:layout_width="1dp"
+                android:layout_height="12dp"
+                android:layout_margin="8dp"
+                android:background="?attr/colorAccent" />
+
+            <ImageView
+                android:id="@+id/iv_gender"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_button_gender" />
+
+            <TextView
+                android:id="@+id/tv_gender"
+                style="@style/TextContent.BodyXS"
+                android:layout_marginStart="4dp"
+                tools:text="@string/gender" />
 
         </LinearLayout>
 
@@ -119,53 +128,46 @@
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/v_horizontal_divider"
-            android:layout_width="0dp"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="16dp"
-            android:background="?attr/colorAccent"
-            android:visibility="gone"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/LL_followers"
-            app:layout_constraintWidth_default="spread"
-            app:layout_constraintWidth_percent="1"
-            tools:visibility="visible" />
-
         <TextView
-            android:id="@+id/tv_post"
-            style="@style/TextContent.TextHeading3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="32dp"
+            android:id="@+id/tv_join"
+            style="@style/TextContent.TextHeading5"
             android:layout_marginTop="16dp"
-            android:text="@string/post"
-            android:visibility="gone"
+            android:background="@drawable/ic_background_join"
+            android:paddingLeft="32dp"
+            android:paddingTop="8dp"
+            android:paddingRight="32dp"
+
+            android:paddingBottom="8dp"
+            android:text="@string/join"
+            android:textColor="@color/backgroundLayout"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/v_horizontal_divider"
-            tools:visibility="visible" />
+            app:layout_constraintTop_toBottomOf="@+id/LL_followers" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_list_community"
+        <LinearLayout
+            android:id="@+id/LL_tab"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
 
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_post"
+            app:layout_constraintTop_toBottomOf="@+id/tv_join">
 
-            app:reverseLayout="false"
-            tools:listitem="@layout/item_community_tweet" />
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

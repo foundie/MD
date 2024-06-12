@@ -132,8 +132,8 @@
     <string name="catalog">Catalog</string>
     <string name="community">Community</string>
 
-    <string name="search_hint">Search...</string>
-    <string name="location">Location</string>
+    <string name="search_hint">Search…</string>
+    <string name="Location">Location</string>
     <string name="input_your_community_name">Input your community name</string>
     <string name="input_your_community_s_description">Input your community\'s description</string>
     <string name="community_s_description">Community\'s Description</string>
@@ -152,7 +152,19 @@
     <string name="review">Review</string>
     <string name="you_have_not_write_any_post_yet">you have not write any post yet</string>
     <string name="you_have_not_write_any_review_yet">you have not write any review yet</string>
-    <string name="update">Update...</string>
+    <string name="update">Update…</string>
     <string name="save">Save</string>
+    <string name="gender">gender</string>
+    <string name="Gender">Gender</string>
+    <string name="select_item">Select Item</string>
+    <string name="posts_saved">Posts Saved</string>
+    <string name="products_liked">Products Liked</string>
+    <string name="privacy">Privacy</string>
+    <string name="account">Account</string>
+    <string name="language">Language</string>
+    <string name="theme">Theme</string>
+    <string name="help">Help</string>
+    <string name="about">About</string>
+    <string name="log_out">Log out</string>
 
 </resources>

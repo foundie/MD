@@ -16,6 +16,9 @@
     <color name="info_000">#F5F6FF</color>
     <color name="info_100">#e4e6fe</color>
 
+    <color name="danger_300">#D73131</color>
+    <color name="danger_200">#ED5C5C</color>
+
     <color name="primaryColor">#DC2F91</color>
     <color name="backgroundLayout">#FFFFFF</color>
 </resources>
