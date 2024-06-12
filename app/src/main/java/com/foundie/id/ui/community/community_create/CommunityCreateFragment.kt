@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.foundie.id.databinding.FragmentCommunityCreateBinding
 
@@ -29,6 +30,7 @@ class CommunityCreateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as? AppCompatActivity)?.supportActionBar?.hide()
 
         binding.ivBackgroundCommunity.setOnClickListener {
             imageViewToSet = binding.ivBackgroundCommunity
@@ -57,6 +59,7 @@ class CommunityCreateFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        (activity as? AppCompatActivity)?.supportActionBar?.show()
         _binding = null
     }
 

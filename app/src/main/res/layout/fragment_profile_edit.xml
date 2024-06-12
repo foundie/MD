@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_profileEditFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="24dp"
     tools:context=".ui.profile.profile_edit.ProfileEditFragment">
 
@@ -78,72 +79,15 @@
                 app:layout_constraintWidth_default="spread" />
 
             <TextView
-                android:id="@+id/tv_email"
-                style="@style/TextContent.BodyS"
-                android:layout_marginTop="24dp"
-                android:text="@string/email"
-                android:textStyle="bold"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_name" />
-
-            <EditText
-                android:id="@+id/et_email"
-                style="@style/TextContent.BodyM"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/ic_background_edit_text"
-
-                android:hint="@string/update"
-                android:inputType="text"
-                android:minHeight="48dp"
-                android:padding="12dp"
-
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_email"
-                app:layout_constraintWidth_default="spread" />
-
-            <TextView
-                android:id="@+id/tv_description_profile"
-                style="@style/TextContent.BodyS"
-                android:layout_marginTop="16dp"
-
-                android:text="@string/description"
-                android:textStyle="bold"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_email" />
-
-            <EditText
-                android:id="@+id/et_description_profile"
-                style="@style/TextContent.BodyM"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/ic_background_edit_text"
-
-                android:hint="@string/update"
-                android:inputType="text"
-                android:minHeight="48dp"
-                android:padding="12dp"
-
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_description_profile"
-                app:layout_constraintWidth_default="spread" />
-
-            <TextView
                 android:id="@+id/tv_location"
                 style="@style/TextContent.BodyS"
                 android:layout_marginTop="16dp"
 
-                android:text="@string/location"
+                android:text="@string/Location"
                 android:textStyle="bold"
 
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_description_profile" />
+                app:layout_constraintTop_toBottomOf="@id/et_name" />
 
             <EditText
                 android:id="@+id/et_location"
@@ -163,6 +107,40 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_location"
                 app:layout_constraintWidth_default="spread" />
 
+            <TextView
+                android:id="@+id/tv_gender"
+                style="@style/TextContent.BodyS"
+                android:layout_marginTop="16dp"
+
+                android:text="@string/Gender"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_location" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/TIL_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/select_item"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_gender"
+                app:layout_constraintWidth_default="spread">
+
+                <AutoCompleteTextView
+                    android:id="@+id/actv_gender"
+                    style="@style/TextContent.BodyM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_background_edit_text"
+                    android:inputType="none"
+                    android:padding="12dp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
                 android:id="@+id/btn_login"
                 android:layout_width="0dp"
@@ -173,7 +151,7 @@
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_location"
+                app:layout_constraintTop_toBottomOf="@+id/TIL_gender"
                 app:layout_constraintWidth_default="spread"
                 app:layout_constraintWidth_percent="1" />
 

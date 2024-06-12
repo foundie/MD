@@ -133,6 +133,7 @@
 
     <string name="search_hint">Search...</string>
     <string name="location">location</string>
+    <string name="Location">Location</string>
     <string name="input_your_community_name">Input your community name</string>
     <string name="input_your_community_s_description">Input your community\'s description</string>
     <string name="community_s_description">Community\'s Description</string>
@@ -153,5 +154,8 @@
     <string name="you_have_not_write_any_review_yet">you have not write any review yet</string>
     <string name="update">Update...</string>
     <string name="save">Save</string>
+    <string name="gender">gender</string>
+    <string name="Gender">Gender</string>
+    <string name="select_item">Select Item</string>
 
 </resources>
