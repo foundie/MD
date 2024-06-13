@@ -21,10 +21,21 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
 
+        <ImageView
+            android:id="@+id/iv_hover_user"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/ic_background_profile"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_user"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_marginTop="90dp"
 
             app:layout_constraintEnd_toEndOf="parent"
@@ -52,6 +63,16 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_user"
             tools:text="@string/username" />
 
+        <TextView
+            android:id="@+id/tv_description_profile"
+            style="@style/TextContent.BodyS"
+            android:layout_marginTop="12dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_username"
+            tools:text="@string/description" />
+
         <LinearLayout
             android:id="@+id/LL_location"
             android:layout_width="wrap_content"
@@ -61,7 +82,7 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_username">
+            app:layout_constraintTop_toBottomOf="@+id/tv_description_profile">
 
             <ImageView
                 android:id="@+id/iv_location"

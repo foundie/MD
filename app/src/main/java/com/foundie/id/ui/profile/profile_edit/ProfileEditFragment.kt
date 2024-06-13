@@ -1,6 +1,7 @@
 package com.foundie.id.ui.profile.profile_edit
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -64,6 +66,10 @@ class ProfileEditFragment : Fragment() {
     private lateinit var fileImage: File
     private var getFileUri: File? = null
 
+    private val items = listOf("Male", "Female", "Prefer not to say")
+    private lateinit var autoComplete: AutoCompleteTextView
+
+    private lateinit var image : ImageView
 
     private val viewModel: ProfileViewModel by lazy {
         ViewModelProvider(
@@ -134,27 +140,46 @@ class ProfileEditFragment : Fragment() {
             }
         }
 
-    private val items = arrayOf("Male", "Female", "Prefer not to say")
-    private lateinit var autoCompleteTextView: AutoCompleteTextView
-    private lateinit var adapterItems: ArrayAdapter<String>
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileEditBinding.inflate(inflater, container, false)
 
-        autoCompleteTextView = binding.actvGender
-        adapterItems = ArrayAdapter(requireContext(), R.layout.item_list, items)
-        autoCompleteTextView.setAdapter(adapterItems)
+        autoComplete = binding.actvGender
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_list, items)
+        autoComplete.setAdapter(adapter)
 
-        autoCompleteTextView.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, _, position, _ ->
-                val item = parent.getItemAtPosition(position).toString()
-                Toast.makeText(requireContext(), "Selected: $item", Toast.LENGTH_SHORT).show()
-            }
+        autoComplete.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            val itemSelected = parent.getItemAtPosition(position)
+            Toast.makeText(requireContext(), "Selected item: $itemSelected", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.imgBackgroundProfile.setOnClickListener {
+            image = binding.imgBackgroundProfile
+            uploadImage(image)
+        }
+
+        binding.ivBackgroundProfile.setOnClickListener {
+            image = binding.ivBackgroundProfile
+            uploadImage(image)
+        }
 
         return binding.root
+    }
+
+    private fun uploadImage(image: ImageView) {
+        val intent = Intent()
+        intent.action = Intent.ACTION_GET_CONTENT
+        intent.type = "image/*"
+        startActivityForResult(intent, 1)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 1) {
+            image.setImageURI(data?.data)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -194,7 +219,7 @@ class ProfileEditFragment : Fragment() {
         binding.apply {
             btnSave.setOnClickListener {
                 val name = etName.text.toString().trim()
-                val phone = etEmail.text.toString().trim()
+                val phone = etPhone.text.toString().trim()
                 val location = etLocation.text.toString().trim()
                 val gender = etDescriptionProfile.text.toString().trim()
 
@@ -368,13 +393,13 @@ class ProfileEditFragment : Fragment() {
 //                            REQUEST_GALLERY_PERMISSION
 //                        )
 //                    } else {
-                        if (isProfile) {
-                            profileGalleryLauncher.launch(PickVisualMediaRequest()) // Launch gallery picker
-                        } else {
-                            coverGalleryLauncher.launch(PickVisualMediaRequest()) // Launch gallery picker
-                        }
+                    if (isProfile) {
+                        profileGalleryLauncher.launch(PickVisualMediaRequest()) // Launch gallery picker
+                    } else {
+                        coverGalleryLauncher.launch(PickVisualMediaRequest()) // Launch gallery picker
                     }
-              //  }
+                }
+                //  }
 
                 options[item] == "Cancel" -> {
                     dialog.dismiss()

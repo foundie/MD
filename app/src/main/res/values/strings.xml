@@ -167,4 +167,8 @@
     <string name="about">About</string>
     <string name="log_out">Log out</string>
 
+    <string name="item_label">Items</string>
+    <string name="todo">TODO</string>
+    <string name="phone_number">Phone Number</string>
+
 </resources>

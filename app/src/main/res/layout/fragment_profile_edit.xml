@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="24dp"
+    android:focusableInTouchMode="true"
     tools:context=".ui.profile.profile_edit.ProfileEditFragment">
 
     <ScrollView
@@ -29,26 +30,78 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginTop="16dp"
-                android:background="?attr/selectableItemBackground"
-                android:onClick="onSelectBackgroundImage"
+                android:background="@drawable/ic_background_edit_profile_bg"
                 android:scaleType="centerCrop"
 
+                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_background_profile_edit_bg"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/ic_background_profile"
+                android:scaleType="centerCrop"
+
+                app:layout_constraintBottom_toBottomOf="@+id/iv_background_profile"
+                app:layout_constraintEnd_toEndOf="@+id/iv_background_profile" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_profile_edit_bg"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/baseline_camera_alt_24"
+
+                app:layout_constraintBottom_toBottomOf="@+id/img_background_profile_edit_bg"
+                app:layout_constraintEnd_toEndOf="@+id/img_background_profile_edit_bg"
+                app:layout_constraintStart_toStartOf="@+id/img_background_profile_edit_bg"
+                app:layout_constraintTop_toTopOf="@+id/img_background_profile_edit_bg" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_background_profile"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginTop="90dp"
+                android:background="@drawable/ic_background_features"
+                android:scaleType="centerCrop"
+
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"
-                tools:src="@tools:sample/avatars" />
+                app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_profile"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="90dp"
-                android:background="?attr/selectableItemBackground"
-                android:onClick="onSelectCommunityImage"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_button_profile_edit"
 
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"
-                tools:src="@tools:sample/avatars" />
+                app:layout_constraintBottom_toBottomOf="@+id/img_background_profile"
+                app:layout_constraintEnd_toEndOf="@+id/img_background_profile"
+                app:layout_constraintStart_toStartOf="@+id/img_background_profile"
+                app:layout_constraintTop_toTopOf="@+id/img_background_profile" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_background_profile_edit"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:background="@drawable/ic_background_profile"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@+id/img_background_profile"
+                app:layout_constraintEnd_toEndOf="@+id/img_background_profile" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_profile_edit"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/baseline_camera_alt_24"
+
+                app:layout_constraintBottom_toBottomOf="@+id/img_background_profile_edit"
+                app:layout_constraintEnd_toEndOf="@+id/img_background_profile_edit"
+                app:layout_constraintStart_toStartOf="@+id/img_background_profile_edit"
+                app:layout_constraintTop_toTopOf="@+id/img_background_profile_edit" />
 
             <TextView
                 android:id="@+id/tv_name"
@@ -58,7 +111,7 @@
                 android:textStyle="bold"
 
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_profile" />
+                app:layout_constraintTop_toBottomOf="@id/img_profile_edit" />
 
             <EditText
                 android:id="@+id/et_name"
@@ -79,17 +132,17 @@
                 app:layout_constraintWidth_default="spread" />
 
             <TextView
-                android:id="@+id/tv_email"
+                android:id="@+id/tv_phone"
                 style="@style/TextContent.BodyS"
                 android:layout_marginTop="24dp"
-                android:text="@string/email"
+                android:text="@string/phone_number"
                 android:textStyle="bold"
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/et_name" />
 
             <EditText
-                android:id="@+id/et_email"
+                android:id="@+id/et_phone"
                 style="@style/TextContent.BodyM"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -97,13 +150,13 @@
                 android:background="@drawable/ic_background_edit_text"
 
                 android:hint="@string/update"
-                android:inputType="text"
+                android:inputType="number"
                 android:minHeight="48dp"
                 android:padding="12dp"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_email"
+                app:layout_constraintTop_toBottomOf="@id/tv_phone"
                 app:layout_constraintWidth_default="spread" />
 
             <ProgressBar
@@ -128,7 +181,7 @@
                 android:textStyle="bold"
 
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_email" />
+                app:layout_constraintTop_toBottomOf="@id/et_phone" />
 
             <EditText
                 android:id="@+id/et_description_profile"
@@ -190,9 +243,9 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/TIL_gender"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/select_item"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -205,6 +258,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_background_edit_text"
+                    android:hint="@string/select_item"
                     android:inputType="none"
                     android:padding="12dp"
                     tools:ignore="TouchTargetSizeCheck" />

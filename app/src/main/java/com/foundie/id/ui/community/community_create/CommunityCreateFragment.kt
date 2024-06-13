@@ -1,8 +1,6 @@
 package com.foundie.id.ui.community.community_create
 
-import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,45 +15,46 @@ class CommunityCreateFragment : Fragment() {
     private var _binding: FragmentCommunityCreateBinding? = null
     private val binding get() = _binding!!
 
-    private val PICK_IMAGE_REQUEST = 1
-    private var imageViewToSet: ImageView? = null
+    private lateinit var image : ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCommunityCreateBinding.inflate(inflater, container, false)
+
+        binding.imgBackgroundCommunity.setOnClickListener {
+            image = binding.imgBackgroundCommunity
+            uploadImage(image)
+        }
+
+        binding.ivBackgroundCommunity.setOnClickListener {
+            image = binding.ivBackgroundCommunity
+            uploadImage(image)
+        }
+
         return binding.root
+    }
+
+    private fun uploadImage(image: ImageView) {
+        val intent = Intent()
+        intent.action = Intent.ACTION_GET_CONTENT
+        intent.type = "image/*"
+        startActivityForResult(intent, 1)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 1) {
+            image.setImageURI(data?.data)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as? AppCompatActivity)?.supportActionBar?.hide()
-
-        binding.ivBackgroundCommunity.setOnClickListener {
-            imageViewToSet = binding.ivBackgroundCommunity
-            openImagePicker()
-        }
-
-        binding.imgCommunity.setOnClickListener {
-            imageViewToSet = binding.imgCommunity
-            openImagePicker()
-        }
     }
 
-    private fun openImagePicker() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
-            val imageUri: Uri? = data?.data
-            imageViewToSet?.setImageURI(imageUri)
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -63,5 +62,4 @@ class CommunityCreateFragment : Fragment() {
         _binding = null
     }
 
-    fun onSelectCommunityImage(view: View) {}
 }
