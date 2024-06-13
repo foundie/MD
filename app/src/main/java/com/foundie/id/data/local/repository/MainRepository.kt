@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.foundie.id.data.local.response.AddPasswordResponse
+import com.foundie.id.data.local.response.CommunityUserResponse
+import com.foundie.id.data.local.response.DataPostItem
 import com.foundie.id.data.local.response.EditProfileResponse
 import com.foundie.id.data.local.response.LoginGoogleResponse
 import com.foundie.id.data.local.response.LoginResponse
@@ -70,6 +72,10 @@ class MainRepository(private val apiService: ApiService) {
 
     private val _product = MutableLiveData<List<ProductData>>()
     val product: LiveData<List<ProductData>> = _product
+
+    private val _postuser = MutableLiveData<List<DataPostItem>>()
+    val postuser: LiveData<List<DataPostItem>> = _postuser
+
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> = _message
     private val _isLoading = MutableLiveData<Boolean>()
@@ -312,6 +318,33 @@ class MainRepository(private val apiService: ApiService) {
             }
 
             override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
+                _isLoading.value = false
+                isError = true
+                _message.value = t.message.toString()
+            }
+        })
+    }
+
+    fun getPostUser(token: String) {
+        _isLoading.value = true
+        val api = ApiConfig.getApiService().getPostUser("Bearer $token")
+        api.enqueue(object : retrofit2.Callback<CommunityUserResponse> {
+            override fun onResponse(call: Call<CommunityUserResponse>, response: Response<CommunityUserResponse>) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    isError = false
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        _postuser.value = responseBody.data
+                    }
+                    _message.value = responseBody?.message.toString()
+                } else {
+                    isError = true
+                    _message.value = response.message()
+                }
+            }
+
+            override fun onFailure(call: Call<CommunityUserResponse>, t: Throwable) {
                 _isLoading.value = false
                 isError = true
                 _message.value = t.message.toString()

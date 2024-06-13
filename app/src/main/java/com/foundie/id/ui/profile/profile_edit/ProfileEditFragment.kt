@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +26,8 @@ import com.foundie.id.R
 import com.foundie.id.databinding.FragmentProfileEditBinding
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.delayTime
-import com.foundie.id.settings.loadImageWithCacheBusting
+import com.foundie.id.settings.delayshortTime
+import com.foundie.id.settings.downloadImageAndSave
 import com.foundie.id.ui.login.dataStore
 import com.foundie.id.ui.profile.ProfileFragment
 import com.foundie.id.ui.profile.ProfileViewModel
@@ -144,7 +144,10 @@ class ProfileEditFragment : Fragment() {
         val adapter = ArrayAdapter(requireContext(), R.layout.item_list, items)
         autoComplete.setAdapter(adapter)
 
-        autoComplete.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, _ -> }
+        autoComplete.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            val selectedGender = items[position]
+            autoComplete.setText(selectedGender)
+        }
 
         return binding.root
     }
@@ -166,24 +169,51 @@ class ProfileEditFragment : Fragment() {
             showLoading(it)
         }
 
+        viewModel.isLoadingProfile.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
         viewModel.biodata.observe(viewLifecycleOwner) { biodata ->
             if (biodata != null) {
-                binding.apply {
-                    etName.setText(biodata.name)
-                    etLocation.setText(biodata.location)
-                    actvGender.setText(biodata.gender)
-                    etDescriptionProfile.setText(biodata.description)
-                    imgProfile.loadImageWithCacheBusting(biodata.profileImageUrl)
-                    ivBackgroundProfile.loadImageWithCacheBusting(biodata.coverImageUrl)
+                lifecycleScope.launch {
+                    try {
+                        val profileImageFile = downloadImageAndSave(requireContext(), biodata.profileImageUrl,"Profile")
+                        val coverImageFile = downloadImageAndSave(requireContext(), biodata.coverImageUrl,"Cover")
+
+                        profileImageFile?.let {
+                            binding.imgProfile.setImageURI(Uri.fromFile(it))
+                            currentProfilePhotoPath = it.absolutePath
+                        }
+
+                        coverImageFile?.let {
+                            binding.ivBackgroundProfile.setImageURI(Uri.fromFile(it))
+                            currentCoverPhotoPath = it.absolutePath
+                        }
+
+                        binding.apply {
+                            etName.setText(biodata.name)
+                            etLocation.setText(biodata.location)
+                            etPhone.setText(biodata.phone)
+                            autoComplete.setText(biodata.gender, false)
+                            etDescriptionProfile.setText(biodata.description)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        Snackbar.make(binding.root,  getString(R.string.ERROR_LOAD_IMAGES), Snackbar.LENGTH_SHORT).show()
+                    }
                 }
             }
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.layoutProfileEditFragment.visibility = View.VISIBLE
+            }, delayshortTime)
         }
+
 
         viewModel.editprofileStatus.observe(viewLifecycleOwner) { editprofileStatus ->
             if (!editprofileStatus.isNullOrEmpty() && editprofileStatus == "Biodata updated successfully") {
                 Snackbar.make(
                     binding.root,
-                    getString(R.string.IMAGE_UPLOAD_SUCCESS),
+                    getString(R.string.BIODATA_UPLOAD_SUCCESS),
                     Snackbar.LENGTH_SHORT
                 ).show()
                 Handler(Looper.getMainLooper()).postDelayed({
@@ -268,13 +298,13 @@ class ProfileEditFragment : Fragment() {
                         } catch (e: IOException) {
                             Snackbar.make(
                                 binding.root,
-                                "Error compressing file",
+                                getString(R.string.ERROR_COMPRESSING_DATA),
                                 Snackbar.LENGTH_SHORT
                             ).show()
                         } catch (e: Exception) {
                             Snackbar.make(
                                 binding.root,
-                                "Error uploading data",
+                                getString(R.string.ERROR_UPLOAD_DATA),
                                 Snackbar.LENGTH_SHORT
                             ).show()
                         }
@@ -282,7 +312,7 @@ class ProfileEditFragment : Fragment() {
                 } else {
                     Snackbar.make(
                         binding.root,
-                        "Please select both profile and cover images",
+                        getString(R.string.ERROR_IMAGE_EMPTY),
                         Snackbar.LENGTH_SHORT
                     ).show()
                 }
@@ -322,9 +352,9 @@ class ProfileEditFragment : Fragment() {
 
                 options[item] == "Choose from Gallery" -> {
                     if (isProfile) {
-                        profileGalleryLauncher.launch(PickVisualMediaRequest()) // Launch gallery picker
+                        profileGalleryLauncher.launch(PickVisualMediaRequest())
                     } else {
-                        coverGalleryLauncher.launch(PickVisualMediaRequest()) // Launch gallery picker
+                        coverGalleryLauncher.launch(PickVisualMediaRequest())
                     }
                 }
                 //  }
@@ -397,7 +427,7 @@ class ProfileEditFragment : Fragment() {
         when (requestCode) {
             REQUEST_CAMERA_PERMISSION -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    dispatchTakePictureIntent(isProfile = true) // Assuming it's for profile, adjust as needed
+                    dispatchTakePictureIntent(isProfile = true)
                 } else {
                     Snackbar.make(binding.root, "Camera permission denied", Snackbar.LENGTH_SHORT)
                         .show()
@@ -406,7 +436,7 @@ class ProfileEditFragment : Fragment() {
 
             REQUEST_GALLERY_PERMISSION -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    profileGalleryLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) // Assuming it's for profile, adjust as needed
+                    profileGalleryLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                 } else {
                     Snackbar.make(binding.root, "Gallery permission denied", Snackbar.LENGTH_SHORT)
                         .show()

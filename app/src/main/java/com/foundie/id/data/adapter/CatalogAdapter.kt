@@ -30,8 +30,6 @@ class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.ListViewHolder>() {
         listCatalog.clear()
         listCatalog.addAll(data)
         diffResult.dispatchUpdatesTo(this)
-        println("Data set to adapter: $data")
-        Log.d("CatalogAdapter", "Data set successfully. Total items: ${listCatalog.size}")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {

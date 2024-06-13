@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Environment
 import android.os.StrictMode
 import android.util.Log
 import android.view.Window
@@ -16,6 +17,7 @@ import id.zelory.compressor.Compressor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
@@ -27,6 +29,7 @@ import java.util.TimeZone
 
 const val SETTINGS_KEY = "settings"
 const val delayTime: Long = 1000
+const val delayshortTime: Long = 300
 const val delayTimeSlider: Long = 2000
 
 fun lightStatusBar(window: Window, isLight: Boolean = true) {
@@ -73,64 +76,92 @@ fun ImageView.loadImageWithCacheBusting(url: String?) {
     }
 }
 
-suspend fun compressFile(context: Context, file: File): File? {
-    var compressedFile: File? = null
-    var compressedFileSize = file.length()
+suspend fun downloadImageAndSave(context: Context, imageUrl: String, fileName: String): File? {
+    return withContext(Dispatchers.IO) {
+        var inputStream: InputStream? = null
+        var outputStream: FileOutputStream? = null
+        var file: File? = null
 
-    if (compressedFileSize > 1 * 1024 * 1024) {
-        compressedFile = withContext(Dispatchers.Default) {
-            Compressor.compress(context, file)
-        }
-    }
-
-    return compressedFile ?: file
-}
-
-    fun convertDateTime(datetime: String?): String {
-        return try {
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-            inputFormat.timeZone = TimeZone.getTimeZone("UTC")
-            val outputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-            outputFormat.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
-
-            val date = inputFormat.parse(datetime.toString())
-            outputFormat.format(date!!)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            ""
-        }
-    }
-
-    fun convertBitmap(context: Context, urlString: String): Bitmap {
-        return try {
-            val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-            StrictMode.setThreadPolicy(policy)
-            val url = URL(urlString)
-            val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+        try {
+            val url = URL(imageUrl)
+            val connection = url.openConnection() as HttpURLConnection
             connection.doInput = true
             connection.connect()
-            val input: InputStream = connection.inputStream
-            BitmapFactory.decodeStream(input)
+            inputStream = connection.inputStream
+
+
+            val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            file = File(storageDir, fileName)
+
+            outputStream = FileOutputStream(file)
+
+            val buffer = ByteArray(4096)
+            var bytesRead: Int
+
+            while (inputStream.read(buffer).also { bytesRead = it } != -1) {
+                outputStream.write(buffer, 0, bytesRead)
+            }
+
+            outputStream.flush()
+            outputStream.close()
+            inputStream.close()
+
         } catch (e: IOException) {
-            BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher_logo)
+            e.printStackTrace()
+        } finally {
+            inputStream?.close()
+            outputStream?.close()
         }
+
+        file
     }
+}
 
-    fun getTimeAgo(time: Long): String {
-        val currentTime = System.currentTimeMillis()
-        val diff = currentTime - time
+fun convertDateTime(datetime: String?): String {
+    return try {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        inputFormat.timeZone = TimeZone.getTimeZone("UTC")
+        val outputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        outputFormat.timeZone = TimeZone.getTimeZone("Asia/Jakarta")
 
-        val minute = 60 * 1000
-        val hour = 60 * minute
-        val day = 24 * hour
-
-        return when {
-            diff < minute -> "just now"
-            diff < 2 * minute -> "a minute ago"
-            diff < 50 * minute -> "${diff / minute} minutes ago"
-            diff < 90 * minute -> "an hour ago"
-            diff < 24 * hour -> "${diff / hour} hours ago"
-            diff < 48 * hour -> "yesterday"
-            else -> "${diff / day} days ago"
-        }
+        val date = inputFormat.parse(datetime.toString())
+        outputFormat.format(date!!)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        ""
     }
+}
+
+fun convertBitmap(context: Context, urlString: String): Bitmap {
+    return try {
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+        val url = URL(urlString)
+        val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+        connection.doInput = true
+        connection.connect()
+        val input: InputStream = connection.inputStream
+        BitmapFactory.decodeStream(input)
+    } catch (e: IOException) {
+        BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher_logo)
+    }
+}
+
+fun getTimeAgo(time: Long): String {
+    val currentTime = System.currentTimeMillis()
+    val diff = currentTime - time
+
+    val minute = 60 * 1000
+    val hour = 60 * minute
+    val day = 24 * hour
+
+    return when {
+        diff < minute -> "just now"
+        diff < 2 * minute -> "a minute ago"
+        diff < 50 * minute -> "${diff / minute} minutes ago"
+        diff < 90 * minute -> "an hour ago"
+        diff < 24 * hour -> "${diff / hour} hours ago"
+        diff < 48 * hour -> "yesterday"
+        else -> "${diff / day} days ago"
+    }
+}

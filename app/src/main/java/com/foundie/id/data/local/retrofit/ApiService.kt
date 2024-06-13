@@ -1,6 +1,7 @@
 package com.foundie.id.data.local.retrofit
 
 import com.foundie.id.data.local.response.AddPasswordResponse
+import com.foundie.id.data.local.response.CommunityUserResponse
 import com.foundie.id.data.local.response.EditProfileResponse
 import com.foundie.id.data.local.response.LoginGoogleResponse
 import com.foundie.id.data.local.response.LoginResponse
@@ -78,6 +79,12 @@ interface ApiService {
     @GET("products")
     fun getProduct(
     ): Call<ProductResponse>
+
+    // Get Post Users
+    @GET("community")
+    fun getPostUser(
+        @Header("Authorization") token: String
+    ): Call<CommunityUserResponse>
 
     @Multipart
     @POST("predict/face")
