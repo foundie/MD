@@ -13,6 +13,7 @@ import androidx.core.util.Pair
 import com.bumptech.glide.Glide
 import com.foundie.id.data.local.response.ProductData
 import com.foundie.id.databinding.ItemCatalogBinding
+import com.foundie.id.settings.loadImageWithCacheBusting
 
 class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.ListViewHolder>() {
 
@@ -58,16 +59,13 @@ class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.ListViewHolder>() {
 
         @SuppressLint("SetTextI18n")
         fun bind(product: ProductData) {
-            Log.d("CatalogAdapter", "Binding product: ${product.productTitle}")
-            binding.tvProductName.text = product.productTitle
-            binding.tvProductCategory.text = product.type
-            binding.tvProductSeasonOne.text = product.season1Name
-            binding.tvProductSeasonTwo.text = product.season2Name
-
-            Glide.with(binding.root)
-                .load(product.image)
-                .into(binding.ivProduct)
-            Log.d("CatalogAdapter", "Item bound: ${product.productTitle}")
+            binding.apply {
+                tvProductName.text = product.productTitle
+                tvProductCategory.text = product.type
+                tvProductSeasonOne.text = product.season1Name
+                tvProductSeasonTwo.text = product.season2Name
+                ivProduct.loadImageWithCacheBusting(product.image)
+            }
 
             itemView.setOnClickListener {
                 //val intent = Intent(itemView.context, StoryDetailActivity::class.java)

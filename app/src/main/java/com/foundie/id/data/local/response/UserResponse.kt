@@ -32,12 +32,15 @@ data class User(
     @field:SerializedName("location")
     val location: String,
 
-    @field:SerializedName("profileImageUrl")
+    @field:SerializedName("profilePictureUrl")
     val profileImageUrl: String,
 
     @field:SerializedName("name")
     val name: String,
 
-    @field:SerializedName("coverImageUrl")
+    @field:SerializedName("description")
+    val description: String,
+
+    @field:SerializedName("coverPictureUrl")
     val coverImageUrl: String
 ) : Parcelable

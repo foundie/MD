@@ -1,8 +1,7 @@
 package com.foundie.id.ui.profile.profile_edit
 
-import android.content.ContentResolver
-import android.content.Context
-import android.content.Intent
+import android.Manifest
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -19,7 +18,9 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.preferences.core.preferencesOf
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -28,7 +29,6 @@ import com.foundie.id.databinding.FragmentProfileEditBinding
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.delayTime
 import com.foundie.id.ui.login.dataStore
-import com.foundie.id.ui.navigation.FragmentActivity
 import com.foundie.id.ui.profile.ProfileFragment
 import com.foundie.id.ui.profile.ProfileViewModel
 import com.foundie.id.viewmodel.AuthModelFactory
@@ -45,11 +45,11 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
+import java.util.UUID
 
 class ProfileEditFragment : Fragment() {
 
@@ -57,35 +57,82 @@ class ProfileEditFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var prefen: SettingsPreferences
     private lateinit var token: String
-    private var currentImageUri: Uri? = null
-    private var getFileUriStory: File? = null
+    private var currentProfilePhotoPath: String? = null
+    private var currentCoverPhotoPath: String? = null
+    private var profileImageUri: Uri? = null
+    private var coverImageUri: Uri? = null
     private lateinit var fileImage: File
-    private val timeStamp: String = SimpleDateFormat(
-        FILENAME_FORMAT,
-        Locale.US
-    ).format(System.currentTimeMillis())
+    private var getFileUri: File? = null
+
+
     private val viewModel: ProfileViewModel by lazy {
         ViewModelProvider(
             this,
             ProfileViewModelFactory(requireContext())
         )[ProfileViewModel::class.java]
     }
-    private val launcherGallery = registerForActivityResult(
-        ActivityResultContracts.PickVisualMedia()
-    ) { uri: Uri? ->
-        if (uri != null) {
-            this.currentImageUri = uri
-            binding.ivBackgroundProfile.setImageURI(null)
-            Log.d("djdjd","$uri")
-            val myFile = convertFile(uri, requireContext())
-            getFileUriStory = myFile
-            showImage()
-        } else {
-            Snackbar.make(
-                binding.root, getString(R.string.IMAGE_SHOW_FAILED), Snackbar.LENGTH_SHORT
-            ).show()
+
+    private val profilePhotoLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success) {
+                currentProfilePhotoPath?.let {
+                    val file = File(it)
+                    binding.imgProfile.setImageURI(Uri.fromFile(file))
+                }
+            } else {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.IMAGE_SHOW_FAILED),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
-    }
+
+    private val coverPhotoLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success) {
+                currentCoverPhotoPath?.let {
+                    val file = File(it)
+                    binding.ivBackgroundProfile.setImageURI(Uri.fromFile(file))
+                }
+            } else {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.IMAGE_SHOW_FAILED),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+    private val profileGalleryLauncher =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
+            uri?.let {
+                binding.imgProfile.setImageURI(it)
+                profileImageUri = it
+                currentProfilePhotoPath = uriToFile(it).absolutePath
+            } ?: run {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.IMAGE_SHOW_FAILED),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+    private val coverGalleryLauncher =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
+            uri?.let {
+                binding.ivBackgroundProfile.setImageURI(it)
+                coverImageUri = it
+                currentCoverPhotoPath = uriToFile(it).absolutePath
+            } ?: run {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.IMAGE_SHOW_FAILED),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        }
 
     private val items = arrayOf("Male", "Female", "Prefer not to say")
     private lateinit var autoCompleteTextView: AutoCompleteTextView
@@ -101,10 +148,11 @@ class ProfileEditFragment : Fragment() {
         adapterItems = ArrayAdapter(requireContext(), R.layout.item_list, items)
         autoCompleteTextView.setAdapter(adapterItems)
 
-        autoCompleteTextView.onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
-            val item = parent.getItemAtPosition(position).toString()
-            Toast.makeText(requireContext(), "Selected: $item", Toast.LENGTH_SHORT).show()
-        }
+        autoCompleteTextView.onItemClickListener =
+            AdapterView.OnItemClickListener { parent, _, position, _ ->
+                val item = parent.getItemAtPosition(position).toString()
+                Toast.makeText(requireContext(), "Selected: $item", Toast.LENGTH_SHORT).show()
+            }
 
         return binding.root
     }
@@ -129,7 +177,9 @@ class ProfileEditFragment : Fragment() {
         viewModel.editprofileStatus.observe(viewLifecycleOwner) { editprofileStatus ->
             if (!editprofileStatus.isNullOrEmpty() && editprofileStatus == "Biodata updated successfully") {
                 Snackbar.make(
-                    binding.root, getString(R.string.IMAGE_UPLOAD_SUCCESS), Snackbar.LENGTH_SHORT
+                    binding.root,
+                    getString(R.string.IMAGE_UPLOAD_SUCCESS),
+                    Snackbar.LENGTH_SHORT
                 ).show()
                 Handler(Looper.getMainLooper()).postDelayed({
                     replaceFragment(ProfileFragment())
@@ -143,80 +193,236 @@ class ProfileEditFragment : Fragment() {
     private fun btnClick() {
         binding.apply {
             btnSave.setOnClickListener {
-                val name = binding.etName.text.toString().trim()
-                val phone = binding.etEmail.text.toString().trim()
-                val location = binding.etLocation.text.toString().trim()
-                val gender = binding.etDescriptionProfile.text.toString().trim()
+                val name = etName.text.toString().trim()
+                val phone = etEmail.text.toString().trim()
+                val location = etLocation.text.toString().trim()
+                val gender = etDescriptionProfile.text.toString().trim()
 
-                lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        val file = getFileUriStory as File
+                // Ensure both paths are valid
+                val profileImagePath = currentProfilePhotoPath
+                val coverImagePath = currentCoverPhotoPath
 
-                        var compressedFile: File? = null
-                        var compressedFileSize = file.length()
-                        while (compressedFileSize > 1 * 1024 * 1024) {
-                            compressedFile = withContext(Dispatchers.Default) {
-                                Compressor.compress(requireContext().applicationContext, file)
+                if (profileImagePath != null && coverImagePath != null) {
+                    lifecycleScope.launch {
+                        try {
+                            // Determine which file to upload (profile or cover)
+                            val profileFile = File(profileImagePath)
+                            val coverFile = File(coverImagePath)
+
+                            // Log file sizes before compression
+                            Log.d(
+                                "Upload",
+                                "Profile file size before compression: ${profileFile.length()} bytes"
+                            )
+                            Log.d(
+                                "Upload",
+                                "Cover file size before compression: ${coverFile.length()} bytes"
+                            )
+
+                            // Compress profile image if necessary
+                            val compressedProfileFile =
+                                if (profileFile.length() > 1 * 1024 * 1024) {
+                                    withContext(Dispatchers.IO) {
+                                        Log.d(
+                                            "Upload",
+                                            "Compressing profile image: ${profileFile.name}"
+                                        )
+                                        Compressor.compress(
+                                            requireContext().applicationContext,
+                                            profileFile
+                                        )
+                                    }
+                                } else {
+                                    profileFile
+                                }
+
+                            // Compress cover image if necessary
+                            val compressedCoverFile = if (coverFile.length() > 1 * 1024 * 1024) {
+                                withContext(Dispatchers.IO) {
+                                    Log.d("Upload", "Compressing cover image: ${coverFile.name}")
+                                    Compressor.compress(
+                                        requireContext().applicationContext,
+                                        coverFile
+                                    )
+                                }
+                            } else {
+                                coverFile
                             }
-                            compressedFileSize = compressedFile.length()
+
+                            // Log file sizes after compression
+                            Log.d(
+                                "Upload",
+                                "Profile file size after compression: ${compressedProfileFile.length()} bytes"
+                            )
+                            Log.d(
+                                "Upload",
+                                "Cover file size after compression: ${compressedCoverFile.length()} bytes"
+                            )
+
+                            // Prepare MultipartBody.Part for profileImage and coverImage
+                            val profileImageBody =
+                                compressedProfileFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                            val coverImageBody =
+                                compressedCoverFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
+
+                            val profileFileName =
+                                "${System.currentTimeMillis()}_${UUID.randomUUID()}_profile.jpg"
+                            val coverFileName =
+                                "${System.currentTimeMillis()}_${UUID.randomUUID()}_cover.jpg"
+
+                            val profileImagePart = MultipartBody.Part.createFormData(
+                                "profileImage",
+                                profileFileName,
+                                profileImageBody
+                            )
+
+                            val coverImagePart = MultipartBody.Part.createFormData(
+                                "coverImage",
+                                coverFileName,
+                                coverImageBody
+                            )
+
+                            // Prepare other request bodies
+                            val phoneBody = phone.toRequestBody("text/plain".toMediaType())
+                            val locationBody = location.toRequestBody("text/plain".toMediaType())
+                            val genderBody = gender.toRequestBody("text/plain".toMediaType())
+                            val nameBody = name.toRequestBody("text/plain".toMediaType())
+
+                            // Call ViewModel to perform the editBiodata operation
+                            viewModel.editBiodata(
+                                token,
+                                coverImagePart,
+                                profileImagePart,
+                                nameBody,
+                                phoneBody,
+                                locationBody,
+                                genderBody
+                            )
+                        } catch (e: IOException) {
+                            Log.e("Upload", "Error compressing file: ${e.message}")
+                            Snackbar.make(
+                                binding.root,
+                                "Error compressing file",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        } catch (e: Exception) {
+                            Log.e("Upload", "Error uploading data: ${e.message}")
+                            Snackbar.make(
+                                binding.root,
+                                "Error uploading data",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
                         }
-
-                        fileImage = compressedFile ?: file
                     }
-
-                    val imageCompressFile =
-                        fileImage.asRequestBody("image/jpeg".toMediaTypeOrNull())
-                    val profile: MultipartBody.Part = MultipartBody.Part.createFormData(
-                        "profileImage", fileImage.name, imageCompressFile
-                    )
-                    val cover: MultipartBody.Part = MultipartBody.Part.createFormData(
-                        "coverImage", fileImage.name, imageCompressFile
-                    )
-                    val phone = phone.toRequestBody("text/plain".toMediaType())
-                    val location = location.toRequestBody("text/plain".toMediaType())
-                    val gender = gender.toRequestBody("text/plain".toMediaType())
-                    val name = name.toRequestBody("text/plain".toMediaType())
-
-                    viewModel.editBiodata(token, cover, profile, name, phone, location, gender)
+                } else {
+                    Snackbar.make(
+                        binding.root,
+                        "Please select both profile and cover images",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
             }
             ivBackgroundProfile.setOnClickListener {
-                startGallery()
+                showImageSourceDialog(false)
             }
+
             imgProfile.setOnClickListener {
-                startGallery()
+                showImageSourceDialog(true)
             }
         }
     }
 
-    private fun startGallery() {
-        launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    private fun showImageSourceDialog(isProfile: Boolean) {
+        val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
+        val builder = android.app.AlertDialog.Builder(requireContext())
+        builder.setTitle("Select Option")
+        builder.setItems(options) { dialog, item ->
+            when {
+                options[item] == "Take Photo" -> {
+                    if (ContextCompat.checkSelfPermission(
+                            requireContext(),
+                            Manifest.permission.CAMERA
+                        )
+                        != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        ActivityCompat.requestPermissions(
+                            requireActivity(),
+                            arrayOf(Manifest.permission.CAMERA),
+                            REQUEST_CAMERA_PERMISSION
+                        )
+                    } else {
+                        dispatchTakePictureIntent(isProfile)
+                    }
+                }
+
+                options[item] == "Choose from Gallery" -> {
+//                    if (ContextCompat.checkSelfPermission(
+//                            requireContext(),
+//                            Manifest.permission.READ_EXTERNAL_STORAGE
+//                        )
+//                        != PackageManager.PERMISSION_GRANTED
+//                    ) {
+//                        ActivityCompat.requestPermissions(
+//                            requireActivity(),
+//                            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+//                            REQUEST_GALLERY_PERMISSION
+//                        )
+//                    } else {
+                        if (isProfile) {
+                            profileGalleryLauncher.launch(PickVisualMediaRequest()) // Launch gallery picker
+                        } else {
+                            coverGalleryLauncher.launch(PickVisualMediaRequest()) // Launch gallery picker
+                        }
+                    }
+              //  }
+
+                options[item] == "Cancel" -> {
+                    dialog.dismiss()
+                }
+            }
+        }
+        builder.show()
     }
 
-    private fun createTempFile(context: Context): File {
-        val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(FILENAME_FORMAT, ".jpg", storageDir)
+
+    private fun createImageFile(isProfile: Boolean): File {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
+
+        val prefix = if (isProfile) "Profile_" else "Cover_"
+        val file = File.createTempFile(
+            "${prefix}${timeStamp}_",
+            ".jpg",
+            storageDir
+        )
+
+        if (isProfile) {
+            currentProfilePhotoPath = file.absolutePath
+        } else {
+            currentCoverPhotoPath = file.absolutePath
+        }
+
+        return file
     }
 
-    private fun convertFile(image: Uri, context: Context): File {
-        val contentResolver: ContentResolver = context.contentResolver
-        val imageFile = createTempFile(context)
-        val inputStream = contentResolver.openInputStream(image) as InputStream
-        val outputStream: OutputStream = FileOutputStream(imageFile)
-        val buf = ByteArray(1024)
-        var len: Int
-        while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
-        outputStream.close()
-        inputStream.close()
 
-        return imageFile
-    }
-
-    private fun showImage() {
-        this.currentImageUri?.let {
-            binding.ivBackgroundProfile.setImageURI(it)
+    private fun dispatchTakePictureIntent(isProfile: Boolean) {
+        val photoFile: File? = try {
+            createImageFile(isProfile)
+        } catch (ex: IOException) {
+            null
+        }
+        photoFile?.also {
+            val photoURI: Uri =
+                FileProvider.getUriForFile(requireContext(), "com.foundie.id.fileprovider", it)
+            if (isProfile) {
+                profilePhotoLauncher.launch(photoURI)
+            } else {
+                coverPhotoLauncher.launch(photoURI)
+            }
         }
     }
+
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
@@ -228,6 +434,44 @@ class ProfileEditFragment : Fragment() {
             .commit()
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_CAMERA_PERMISSION -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    dispatchTakePictureIntent(isProfile = true) // Assuming it's for profile, adjust as needed
+                } else {
+                    Snackbar.make(binding.root, "Camera permission denied", Snackbar.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+            REQUEST_GALLERY_PERMISSION -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    profileGalleryLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) // Assuming it's for profile, adjust as needed
+                } else {
+                    Snackbar.make(binding.root, "Gallery permission denied", Snackbar.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
+
+    private fun uriToFile(uri: Uri): File {
+        val contentResolver = requireContext().contentResolver
+        val file = File.createTempFile("temp_image", ".jpg", requireContext().cacheDir)
+        contentResolver.openInputStream(uri)?.use { inputStream ->
+            file.outputStream().use { outputStream ->
+                inputStream.copyTo(outputStream)
+            }
+        }
+        return file
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         (activity as? AppCompatActivity)?.supportActionBar?.show()
@@ -235,6 +479,7 @@ class ProfileEditFragment : Fragment() {
     }
 
     companion object {
-        const val FILENAME_FORMAT = "MMddyyyy"
+        private const val REQUEST_CAMERA_PERMISSION = 100
+        private const val REQUEST_GALLERY_PERMISSION = 101
     }
 }

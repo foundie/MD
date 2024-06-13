@@ -15,6 +15,7 @@ import com.foundie.id.data.adapter.ImageSliderAdapter
 import com.foundie.id.data.local.response.ImageDataResponse
 import com.foundie.id.data.local.response.ProductData
 import com.foundie.id.databinding.FragmentHomeBinding
+import com.foundie.id.settings.delayTimeSlider
 import com.foundie.id.ui.catalog.CatalogViewModel
 import com.foundie.id.viewmodel.CatalogViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -28,7 +29,6 @@ class HomeFragment : Fragment() {
     private val list = ArrayList<ImageDataResponse>()
     private val handler = Handler()
     private var currentPage = 0
-    private val slideInterval = 2000L // Durasi antara perpindahan slide (dalam milidetik)
     private lateinit var runnable: Runnable
     private lateinit var catalogAdapter: CatalogAdapter
     private val viewModel: CatalogViewModel by lazy {
@@ -52,10 +52,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         catalogAdapter = CatalogAdapter()
-        val layoutManager = LinearLayoutManager(requireContext())
-        binding.rvListCatalog.layoutManager = layoutManager
-        binding.rvListCatalog.setHasFixedSize(true)
-        binding.rvListCatalog.adapter = catalogAdapter
+        showRecyclerView()
 
         viewModel.isLoadingProduct.observe(viewLifecycleOwner) {
             showLoading(it)
@@ -100,10 +97,10 @@ class HomeFragment : Fragment() {
                 currentPage = 0
             }
             binding.viewPager.setCurrentItem(currentPage++, true)
-            handler.postDelayed(runnable, slideInterval)
+            handler.postDelayed(runnable, delayTimeSlider)
         }
 
-        handler.postDelayed(runnable, slideInterval)
+        handler.postDelayed(runnable, delayTimeSlider)
 
         // Menangani perpindahan halaman
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {

@@ -8,16 +8,14 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.foundie.id.R
 import com.foundie.id.databinding.FragmentProfileBinding
 import com.foundie.id.settings.SettingsPreferences
+import com.foundie.id.settings.loadImageWithCacheBusting
 import com.foundie.id.ui.login.dataStore
 import com.foundie.id.ui.profile.profile_edit.ProfileEditFragment
 import com.foundie.id.ui.profile.settings.SettingFragment
@@ -25,7 +23,6 @@ import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.ProfileViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator
-import com.squareup.picasso.Picasso
 
 class ProfileFragment : Fragment() {
 
@@ -83,8 +80,8 @@ class ProfileFragment : Fragment() {
                     tvGender.text = biodata.gender
                     tvFollowed.text = "Followed: 7"
                     tvFollowers.text = "Followers: 1000000"
-                    ivUser.loadImage(biodata.profileImageUrl)
-                    ivBackgroundUser.loadImage(biodata.coverImageUrl)
+                    ivUser.loadImageWithCacheBusting(biodata.profileImageUrl)
+                    ivBackgroundUser.loadImageWithCacheBusting(biodata.coverImageUrl)
                 }
             }
         }
@@ -101,7 +98,7 @@ class ProfileFragment : Fragment() {
             Log.d("ProfileFragment", message)
         }
 
-        binding.ivEditProfile.setOnClickListener{
+        binding.ivEditProfile.setOnClickListener {
             replaceFragment(ProfileEditFragment())
         }
     }
@@ -110,19 +107,6 @@ class ProfileFragment : Fragment() {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-//   private fun ImageView.loadImage(url: String) {
-//       Glide.with(this)
-//           .load(url)
-//           .diskCacheStrategy(DiskCacheStrategy.NONE)
-//           .skipMemoryCache(true)
-//           .into(this)
-//   }
-
-    fun ImageView.loadImage(url: String?) {
-        url?.let {
-            Picasso.get().load(it).into(this)
-        }
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_profile, menu)
@@ -135,6 +119,7 @@ class ProfileFragment : Fragment() {
                 replaceFragment(SettingFragment())
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
