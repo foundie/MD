@@ -257,7 +257,7 @@
                     style="@style/TextContent.BodyM"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_background_edit_text"
+
                     android:hint="@string/select_item"
                     android:inputType="none"
                     android:padding="12dp"

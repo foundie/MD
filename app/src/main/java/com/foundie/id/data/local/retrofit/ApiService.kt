@@ -69,6 +69,7 @@ interface ApiService {
         @Part profileImage: MultipartBody.Part,
         @Part("name") name: RequestBody,
         @Part("phone") phone: RequestBody,
+        @Part("description") description: RequestBody,
         @Part("location") location: RequestBody,
         @Part("gender") gender: RequestBody,
     ): Call<EditProfileResponse>

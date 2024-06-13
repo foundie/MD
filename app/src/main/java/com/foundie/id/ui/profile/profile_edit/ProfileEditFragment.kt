@@ -1,7 +1,6 @@
 package com.foundie.id.ui.profile.profile_edit
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -15,8 +14,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +27,7 @@ import com.foundie.id.R
 import com.foundie.id.databinding.FragmentProfileEditBinding
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.delayTime
+import com.foundie.id.settings.loadImageWithCacheBusting
 import com.foundie.id.ui.login.dataStore
 import com.foundie.id.ui.profile.ProfileFragment
 import com.foundie.id.ui.profile.ProfileViewModel
@@ -53,6 +51,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.UUID
 
+@Suppress("DEPRECATION")
 class ProfileEditFragment : Fragment() {
 
     private var _binding: FragmentProfileEditBinding? = null
@@ -63,13 +62,8 @@ class ProfileEditFragment : Fragment() {
     private var currentCoverPhotoPath: String? = null
     private var profileImageUri: Uri? = null
     private var coverImageUri: Uri? = null
-    private lateinit var fileImage: File
-    private var getFileUri: File? = null
-
     private val items = listOf("Male", "Female", "Prefer not to say")
     private lateinit var autoComplete: AutoCompleteTextView
-
-    private lateinit var image : ImageView
 
     private val viewModel: ProfileViewModel by lazy {
         ViewModelProvider(
@@ -150,36 +144,9 @@ class ProfileEditFragment : Fragment() {
         val adapter = ArrayAdapter(requireContext(), R.layout.item_list, items)
         autoComplete.setAdapter(adapter)
 
-        autoComplete.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            val itemSelected = parent.getItemAtPosition(position)
-            Toast.makeText(requireContext(), "Selected item: $itemSelected", Toast.LENGTH_SHORT).show()
-        }
-
-        binding.imgBackgroundProfile.setOnClickListener {
-            image = binding.imgBackgroundProfile
-            uploadImage(image)
-        }
-
-        binding.ivBackgroundProfile.setOnClickListener {
-            image = binding.ivBackgroundProfile
-            uploadImage(image)
-        }
+        autoComplete.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, _ -> }
 
         return binding.root
-    }
-
-    private fun uploadImage(image: ImageView) {
-        val intent = Intent()
-        intent.action = Intent.ACTION_GET_CONTENT
-        intent.type = "image/*"
-        startActivityForResult(intent, 1)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == 1) {
-            image.setImageURI(data?.data)
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -197,6 +164,19 @@ class ProfileEditFragment : Fragment() {
 
         viewModel.isLoadingeditBiodata.observe(viewLifecycleOwner) {
             showLoading(it)
+        }
+
+        viewModel.biodata.observe(viewLifecycleOwner) { biodata ->
+            if (biodata != null) {
+                binding.apply {
+                    etName.setText(biodata.name)
+                    etLocation.setText(biodata.location)
+                    actvGender.setText(biodata.gender)
+                    etDescriptionProfile.setText(biodata.description)
+                    imgProfile.loadImageWithCacheBusting(biodata.profileImageUrl)
+                    ivBackgroundProfile.loadImageWithCacheBusting(biodata.coverImageUrl)
+                }
+            }
         }
 
         viewModel.editprofileStatus.observe(viewLifecycleOwner) { editprofileStatus ->
@@ -221,37 +201,21 @@ class ProfileEditFragment : Fragment() {
                 val name = etName.text.toString().trim()
                 val phone = etPhone.text.toString().trim()
                 val location = etLocation.text.toString().trim()
-                val gender = etDescriptionProfile.text.toString().trim()
+                val gender = actvGender.text.toString().trim()
+                val description = etDescriptionProfile.text.toString().trim()
 
-                // Ensure both paths are valid
                 val profileImagePath = currentProfilePhotoPath
                 val coverImagePath = currentCoverPhotoPath
 
                 if (profileImagePath != null && coverImagePath != null) {
                     lifecycleScope.launch {
                         try {
-                            // Determine which file to upload (profile or cover)
                             val profileFile = File(profileImagePath)
                             val coverFile = File(coverImagePath)
 
-                            // Log file sizes before compression
-                            Log.d(
-                                "Upload",
-                                "Profile file size before compression: ${profileFile.length()} bytes"
-                            )
-                            Log.d(
-                                "Upload",
-                                "Cover file size before compression: ${coverFile.length()} bytes"
-                            )
-
-                            // Compress profile image if necessary
                             val compressedProfileFile =
                                 if (profileFile.length() > 1 * 1024 * 1024) {
                                     withContext(Dispatchers.IO) {
-                                        Log.d(
-                                            "Upload",
-                                            "Compressing profile image: ${profileFile.name}"
-                                        )
                                         Compressor.compress(
                                             requireContext().applicationContext,
                                             profileFile
@@ -261,10 +225,8 @@ class ProfileEditFragment : Fragment() {
                                     profileFile
                                 }
 
-                            // Compress cover image if necessary
                             val compressedCoverFile = if (coverFile.length() > 1 * 1024 * 1024) {
                                 withContext(Dispatchers.IO) {
-                                    Log.d("Upload", "Compressing cover image: ${coverFile.name}")
                                     Compressor.compress(
                                         requireContext().applicationContext,
                                         coverFile
@@ -274,17 +236,6 @@ class ProfileEditFragment : Fragment() {
                                 coverFile
                             }
 
-                            // Log file sizes after compression
-                            Log.d(
-                                "Upload",
-                                "Profile file size after compression: ${compressedProfileFile.length()} bytes"
-                            )
-                            Log.d(
-                                "Upload",
-                                "Cover file size after compression: ${compressedCoverFile.length()} bytes"
-                            )
-
-                            // Prepare MultipartBody.Part for profileImage and coverImage
                             val profileImageBody =
                                 compressedProfileFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
                             val coverImageBody =
@@ -307,31 +258,20 @@ class ProfileEditFragment : Fragment() {
                                 coverImageBody
                             )
 
-                            // Prepare other request bodies
                             val phoneBody = phone.toRequestBody("text/plain".toMediaType())
                             val locationBody = location.toRequestBody("text/plain".toMediaType())
                             val genderBody = gender.toRequestBody("text/plain".toMediaType())
                             val nameBody = name.toRequestBody("text/plain".toMediaType())
+                            val descBody = description.toRequestBody("text/plain".toMediaType())
 
-                            // Call ViewModel to perform the editBiodata operation
-                            viewModel.editBiodata(
-                                token,
-                                coverImagePart,
-                                profileImagePart,
-                                nameBody,
-                                phoneBody,
-                                locationBody,
-                                genderBody
-                            )
+                            viewModel.editBiodata(token, coverImagePart, profileImagePart, nameBody, phoneBody, descBody, locationBody, genderBody)
                         } catch (e: IOException) {
-                            Log.e("Upload", "Error compressing file: ${e.message}")
                             Snackbar.make(
                                 binding.root,
                                 "Error compressing file",
                                 Snackbar.LENGTH_SHORT
                             ).show()
                         } catch (e: Exception) {
-                            Log.e("Upload", "Error uploading data: ${e.message}")
                             Snackbar.make(
                                 binding.root,
                                 "Error uploading data",
@@ -347,11 +287,11 @@ class ProfileEditFragment : Fragment() {
                     ).show()
                 }
             }
-            ivBackgroundProfile.setOnClickListener {
+            imgBackgroundProfileEditBg.setOnClickListener {
                 showImageSourceDialog(false)
             }
 
-            imgProfile.setOnClickListener {
+            imgBackgroundProfileEdit.setOnClickListener {
                 showImageSourceDialog(true)
             }
         }
@@ -381,18 +321,6 @@ class ProfileEditFragment : Fragment() {
                 }
 
                 options[item] == "Choose from Gallery" -> {
-//                    if (ContextCompat.checkSelfPermission(
-//                            requireContext(),
-//                            Manifest.permission.READ_EXTERNAL_STORAGE
-//                        )
-//                        != PackageManager.PERMISSION_GRANTED
-//                    ) {
-//                        ActivityCompat.requestPermissions(
-//                            requireActivity(),
-//                            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-//                            REQUEST_GALLERY_PERMISSION
-//                        )
-//                    } else {
                     if (isProfile) {
                         profileGalleryLauncher.launch(PickVisualMediaRequest()) // Launch gallery picker
                     } else {
@@ -459,6 +387,7 @@ class ProfileEditFragment : Fragment() {
             .commit()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

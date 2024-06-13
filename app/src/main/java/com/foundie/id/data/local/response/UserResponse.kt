@@ -41,6 +41,12 @@ data class User(
     @field:SerializedName("description")
     val description: String,
 
+    @field:SerializedName("followersCount")
+    val followers: String,
+
+    @field:SerializedName("followingCount")
+    val following: String,
+
     @field:SerializedName("coverPictureUrl")
     val coverImageUrl: String
 ) : Parcelable

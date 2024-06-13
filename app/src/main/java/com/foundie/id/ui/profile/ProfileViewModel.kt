@@ -37,9 +37,10 @@ class ProfileViewModel(private val mainRepository: MainRepository) : ViewModel()
         profileImage: MultipartBody.Part,
         name: RequestBody,
         phone:RequestBody,
+        description: RequestBody,
         location: RequestBody,
         gender: RequestBody,
     ) {
-        mainRepository.editBiodata(token, coverImage, profileImage , name, phone, location, gender)
+        mainRepository.editBiodata(token, coverImage, profileImage , name, phone, description, location, gender)
     }
 }

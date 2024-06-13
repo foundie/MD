@@ -1,5 +1,6 @@
 package com.foundie.id.ui.profile
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -48,6 +49,7 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefen = SettingsPreferences.getInstance(requireContext().dataStore)
@@ -78,8 +80,9 @@ class ProfileFragment : Fragment() {
                     tvUsername.text = biodata.name
                     tvLocation.text = biodata.location
                     tvGender.text = biodata.gender
-                    tvFollowed.text = "Followed: 7"
-                    tvFollowers.text = "Followers: 1000000"
+                    tvDescriptionProfile.text = biodata.description
+                    tvFollowed.text = "Following: ${biodata.following}"
+                    tvFollowers.text = "Followers: ${biodata.followers}"
                     ivUser.loadImageWithCacheBusting(biodata.profileImageUrl)
                     ivBackgroundUser.loadImageWithCacheBusting(biodata.coverImageUrl)
                 }

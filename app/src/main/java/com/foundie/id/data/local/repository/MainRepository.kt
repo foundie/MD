@@ -260,10 +260,10 @@ class MainRepository(private val apiService: ApiService) {
         })
     }
 
-    fun editBiodata(token: String, coverImage: MultipartBody.Part, profileImage: MultipartBody.Part, name: RequestBody, phone: RequestBody, location: RequestBody, gender: RequestBody) {
+    fun editBiodata(token: String, coverImage: MultipartBody.Part, profileImage: MultipartBody.Part, name: RequestBody, phone: RequestBody,  description: RequestBody, location: RequestBody, gender: RequestBody) {
         _isLoadingeditBiodata.value = true
         val service = ApiConfig.getApiService().editBiodata(
-            "Bearer $token", coverImage, profileImage,name,phone,location,gender
+            "Bearer $token", coverImage, profileImage,name,phone,description,location,gender
         )
         service.enqueue(object : Callback<EditProfileResponse> {
             override fun onResponse(
