@@ -81,4 +81,9 @@
         <item name="android:textSize">10sp</item>
     </style>
 
+    <style name="TextContent.BodyXXS">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="android:textSize">8sp</item>
+    </style>
+
 </resources>
