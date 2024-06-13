@@ -40,7 +40,7 @@
                 android:layout_width="34dp"
                 android:layout_height="34dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/ic_background_profile"
+                android:background="@drawable/ic_background_edit_profile"
                 android:scaleType="centerCrop"
 
                 app:layout_constraintBottom_toBottomOf="@+id/iv_background_profile"
@@ -51,7 +51,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/baseline_camera_alt_24"
+                android:src="@drawable/ic_button_camera"
 
                 app:layout_constraintBottom_toBottomOf="@+id/img_background_profile_edit_bg"
                 app:layout_constraintEnd_toEndOf="@+id/img_background_profile_edit_bg"
@@ -86,7 +86,7 @@
                 android:id="@+id/img_background_profile_edit"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
-                android:background="@drawable/ic_background_profile"
+                android:background="@drawable/ic_background_edit_profile"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="@+id/img_background_profile"
                 app:layout_constraintEnd_toEndOf="@+id/img_background_profile" />
@@ -96,7 +96,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/baseline_camera_alt_24"
+                android:src="@drawable/ic_button_camera"
 
                 app:layout_constraintBottom_toBottomOf="@+id/img_background_profile_edit"
                 app:layout_constraintEnd_toEndOf="@+id/img_background_profile_edit"
