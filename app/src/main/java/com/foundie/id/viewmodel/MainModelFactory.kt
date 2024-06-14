@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.foundie.id.di.Injection
 import com.foundie.id.ui.catalog.CatalogViewModel
+import com.foundie.id.ui.community.UserPostViewModel
 import com.foundie.id.ui.password.PassViewModel
 import com.foundie.id.ui.login.LoginViewModel
 import com.foundie.id.ui.login.VerifyViewModel
@@ -66,6 +67,16 @@ class ProfileViewModelFactory(private val context: Context) : ViewModelProvider.
         if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return ProfileViewModel(Injection.provideRepository(context)) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+
+class CommunityViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(UserPostViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return UserPostViewModel(Injection.provideRepository(context)) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

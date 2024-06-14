@@ -12,10 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:reverseLayout="false"
         app:spanCount="2"
-        tools:listitem="@layout/item_community" />
+        tools:listitem="@layout/item_community_tweet" />
 
     <ProgressBar
         android:id="@+id/progressBar"
