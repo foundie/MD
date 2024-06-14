@@ -5,9 +5,7 @@
     android:id="@+id/item_community"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="4dp">
+    android:background="@drawable/ic_background_tweet">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_community_tweet"
@@ -75,6 +73,17 @@
             app:layout_constraintTop_toBottomOf="@+id/img_user"
             tools:text="@string/post_description" />
 
+        <ImageView
+            android:id="@+id/iv_post_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="8dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_post_description"
+            tools:text="@string/post_description" />
+
         <TextView
             android:id="@+id/tv_timestamp"
             style="@style/TextContent.BodyXS"
@@ -82,8 +91,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_community"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_post_image"
             tools:text="time posted" />
 
         <ImageView
@@ -96,7 +105,7 @@
             android:src="@drawable/ic_button_message"
 
             app:layout_constraintEnd_toStartOf="@+id/iv_favorite"
-            app:layout_constraintTop_toBottomOf="@+id/tv_post_description" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_post_image" />
 
         <ImageView
             android:id="@+id/iv_favorite"
@@ -108,7 +117,7 @@
             android:src="@drawable/baseline_favorite_border_24"
 
             app:layout_constraintStart_toEndOf="@+id/iv_replied"
-            app:layout_constraintTop_toBottomOf="@+id/tv_post_description" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_post_image" />
 
         <ImageView
             android:id="@+id/iv_bookmark"
@@ -121,7 +130,7 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_favorite"
-            app:layout_constraintTop_toBottomOf="@+id/tv_post_description" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_post_image" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

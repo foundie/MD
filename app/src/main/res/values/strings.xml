@@ -117,6 +117,7 @@
     <string name="bookmarks">bookmarks</string>
     <string name="notification">notification</string>
     <string name="settings">settings</string>
+    <string name="Settings">Settings</string>
     <string name="total_members">Total Members</string>
     <string name="community_name">Community Name</string>
     <string name="season">#season</string>
@@ -126,6 +127,7 @@
     <string name="description">Description</string>
 
     <string name="all">All</string>
+    <string name="all_community">All Community</string>
     <string name="joined">Joined</string>
     <string name="popular">Popular</string>
     <string name="you_have_not_joined_any_communities_yet">You have not joined any communities yet</string>
@@ -175,5 +177,16 @@
     <string name="item_label">Items</string>
     <string name="todo">TODO</string>
     <string name="phone_number">Phone Number</string>
-
+    <string name="privacy_statement">Privacy Statement</string>
+    <string name="_14_june_2024">14 June 2024</string>
+    <string name="policy_description">
+    Welcome to Foundie. Your privacy is important to us, and we are committed to protecting your personal information. We collect personal data such as your name, email, phone number, and location when you register or update your profile, as well as any photos, descriptions, and reviews you upload. Automatically collected data includes your IP address, device type, OS, log data, and location (with permission). This information is used to provide and improve our services, customize user experience, manage accounts, send updates, and analyze trends. We do not share your personal information with third parties unless you consent, it is with our service providers, or required by law. We implement various security measures to protect your data but cannot guarantee absolute security. You have the right to access, update, or delete your information at any time by contacting us. Our Privacy Policy may be updated periodically, and we will notify you of any changes. For any questions, please contact us at support@foundie.com or Jl. Contoh No.123, Kota Contoh, Indonesia. Thank you for trusting Foundie.
+    </string>
+    <string name="statement_one">Welcome to Foundie. Your privacy is important to us, and we are committed to protecting your personal information with the utmost care and diligence. We understand the sensitivity of your data and take this responsibility seriously.</string>
+    <string name="statement_two">We collect various types of personal data, including your name, email address, phone number, and location, especially when you register or update your profile on our platform. Additionally, we gather any photos, descriptions, and reviews that you upload. This personal data helps us identify and communicate with you effectively. Automatically collected data includes your IP address, device type, operating system, log data, and location information, provided you have given permission for location access. This automatically collected data assists us in understanding how our app is used and helps us enhance its performance and functionality.</string>
+    <string name="statement_three">The information we collect is utilized to provide, maintain, and improve our services. We use it to customize your user experience, ensuring that the content and features you encounter are tailored to your preferences. Your data allows us to manage your account efficiently, offer customer support, send important updates, promotional content, and other information related to our services. Moreover, we analyze trends, usage patterns, and activities within our application to make informed decisions on further development and improvements.</string>
+    <string name="statement_four">Your personal information is not shared with third parties unless you give explicit consent. We may share your data with our trusted service providers who assist us in delivering our services or as required by law to comply with legal obligations, protect our rights, property, or ensure the safety of our users and the public. We have implemented robust security measures to protect your data from unauthorized access, use, or disclosure. Despite our best efforts, no method of internet transmission or electronic storage is completely secure, and we cannot guarantee absolute security.</string>
+    <string name="statement_five">You have the right to access, update, or delete your personal information at any time. Should you wish to exercise these rights, please contact us at your convenience. We strive to respond promptly and ensure your data remains accurate and up-to-date. Our Privacy Policy may be updated periodically to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any significant changes through our app and via email. You are encouraged to review this policy regularly to stay informed about how we are protecting your information.</string>
+    <string name="statement_six">For any questions or concerns about this Privacy Policy or our data practices, please do not hesitate to contact us at support@foundie.com. Alternatively, you can reach us at our physical address: Jl. Contoh No.123, Kota Contoh, Indonesia. We value your trust and are committed to maintaining the highest standards of privacy and security. Thank you for choosing Foundie and for entrusting us with your personal information. We are dedicated to providing you with a safe and enjoyable experience on our platform.</string>
+    <string name="back">back</string>
 </resources>

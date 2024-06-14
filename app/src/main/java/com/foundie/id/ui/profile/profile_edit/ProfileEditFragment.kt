@@ -8,6 +8,7 @@ import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -147,6 +148,12 @@ class ProfileEditFragment : Fragment() {
         autoComplete.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             val selectedGender = items[position]
             autoComplete.setText(selectedGender)
+        }
+
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar?.apply {
+            title = ""
+            setDisplayHomeAsUpEnabled(true)
         }
 
         return binding.root
@@ -454,6 +461,16 @@ class ProfileEditFragment : Fragment() {
             }
         }
         return file
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                requireActivity().onBackPressed()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {

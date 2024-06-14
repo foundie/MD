@@ -1,4 +1,4 @@
-package com.foundie.id.ui.profile.settings
+package com.foundie.id.ui.profile.settings.privacy
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,18 +8,18 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.foundie.id.R
-import com.foundie.id.databinding.FragmentSettingBinding
+import com.foundie.id.databinding.FragmentPrivacyBinding
 
-class SettingFragment : Fragment() {
-    private var _binding: FragmentSettingBinding? = null
+class PrivacyFragment : Fragment() {
+
+    private var _binding: FragmentPrivacyBinding? = null
     private val binding get() = _binding!!
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val actionBar = (activity as AppCompatActivity).supportActionBar
         actionBar?.apply {
-            title = getString(R.string.Settings)
+            title = getString(R.string.privacy_policy)
             setDisplayHomeAsUpEnabled(true)
         }
     }
@@ -28,7 +28,7 @@ class SettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSettingBinding.inflate(inflater, container, false)
+        _binding = FragmentPrivacyBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -46,4 +46,5 @@ class SettingFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }
