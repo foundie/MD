@@ -5,53 +5,95 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.foundie.id.R
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.foundie.id.data.adapter.UserPostAdapter
+import com.foundie.id.data.local.response.DataPostItem
+import com.foundie.id.databinding.FragmentCommunityAllBinding
+import com.foundie.id.settings.SettingsPreferences
+import com.foundie.id.ui.login.dataStore
+import com.foundie.id.viewmodel.AuthModelFactory
+import com.foundie.id.viewmodel.AuthViewModel
+import com.foundie.id.viewmodel.CommunityViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@Suppress("DEPRECATION")
+class  CommunityAllFragment : Fragment() {
+    private var _binding: FragmentCommunityAllBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var prefen: SettingsPreferences
+    private lateinit var token: String
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CommunityAllFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class CommunityAllFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var adapter: UserPostAdapter
+    private val viewModel: UserPostViewModel by lazy {
+        ViewModelProvider(this, CommunityViewModelFactory(requireContext()))[UserPostViewModel::class.java]
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentCommunityAllBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        prefen = SettingsPreferences.getInstance(requireContext().dataStore)
+        adapter = UserPostAdapter()
+        showRecyclerView()
+
+        val authViewModel =
+            ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
+        authViewModel.getUserLoginToken().observe(viewLifecycleOwner) {
+            token = it
+            viewModel.getPostUser(token)
+        }
+
+        viewModel.isLoadingUserPost.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
+        viewModel.userPost.observe(viewLifecycleOwner) { postList ->
+            setPostData(postList)
+        }
+
+        viewModel.userPostStatus.observe(viewLifecycleOwner) { postStatus ->
+            val isError = viewModel.isErrorPost
+
+            if (isError && !postStatus.isNullOrEmpty()) {
+                binding.rvListCommunity.visibility = View.VISIBLE
+                Snackbar.make(binding.root, postStatus, Snackbar.LENGTH_SHORT).show()
+
+            } else if (!isError && !postStatus.isNullOrEmpty()) {
+                binding.rvListCommunity.visibility = View.VISIBLE
+            }
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_community_all, container, false)
+    private fun showRecyclerView() {
+        val layoutManager = LinearLayoutManager(requireContext())
+        binding.rvListCommunity.layoutManager = layoutManager
+        binding.rvListCommunity.setHasFixedSize(true)
+        binding.rvListCommunity.adapter = adapter
+//        adapter.setOnItemClickCallback(object : CatalogAdapter.OnItemClickCallback {
+//            override fun onItemClicked(data: ProductData) {
+//                //selectedStory(data)
+//            }
+//        })
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CommunityAllFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic fun newInstance(param1: String, param2: String) =
-                CommunityAllFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
+    private fun setPostData(postList: List<DataPostItem>) {
+        if (::adapter.isInitialized) {
+            if (postList.isNotEmpty()) {
+                adapter.setData(postList)
+            }
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

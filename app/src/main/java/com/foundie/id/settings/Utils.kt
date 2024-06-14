@@ -29,7 +29,7 @@ import java.util.TimeZone
 
 const val SETTINGS_KEY = "settings"
 const val delayTime: Long = 1000
-const val delayshortTime: Long = 300
+const val delayshortTime: Long = 500
 const val delayTimeSlider: Long = 2000
 
 fun lightStatusBar(window: Window, isLight: Boolean = true) {

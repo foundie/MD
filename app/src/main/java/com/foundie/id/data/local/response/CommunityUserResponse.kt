@@ -21,16 +21,6 @@ data class CommunityUserResponse(
 ) : Parcelable
 
 @Parcelize
-data class Timestamp(
-
-	@field:SerializedName("_nanoseconds")
-	val nanoseconds: Int,
-
-	@field:SerializedName("_seconds")
-	val seconds: Int
-) : Parcelable
-
-@Parcelize
 data class DataPostItem(
 
 	@field:SerializedName("likesCount")
@@ -55,7 +45,7 @@ data class DataPostItem(
 	val email: String,
 
 	@field:SerializedName("timestamp")
-	val timestamp: Timestamp,
+	val timestamp: String,
 
 	@field:SerializedName("profileImageUrl")
 	val profileImageUrl: String,
