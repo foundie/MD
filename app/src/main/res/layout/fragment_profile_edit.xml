@@ -30,8 +30,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_profileEditFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:layout_height="wrap_content" >
 
             <TextView
                 android:id="@+id/tv_title"
@@ -76,9 +75,9 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_background_profile"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_marginTop="90dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="85dp"
                 android:background="@drawable/ic_background_profile"
                 android:scaleType="centerCrop"
 
@@ -88,8 +87,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_profile"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_button_profile_edit"
 

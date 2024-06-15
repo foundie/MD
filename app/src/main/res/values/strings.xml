@@ -189,4 +189,7 @@
     <string name="statement_five">You have the right to access, update, or delete your personal information at any time. Should you wish to exercise these rights, please contact us at your convenience. We strive to respond promptly and ensure your data remains accurate and up-to-date. Our Privacy Policy may be updated periodically to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any significant changes through our app and via email. You are encouraged to review this policy regularly to stay informed about how we are protecting your information.</string>
     <string name="statement_six">For any questions or concerns about this Privacy Policy or our data practices, please do not hesitate to contact us at support@foundie.com. Alternatively, you can reach us at our physical address: Jl. Contoh No.123, Kota Contoh, Indonesia. We value your trust and are committed to maintaining the highest standards of privacy and security. Thank you for choosing Foundie and for entrusting us with your personal information. We are dedicated to providing you with a safe and enjoyable experience on our platform.</string>
     <string name="back">back</string>
+    <string name="image_post">image post</string>
+    <string name="what_s_new">What\'s new?</string>
+    <string name="audience_type">Audience Type</string>
 </resources>
