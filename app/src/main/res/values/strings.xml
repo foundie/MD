@@ -193,4 +193,12 @@
     <string name="what_s_new">What\'s new?</string>
     <string name="audience_type">Audience Type</string>
     <string name="input_your_title">Input your title</string>
+    <string name="find_out_your_makeup_style">Find out your makeup style</string>
+    <string name="know_your_skin_type_and_choose_make_up_style_that_are_suitable_for_you">Know your skin type and choose make up style that are suitable for you</string>
+    <string name="analyze">Analyze</string>
+    <string name="image">image</string>
+    <string name="result">Result</string>
+
+    <string name="makeup_result">MakeUp Result</string>
+    <string name="makeup_style_analysis">Makeup Style Analysis</string>
 </resources>
