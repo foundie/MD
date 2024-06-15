@@ -3,7 +3,6 @@ package com.foundie.id.ui.profile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.foundie.id.data.local.repository.MainRepository
-import com.foundie.id.data.local.response.ProductData
 import com.foundie.id.data.local.response.User
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -11,7 +10,7 @@ import okhttp3.RequestBody
 class ProfileViewModel(private val mainRepository: MainRepository) : ViewModel() {
 
     val profileStatus: LiveData<String> = mainRepository.message
-    val editprofileStatus: LiveData<String> = mainRepository.editbiodatastatus
+    val editprofileStatus: LiveData<String> = mainRepository.editBiodataStatus
 
     val isLoadingProfile: LiveData<Boolean> = mainRepository.isLoading
     val isLoadingeditBiodata: LiveData<Boolean> = mainRepository.isLoadingeditBiodata

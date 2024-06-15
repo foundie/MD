@@ -1,6 +1,7 @@
 package com.foundie.id.data.local.retrofit
 
 import com.foundie.id.data.local.response.AddPasswordResponse
+import com.foundie.id.data.local.response.AddPostUserResponse
 import com.foundie.id.data.local.response.CommunityUserResponse
 import com.foundie.id.data.local.response.EditProfileResponse
 import com.foundie.id.data.local.response.LoginGoogleResponse
@@ -62,6 +63,7 @@ interface ApiService {
         @Header("Authorization") token: String,
     ): Call<UserResponse>
 
+    // Edit Biodata User
     @Multipart
     @POST("biodata/add")
     fun editBiodata(
@@ -85,6 +87,16 @@ interface ApiService {
     fun getPostUser(
         @Header("Authorization") token: String
     ): Call<CommunityUserResponse>
+
+    // Add Post Users
+    @Multipart
+    @POST("/community/post")
+    fun addPostUser(
+        @Header("Authorization") token: String,
+        @Part postImage: MultipartBody.Part,
+        @Part("title") title: RequestBody,
+        @Part("text") description: RequestBody,
+    ): Call<AddPostUserResponse>
 
     @Multipart
     @POST("predict/face")

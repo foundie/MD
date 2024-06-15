@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.foundie.id.data.local.response.AddPasswordResponse
+import com.foundie.id.data.local.response.AddPostUserResponse
 import com.foundie.id.data.local.response.CommunityUserResponse
 import com.foundie.id.data.local.response.DataPostItem
 import com.foundie.id.data.local.response.EditProfileResponse
@@ -62,11 +63,17 @@ class MainRepository(private val apiService: ApiService) {
     val predict: LiveData<PredictResponse> = _makeupStyle
     var isErrorpredict: Boolean = false
 
-    private val _editbiodatastatus = MutableLiveData<String>()
-    val editbiodatastatus: LiveData<String> = _editbiodatastatus
+    private val _editBiodataStatus = MutableLiveData<String>()
+    val editBiodataStatus: LiveData<String> = _editBiodataStatus
     private val _isLoadingeditBiodata = MutableLiveData<Boolean>()
     val isLoadingeditBiodata: LiveData<Boolean> = _isLoadingeditBiodata
     var isErroreditBiodata: Boolean = false
+
+    private val _addpostStatus = MutableLiveData<String>()
+    val addpostStatus: LiveData<String> = _addpostStatus
+    private val _isLoadingAddPost = MutableLiveData<Boolean>()
+    val isLoadingAddPost: LiveData<Boolean> = _isLoadingAddPost
+    var isErrorAddPost: Boolean = false
 
 
     private val _product = MutableLiveData<List<ProductData>>()
@@ -280,11 +287,11 @@ class MainRepository(private val apiService: ApiService) {
                     isErroreditBiodata = false
                     val responseBody = response.body()
                     if (responseBody != null && !responseBody.error) {
-                        _editbiodatastatus.value = responseBody.message
+                        _editBiodataStatus.value = responseBody.message
                     }
                 } else {
                     isErroreditBiodata = true
-                    _editbiodatastatus.value = response.message()
+                    _editBiodataStatus.value = response.message()
 
                 }
             }
@@ -292,7 +299,7 @@ class MainRepository(private val apiService: ApiService) {
             override fun onFailure(call: Call<EditProfileResponse>, t: Throwable) {
                 _isLoadingeditBiodata.value = false
                 isErroreditBiodata = true
-                _editbiodatastatus.value = t.message
+                _editBiodataStatus.value = t.message
             }
         })
     }
@@ -347,6 +354,37 @@ class MainRepository(private val apiService: ApiService) {
                 _isLoading.value = false
                 isError = true
                 _message.value = t.message.toString()
+            }
+        })
+    }
+
+    fun addPostUser(token: String, postImage: MultipartBody.Part, title: RequestBody, text: RequestBody) {
+        _isLoadingAddPost.value = true
+        val service = ApiConfig.getApiService().addPostUser(
+            "Bearer $token", postImage, title, text)
+        service.enqueue(object : Callback<AddPostUserResponse> {
+            override fun onResponse(
+                call: Call<AddPostUserResponse>,
+                response: Response<AddPostUserResponse>
+            ) {
+                _isLoadingAddPost.value = false
+                if (response.isSuccessful) {
+                    isErrorAddPost = false
+                    val responseBody = response.body()
+                    if (responseBody != null && !responseBody.error) {
+                        _addpostStatus.value = responseBody.message
+                    }
+                } else {
+                    isErrorAddPost= true
+                    _addpostStatus.value = response.message()
+
+                }
+            }
+
+            override fun onFailure(call: Call<AddPostUserResponse>, t: Throwable) {
+                _isLoadingAddPost.value = false
+                isErrorAddPost = true
+                _addpostStatus.value = t.message
             }
         })
     }

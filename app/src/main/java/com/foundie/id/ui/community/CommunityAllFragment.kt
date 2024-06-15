@@ -25,8 +25,8 @@ class  CommunityAllFragment : Fragment() {
     private lateinit var token: String
 
     private lateinit var adapter: UserPostAdapter
-    private val viewModel: UserPostViewModel by lazy {
-        ViewModelProvider(this, CommunityViewModelFactory(requireContext()))[UserPostViewModel::class.java]
+    private val viewModel: CommunityViewModel by lazy {
+        ViewModelProvider(this, CommunityViewModelFactory(requireContext()))[CommunityViewModel::class.java]
     }
 
 

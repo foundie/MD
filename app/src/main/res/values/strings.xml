@@ -95,6 +95,7 @@
     <string name="IMAGE_SHOW_FAILED">Show Image failed to initialize. See error logs for details</string>
     <string name="IMAGE_CAPTURE_FAILED">Capture Image failed to initialize. See error logs for details</string>
     <string name="BIODATA_UPLOAD_SUCCESS">Biodata Updated Successfully</string>
+    <string name="POST_UPLOAD_SUCCESS">Biodata Updated Successfully</string>
     <string name="ERROR_LOAD_IMAGES">Failed to load images</string>
     <string name="ERROR_UPLOAD_DATA">Error uploading data</string>
     <string name="ERROR_COMPRESSING_DATA">Error compressing file</string>

@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import com.foundie.id.R
 import com.foundie.id.databinding.FragmentPrivacyBinding
 
-class PrivacyFragment : Fragment() {
+class  PrivacyFragment : Fragment() {
 
     private var _binding: FragmentPrivacyBinding? = null
     private val binding get() = _binding!!

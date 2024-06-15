@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.foundie.id.data.local.response.DataPostItem
 import com.foundie.id.databinding.ItemCommunityTweetBinding
+import com.foundie.id.settings.getTimeAgo
 import com.foundie.id.settings.loadImageWithCacheBusting
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class UserPostAdapter : RecyclerView.Adapter<UserPostAdapter.ListViewHolder>() {
 
@@ -57,8 +60,13 @@ class UserPostAdapter : RecyclerView.Adapter<UserPostAdapter.ListViewHolder>() {
                 tvCommunityName.visibility = View.GONE
                 tvUsername.text = postuser.email
                 tvPostDescription.text = postuser.title
-                tvTimestamp.text = postuser.timestamp
+
+                val dateTime = postuser.timestamp
+                val dateTimeMillis = SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).parse(dateTime)!!.time
+                tvTimestamp.text = getTimeAgo(dateTimeMillis)
+
                 imgUser.loadImageWithCacheBusting(postuser.profileImageUrl)
+                ivPostImage.loadImageWithCacheBusting(postuser.imageUrls[0])
             }
 
             itemView.setOnClickListener {
