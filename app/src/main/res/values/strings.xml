@@ -203,4 +203,13 @@
 
     <string name="makeup_result">MakeUp Result</string>
     <string name="makeup_style_analysis">Makeup Style Analysis</string>
+    <string name="compare_and_shine_find_your_perfect_product">Compare and Shine: Find Your Perfect Product</string>
+    <string name="know_your_perfect_shade_in_another_brand">Know your perfect shade in another brand</string>
+    <string name="compare_product">Compare Product</string>
+    <string name="brand_name">Brand Name</string>
+    <string name="input_your_product_brand_s_name">Input your product brand\'s name</string>
+    <string name="input_your_brand_name_product">Input your brand name product...</string>
+    <string name="product_type">Product Type</string>
+    <string name="input_your_product_shade">Input your product shade...</string>
+    <string name="product_shade">Product Shade</string>
 </resources>
