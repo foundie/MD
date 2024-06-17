@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.foundie.id.di.Injection
 import com.foundie.id.ui.catalog.CatalogViewModel
 import com.foundie.id.ui.community.CommunityViewModel
+import com.foundie.id.ui.home.makeup_analysis.PredictViewModel
 import com.foundie.id.ui.password.PassViewModel
 import com.foundie.id.ui.login.LoginViewModel
 import com.foundie.id.ui.login.VerifyViewModel
+import com.foundie.id.ui.profile.ProfileViewModel
 import com.foundie.id.ui.signup.SignUpViewModel
 
 class SignUpViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
@@ -63,9 +65,9 @@ class CatalogViewModelFactory(private val context: Context) : ViewModelProvider.
 
 class ProfileViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(CommunityViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return com.foundie.id.ui.profile.ProfileViewModel(Injection.provideRepository(context)) as T
+            return ProfileViewModel(Injection.provideRepository(context)) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
@@ -76,6 +78,16 @@ class CommunityViewModelFactory(private val context: Context) : ViewModelProvide
         if (modelClass.isAssignableFrom(CommunityViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return CommunityViewModel(Injection.provideRepository(context)) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+
+class PredictViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(PredictViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return PredictViewModel(Injection.provideRepository(context)) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

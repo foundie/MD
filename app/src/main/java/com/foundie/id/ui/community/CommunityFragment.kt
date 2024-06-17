@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.foundie.id.R
 import com.foundie.id.databinding.FragmentCommunityBinding
+import com.foundie.id.ui.community.community_post.CreatePostFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class CommunityFragment : Fragment() {
@@ -47,6 +48,7 @@ class CommunityFragment : Fragment() {
         }.attach()
 
         (activity as? AppCompatActivity)?.supportActionBar?.elevation = 0f
+        btnClick()
     }
 
     override fun onDestroyView() {
@@ -96,6 +98,20 @@ class CommunityFragment : Fragment() {
             val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
+    }
+
+    private fun btnClick() {
+        binding.apply {
+            floatingActionButton.setOnClickListener{
+                replaceFragment(CreatePostFragment())
+            }
+        }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout, fragment)
+            .commit()
     }
 
     companion object {

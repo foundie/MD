@@ -17,6 +17,8 @@ import com.foundie.id.data.local.response.ProductData
 import com.foundie.id.databinding.FragmentHomeBinding
 import com.foundie.id.settings.delayTimeSlider
 import com.foundie.id.ui.catalog.CatalogViewModel
+import com.foundie.id.ui.home.makeup_analysis.MakeupAnalysisInputFragment
+import com.foundie.id.ui.home.makeup_analysis.result.RMakeUpFragment
 import com.foundie.id.viewmodel.CatalogViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
@@ -53,6 +55,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         catalogAdapter = CatalogAdapter()
         showRecyclerView()
+        btnClick()
 
         viewModel.isLoadingProduct.observe(viewLifecycleOwner) {
             showLoading(it)
@@ -135,12 +138,26 @@ class HomeFragment : Fragment() {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        // Hentikan pemutaran slide otomatis saat fragment dihancurkan
-        handler.removeCallbacks(runnable)
-        _binding = null
+    private fun btnClick(){
+        binding.apply{
+            imgMakeupAnalysis.setOnClickListener{
+                replaceFragment(MakeupAnalysisInputFragment())
+            }
+        }
     }
+
+    private fun replaceFragment(fragment: Fragment) {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout, fragment)
+            .commit()
+    }
+
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        // Hentikan pemutaran slide otomatis saat fragment dihancurkan
+//        handler.removeCallbacks(runnable)
+//        _binding = null
+//    }
 }
 
 //    override fun onOptionsItemSelected(item: MenuItem): Boolean {

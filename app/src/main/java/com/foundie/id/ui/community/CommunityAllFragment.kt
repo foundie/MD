@@ -7,14 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.foundie.id.R
 import com.foundie.id.data.adapter.UserPostAdapter
 import com.foundie.id.data.local.response.DataPostItem
 import com.foundie.id.databinding.FragmentCommunityAllBinding
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.ui.login.dataStore
+import com.foundie.id.ui.profile.ProfileViewModel
+import com.foundie.id.ui.profile.user_detail.UserDetailFragment
 import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.CommunityViewModelFactory
+import com.foundie.id.viewmodel.ProfileViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 @Suppress("DEPRECATION")
@@ -27,6 +31,9 @@ class  CommunityAllFragment : Fragment() {
     private lateinit var adapter: UserPostAdapter
     private val viewModel: CommunityViewModel by lazy {
         ViewModelProvider(this, CommunityViewModelFactory(requireContext()))[CommunityViewModel::class.java]
+    }
+    private val profileViewModel: ProfileViewModel by lazy {
+        ViewModelProvider(this, ProfileViewModelFactory(requireContext()))[ProfileViewModel::class.java]
     }
 
 
@@ -78,12 +85,29 @@ class  CommunityAllFragment : Fragment() {
         binding.rvListCommunity.layoutManager = layoutManager
         binding.rvListCommunity.setHasFixedSize(true)
         binding.rvListCommunity.adapter = adapter
+        adapter.setOnItemClickCallback(object : UserPostAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: DataPostItem) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onProfileImageClicked(data: DataPostItem) {
+                val userDetailFragment = UserDetailFragment()
+                val bundle = Bundle()
+                bundle.putParcelable("USER_DATA", data)
+                userDetailFragment.arguments = bundle
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, userDetailFragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
 //        adapter.setOnItemClickCallback(object : CatalogAdapter.OnItemClickCallback {
 //            override fun onItemClicked(data: ProductData) {
 //                //selectedStory(data)
 //            }
 //        })
+    })
     }
+
 
     private fun setPostData(postList: List<DataPostItem>) {
         if (::adapter.isInitialized) {

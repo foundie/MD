@@ -4,11 +4,13 @@ import com.foundie.id.data.local.response.AddPasswordResponse
 import com.foundie.id.data.local.response.AddPostUserResponse
 import com.foundie.id.data.local.response.CommunityUserResponse
 import com.foundie.id.data.local.response.EditProfileResponse
+import com.foundie.id.data.local.response.HistoryResponse
 import com.foundie.id.data.local.response.LoginGoogleResponse
 import com.foundie.id.data.local.response.LoginResponse
 import com.foundie.id.data.local.response.PredictResponse
 import com.foundie.id.data.local.response.ProductResponse
 import com.foundie.id.data.local.response.RegisterResponse
+import com.foundie.id.data.local.response.UserDetailResponse
 import com.foundie.id.data.local.response.UserResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -20,6 +22,7 @@ import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -88,21 +91,36 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Call<CommunityUserResponse>
 
+
     // Add Post Users
     @Multipart
     @POST("/community/post")
     fun addPostUser(
         @Header("Authorization") token: String,
-        @Part postImage: MultipartBody.Part,
+        @Part image: MultipartBody.Part,
         @Part("title") title: RequestBody,
-        @Part("text") description: RequestBody,
+        @Part("text") text: RequestBody,
     ): Call<AddPostUserResponse>
 
+    // Predict MakeupStyle
     @Multipart
     @POST("predict/face")
     fun styleMakeup(
         @Header("Authorization") token: String,
-        @Part file: MultipartBody.Part,
+        @Part image: MultipartBody.Part,
     ): Call<PredictResponse>
+
+    // Get History Predict Users
+    @GET("predict/history")
+    fun getHistory(
+        @Header("Authorization") token: String
+    ): Call<HistoryResponse>
+
+    // Get Email Detail
+    @GET("biodata/{email}")
+    fun getdetailUser(
+        @Header("Authorization") token: String,
+        @Path("Email") email: String
+    ): Call<UserDetailResponse>
 
 }

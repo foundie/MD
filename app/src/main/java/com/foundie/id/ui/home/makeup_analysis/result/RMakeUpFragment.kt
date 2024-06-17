@@ -1,60 +1,79 @@
 package com.foundie.id.ui.home.makeup_analysis.result
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.foundie.id.R
+import com.foundie.id.databinding.FragmentRMakeUpBinding
+import com.foundie.id.settings.SettingsPreferences
+import com.foundie.id.ui.home.makeup_analysis.PredictViewModel
+import com.foundie.id.ui.login.dataStore
+import com.foundie.id.viewmodel.AuthModelFactory
+import com.foundie.id.viewmodel.AuthViewModel
+import com.foundie.id.viewmodel.PredictViewModelFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RMakeUpFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RMakeUpFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private var _binding: FragmentRMakeUpBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var prefen: SettingsPreferences
+    private lateinit var token: String
+    private val viewModel: PredictViewModel by lazy {
+        ViewModelProvider(
+            this,
+            PredictViewModelFactory(requireContext())
+        )[PredictViewModel::class.java]
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_r_make_up, container, false)
+    ): View {
+        _binding = FragmentRMakeUpBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RMakeUpFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RMakeUpFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        prefen = SettingsPreferences.getInstance(requireContext().dataStore)
+        val authViewModel =
+            ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
+        authViewModel.getUserLoginToken().observe(viewLifecycleOwner) {
+            token = it
+            viewModel.getHistory(token)
+        }
+
+        viewModel.isLoadingHistory.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
+        viewModel.history.observe(viewLifecycleOwner) { history ->
+            if (history != null && history.type == "face classification") {
+                binding.apply {
+                    tvTitleResult.text = history.prediction
+                    tvDescriptionResult.text = history.message
                 }
             }
+        }
+
+        viewModel.historyStatus.observe(viewLifecycleOwner) { historyStatus ->
+            if (historyStatus.isNullOrEmpty()) return@observe
+
+            val isError = viewModel.isErrorHistory
+            val message = if (isError && historyStatus == "Unauthorized") {
+                getString(R.string.ERROR_UNAUTHORIZED)
+            } else {
+                historyStatus
+            }
+            Log.d("RMakeUpFragment", message)
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

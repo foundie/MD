@@ -1,5 +1,6 @@
 package com.foundie.id.ui.community.community_post
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -13,6 +14,8 @@ import android.view.ViewGroup
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -21,10 +24,10 @@ import com.foundie.id.R
 import com.foundie.id.databinding.FragmentCreatePostBinding
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.delayTime
+import com.foundie.id.ui.community.CommunityFragment
 import com.foundie.id.ui.community.CommunityViewModel
 import com.foundie.id.ui.login.dataStore
 import com.foundie.id.ui.profile.ProfileFragment
-import com.foundie.id.ui.profile.ProfileViewModel
 import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.CommunityViewModelFactory
@@ -45,7 +48,6 @@ import java.util.Date
 import java.util.Locale
 import java.util.UUID
 
-@Suppress("DEPRECATION")
 class CreatePostFragment : Fragment() {
 
     private var _binding: FragmentCreatePostBinding? = null
@@ -132,7 +134,7 @@ class CreatePostFragment : Fragment() {
                     Snackbar.LENGTH_SHORT
                 ).show()
                 Handler(Looper.getMainLooper()).postDelayed({
-                    replaceFragment(ProfileFragment())
+                    replaceFragment(CommunityFragment())
                 }, delayTime)
             } else if (viewModel.isErrorAddPost && !addpostStatus.isNullOrEmpty()) {
                 Snackbar.make(binding.root, addpostStatus, Snackbar.LENGTH_SHORT).show()
@@ -146,41 +148,50 @@ class CreatePostFragment : Fragment() {
                 val title = edTitle.text.toString().trim()
                 val desc = edDescription.text.toString().trim()
 
+                if (title.isEmpty() || desc.isEmpty()) {
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.ERROR_TITLE_DESC_EMPTY),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                }
+
                 val postImagePath = currentPostPhotoPath
 
                 if (postImagePath != null) {
                     lifecycleScope.launch {
                         try {
-                            val profileFile = File(postImagePath)
+                            val postFile = File(postImagePath)
 
                             val compressedProfileFile =
-                                if (profileFile.length() > 1 * 1024 * 1024) {
+                                if (postFile.length() > 1 * 1024 * 1024) {
                                     withContext(Dispatchers.IO) {
                                         Compressor.compress(
                                             requireContext().applicationContext,
-                                            profileFile
+                                            postFile
                                         )
                                     }
                                 } else {
-                                    profileFile
+                                    postFile
                                 }
 
-                            val profileImageBody =
+                            val postImageBody =
                                 compressedProfileFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
 
-                            val profileFileName =
-                                "${System.currentTimeMillis()}_${UUID.randomUUID()}_profile.jpg"
+                            val postFileName =
+                                "${System.currentTimeMillis()}_${UUID.randomUUID()}_post.jpg"
 
-                            val profileImagePart = MultipartBody.Part.createFormData(
-                                "profileImage",
-                                profileFileName,
-                                profileImageBody
+                            val postImagePart = MultipartBody.Part.createFormData(
+                                "image",
+                                postFileName,
+                                postImageBody
                             )
 
                             val titleBody = title.toRequestBody("text/plain".toMediaType())
                             val descBody = desc.toRequestBody("text/plain".toMediaType())
 
-                            viewModel.addPostUser(token, profileImagePart,titleBody,descBody)
+                            viewModel.addPostUser(token, postImagePart, titleBody, descBody)
                         } catch (e: IOException) {
                             Snackbar.make(
                                 binding.root,
@@ -204,54 +215,55 @@ class CreatePostFragment : Fragment() {
                 }
             }
             ivUploadCamera.setOnClickListener {
-                showImageSourceDialog(false)
+                if (ContextCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.CAMERA
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    dispatchTakePictureIntent(isPost = true)
+                } else {
+                    ActivityCompat.requestPermissions(
+                        requireActivity(),
+                        arrayOf(Manifest.permission.CAMERA),
+                        REQUEST_CAMERA_PERMISSION
+                    )
+                }
             }
 
             ivUploadPhoto.setOnClickListener {
-                showImageSourceDialog(true)
+                profileGalleryLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
         }
     }
 
-
-    private fun createImageFile(isProfile: Boolean): File {
+    private fun createImageFile(isPost: Boolean): File {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
         val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
 
-        val prefix = if (isProfile) "Profile_" else "Cover_"
+        val prefix = if (isPost) "Cam_" else "Gallery_"
         val file = File.createTempFile(
             "${prefix}${timeStamp}_",
             ".jpg",
             storageDir
         )
 
-        if (isProfile) {
-            currentPostPhotoPath = file.absolutePath
-        } else {
-            currentCoverPhotoPath = file.absolutePath
-        }
+        currentPostPhotoPath = file.absolutePath
 
         return file
     }
 
-
-    private fun dispatchTakePictureIntent(isProfile: Boolean) {
+    private fun dispatchTakePictureIntent(isPost: Boolean) {
         val photoFile: File? = try {
-            createImageFile(isProfile)
+            createImageFile(isPost)
         } catch (ex: IOException) {
             null
         }
         photoFile?.also {
             val photoURI: Uri =
                 FileProvider.getUriForFile(requireContext(), "com.foundie.id.fileprovider", it)
-            if (isProfile) {
-                profilePhotoLauncher.launch(photoURI)
-            } else {
-                coverPhotoLauncher.launch(photoURI)
-            }
+            profilePhotoLauncher.launch(photoURI)
         }
     }
-
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
@@ -273,7 +285,7 @@ class CreatePostFragment : Fragment() {
         when (requestCode) {
             REQUEST_CAMERA_PERMISSION -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    dispatchTakePictureIntent(isProfile = true)
+                    dispatchTakePictureIntent(isPost = true)
                 } else {
                     Snackbar.make(binding.root, "Camera permission denied", Snackbar.LENGTH_SHORT)
                         .show()
@@ -282,7 +294,9 @@ class CreatePostFragment : Fragment() {
 
             REQUEST_GALLERY_PERMISSION -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    profileGalleryLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                    profileGalleryLauncher.launch(
+                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                    )
                 } else {
                     Snackbar.make(binding.root, "Gallery permission denied", Snackbar.LENGTH_SHORT)
                         .show()

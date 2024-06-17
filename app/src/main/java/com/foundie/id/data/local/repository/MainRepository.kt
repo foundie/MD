@@ -8,13 +8,17 @@ import com.foundie.id.data.local.response.AddPostUserResponse
 import com.foundie.id.data.local.response.CommunityUserResponse
 import com.foundie.id.data.local.response.DataPostItem
 import com.foundie.id.data.local.response.EditProfileResponse
+import com.foundie.id.data.local.response.HistoryResponse
 import com.foundie.id.data.local.response.LoginGoogleResponse
 import com.foundie.id.data.local.response.LoginResponse
+import com.foundie.id.data.local.response.PredictDataItem
 import com.foundie.id.data.local.response.PredictResponse
 import com.foundie.id.data.local.response.ProductData
 import com.foundie.id.data.local.response.ProductResponse
 import com.foundie.id.data.local.response.RegisterResponse
 import com.foundie.id.data.local.response.User
+import com.foundie.id.data.local.response.UserDetail
+import com.foundie.id.data.local.response.UserDetailResponse
 import com.foundie.id.data.local.response.UserResponse
 import com.foundie.id.data.local.retrofit.ApiService
 import com.foundie.id.settings.wrapEspressoIdlingResource
@@ -57,11 +61,12 @@ class MainRepository(private val apiService: ApiService) {
 
     private val _predictStatus = MutableLiveData<String>()
     val predictStatus: LiveData<String> = _predictStatus
-    private val _isLoadingpredict = MutableLiveData<Boolean>()
-    val isLoadingpredict: LiveData<Boolean> = _isLoadingpredict
+    private val _isLoadingPredict = MutableLiveData<Boolean>()
+    val isLoadingPredict: LiveData<Boolean> = _isLoadingPredict
     private val _makeupStyle = MutableLiveData<PredictResponse>()
-    val predict: LiveData<PredictResponse> = _makeupStyle
-    var isErrorpredict: Boolean = false
+    val makeupStyle: LiveData<PredictResponse> = _makeupStyle
+    var isErrorPredict: Boolean = false
+
 
     private val _editBiodataStatus = MutableLiveData<String>()
     val editBiodataStatus: LiveData<String> = _editBiodataStatus
@@ -88,9 +93,15 @@ class MainRepository(private val apiService: ApiService) {
     val isLoading: LiveData<Boolean> = _isLoading
 
 
-
     private val _biodata = MutableLiveData<User>()
     val biodata: LiveData<User> = _biodata
+
+    private val _detailUser = MutableLiveData<UserDetail>()
+    val detailUser: LiveData<UserDetail> = _detailUser
+
+    private val _history = MutableLiveData<PredictDataItem>()
+    val history: LiveData<PredictDataItem> = _history
+
     //var product: List<ProductData> = listOf()
     var isError: Boolean = false
 
@@ -112,10 +123,13 @@ class MainRepository(private val apiService: ApiService) {
                     when (response.code()) {
                         409 -> _registerStatus.value =
                             "Email already exists"
+
                         408 -> _registerStatus.value =
                             "Your internet connection is slow, please try again"
+
                         500 -> _registerStatus.value =
                             "Server not found, please try again later"
+
                         else -> {
                             _registerStatus.value = response.message()
                         }
@@ -152,7 +166,9 @@ class MainRepository(private val apiService: ApiService) {
                         isErrorLogin = true
                         when (response.code()) {
                             401 -> _loginStatus.value = "User not found"
-                            403 -> _loginStatus.value = "You have reached the maximum number of login attempts. Please try again later."
+                            403 -> _loginStatus.value =
+                                "You have reached the maximum number of login attempts. Please try again later."
+
                             500 -> _loginStatus.value = "Server not found. Please try again later."
                             else -> {
                                 _loginStatus.value = response.message()
@@ -186,7 +202,8 @@ class MainRepository(private val apiService: ApiService) {
                     if (response.isSuccessful && responseBody != null) {
                         isErrorVerify = false
                         _verify.value = responseBody
-                        _verifyStatus.value = "Welcome ${responseBody.loginGoogleResult.name}, To Foundie"
+                        _verifyStatus.value =
+                            "Welcome ${responseBody.loginGoogleResult.name}, To Foundie"
                     } else {
                         isErrorVerify = true
                         when (response.code()) {
@@ -206,10 +223,10 @@ class MainRepository(private val apiService: ApiService) {
         }
     }
 
-    fun setPassword(token: String,email: String,password: String) {
+    fun setPassword(token: String, email: String, password: String) {
         wrapEspressoIdlingResource {
             _isLoadingPass.value = true
-            val api = ApiConfig.getApiService().setPassword("Bearer $token",email,password)
+            val api = ApiConfig.getApiService().setPassword("Bearer $token", email, password)
             api.enqueue(object : Callback<AddPasswordResponse> {
                 override fun onResponse(
                     call: Call<AddPasswordResponse>,
@@ -217,17 +234,20 @@ class MainRepository(private val apiService: ApiService) {
                 ) {
                     _isLoadingPass.value = false
                     if (response.isSuccessful) {
-                        isErrorPassword= false
+                        isErrorPassword = false
                         _passwordStatus.value = "Password added successfully"
                     } else {
                         isErrorPassword = true
                         when (response.code()) {
                             401 -> _passwordStatus.value =
                                 "Unauthorized"
+
                             408 -> _passwordStatus.value =
                                 "Your internet connection is slow, please try again"
+
                             500 -> _passwordStatus.value =
                                 "Server not found, please try again later"
+
                             else -> {
                                 _passwordStatus.value = response.message()
                             }
@@ -272,10 +292,46 @@ class MainRepository(private val apiService: ApiService) {
         })
     }
 
-    fun editBiodata(token: String, coverImage: MultipartBody.Part, profileImage: MultipartBody.Part, name: RequestBody, phone: RequestBody,  description: RequestBody, location: RequestBody, gender: RequestBody) {
+    fun getDetailUser(token: String, email: String) {
+        _isLoading.value = true
+        val api = ApiConfig.getApiService().getdetailUser("Bearer $token",email)
+        api.enqueue(object : retrofit2.Callback<UserDetailResponse> {
+            override fun onResponse(call: Call<UserDetailResponse>, response: Response<UserDetailResponse>) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    isError = false
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        _detailUser.value = responseBody.data.user
+                    }
+                    _message.value = responseBody?.message.toString()
+                } else {
+                    isError = true
+                    _message.value = response.message()
+                }
+            }
+
+            override fun onFailure(call: Call<UserDetailResponse>, t: Throwable) {
+                _isLoading.value = false
+                isError = true
+                _message.value = t.message.toString()
+            }
+        })
+    }
+
+    fun editBiodata(
+        token: String,
+        coverImage: MultipartBody.Part,
+        profileImage: MultipartBody.Part,
+        name: RequestBody,
+        phone: RequestBody,
+        description: RequestBody,
+        location: RequestBody,
+        gender: RequestBody
+    ) {
         _isLoadingeditBiodata.value = true
         val service = ApiConfig.getApiService().editBiodata(
-            "Bearer $token", coverImage, profileImage,name,phone,description,location,gender
+            "Bearer $token", coverImage, profileImage, name, phone, description, location, gender
         )
         service.enqueue(object : Callback<EditProfileResponse> {
             override fun onResponse(
@@ -308,7 +364,10 @@ class MainRepository(private val apiService: ApiService) {
         _isLoading.value = true
         val api = ApiConfig.getApiService2().getProduct()
         api.enqueue(object : retrofit2.Callback<ProductResponse> {
-            override fun onResponse(call: Call<ProductResponse>, response: Response<ProductResponse>) {
+            override fun onResponse(
+                call: Call<ProductResponse>,
+                response: Response<ProductResponse>
+            ) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     isError = false
@@ -335,7 +394,10 @@ class MainRepository(private val apiService: ApiService) {
         _isLoading.value = true
         val api = ApiConfig.getApiService().getPostUser("Bearer $token")
         api.enqueue(object : retrofit2.Callback<CommunityUserResponse> {
-            override fun onResponse(call: Call<CommunityUserResponse>, response: Response<CommunityUserResponse>) {
+            override fun onResponse(
+                call: Call<CommunityUserResponse>,
+                response: Response<CommunityUserResponse>
+            ) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     isError = false
@@ -358,10 +420,16 @@ class MainRepository(private val apiService: ApiService) {
         })
     }
 
-    fun addPostUser(token: String, postImage: MultipartBody.Part, title: RequestBody, text: RequestBody) {
+    fun addPostUser(
+        token: String,
+        postImage: MultipartBody.Part,
+        title: RequestBody,
+        text: RequestBody
+    ) {
         _isLoadingAddPost.value = true
         val service = ApiConfig.getApiService().addPostUser(
-            "Bearer $token", postImage, title, text)
+            "Bearer $token", postImage, title, text
+        )
         service.enqueue(object : Callback<AddPostUserResponse> {
             override fun onResponse(
                 call: Call<AddPostUserResponse>,
@@ -375,7 +443,7 @@ class MainRepository(private val apiService: ApiService) {
                         _addpostStatus.value = responseBody.message
                     }
                 } else {
-                    isErrorAddPost= true
+                    isErrorAddPost = true
                     _addpostStatus.value = response.message()
 
                 }
@@ -390,40 +458,70 @@ class MainRepository(private val apiService: ApiService) {
     }
 
     fun styleMakeup(token: String, photo: MultipartBody.Part) {
-        _isLoadingpredict.value = true
-        val service = ApiConfig.getApiService().styleMakeup(
-            "Bearer $token", photo)
+        _isLoadingPredict.value = true
+        val service = ApiConfig.getApiService().styleMakeup("Bearer $token", photo)
         service.enqueue(object : Callback<PredictResponse> {
             override fun onResponse(
                 call: Call<PredictResponse>,
                 response: Response<PredictResponse>
             ) {
-                val responseBody = response.body()
-                _isLoadingpredict.value = false
+                _isLoadingPredict.value = false
                 if (response.isSuccessful) {
-                    isErrorpredict = false
-                    _makeupStyle.value = responseBody!!
-                    _predictStatus.value =
-                        "Success Get MakeUpStyle Recomendation"
+                    response.body()?.let {
+                        isErrorPredict = false
+                        _makeupStyle.value = it
+                        _predictStatus.value = it.data.message
+                    }
                 } else {
-                    isErrorpredict = true
+                    isErrorPredict = true
                     when (response.code()) {
                         401 -> _predictStatus.value = "Data not found"
-                        408 -> _passwordStatus.value = "Your internet connection is slow, please try again"
+                        408 -> _predictStatus.value =
+                            "Your internet connection is slow, please try again"
+
                         500 -> _predictStatus.value = "Server not found. Please try again later."
-                        else -> {
-                            _predictStatus.value = response.message()
-                        }
+                        else -> _predictStatus.value = response.message()
                     }
                 }
             }
 
             override fun onFailure(call: Call<PredictResponse>, t: Throwable) {
-                isErrorpredict = true
-                _isLoadingpredict.value = false
-                _predictStatus.value = t.message.toString()
+                isErrorPredict = true
+                _isLoadingPredict.value = false
+                _predictStatus.value = t.message
+            }
+        })
+    }
+
+    fun getHistory(token: String) {
+        _isLoading.value = true
+        val api = ApiConfig.getApiService().getHistory("Bearer $token")
+        api.enqueue(object : retrofit2.Callback<HistoryResponse> {
+            override fun onResponse(call: Call<HistoryResponse>, response: Response<HistoryResponse>) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    isError = false
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        val historyData = responseBody.data.firstOrNull()
+
+                        // Kirim data PredictDataItem ke LiveData _history
+                        _history.value = historyData!!
+
+                        // Kirim message ke LiveData
+                        _message.value = responseBody.message.toString()
+                } else {
+                    isError = true
+                    _message.value = response.message()
+                }
+                    }
             }
 
+            override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
+                _isLoading.value = false
+                isError = true
+                _message.value = t.message.toString()
+            }
         })
     }
 }
