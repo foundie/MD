@@ -7,6 +7,7 @@
         <item name="backgroundColor">@color/backgroundLayout</item>
         <item name="colorOnSurface">@color/white</item>
         <item name="colorAccent">@color/neutral_200</item>
+        <item name="colorOnTertiary">@color/dropdown_dark</item>
         <item name="colorOnPrimary">@color/pink_000</item>
         <item name="colorContainer">@color/info_100</item>
         <item name="colorOnContainer">@color/backgroundNav</item>
