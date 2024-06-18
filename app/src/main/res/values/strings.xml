@@ -214,4 +214,19 @@
     <string name="product_type">Product Type</string>
     <string name="input_your_product_shade">Input your product shade...</string>
     <string name="product_shade">Product Shade</string>
+    <string name="likes_total">likes total</string>
+    <string name="_90_8k">90.8K</string>
+    <string name="likes">Likes</string>
+    <string name="replies">Replies</string>
+    <string name="icon">icon</string>
+    <string name="example_input_skintific">Example input : Skintific</string>
+    <string name="example_input_cushion">Example input : Cushion</string>
+    <string name="product_variant">Product Variant</string>
+    <string name="input_your_product_variant">Input your product variant...</string>
+    <string name="example_input_wardah">Example Input : Wardah</string>
+    <string name="example_input_08">Example Input : 08</string>
+    <string name="input_example_pink_me">Input Example : Pink Me</string>
+    <string name="is_this_what_you_re_looking_for">Is this what you\'re looking for...</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
