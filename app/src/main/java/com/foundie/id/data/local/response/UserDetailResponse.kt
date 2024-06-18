@@ -47,6 +47,9 @@ data class UserDetail(
 	@field:SerializedName("followersCount")
 	val followersCount: Int,
 
+	@field:SerializedName("followingCount")
+	val followingCount: Int,
+
 	@field:SerializedName("email")
 	val email: String
 ) : Parcelable
@@ -54,17 +57,11 @@ data class UserDetail(
 @Parcelize
 data class Data(
 
-	@field:SerializedName("followersCount")
-	val followersCount: Int,
-
 	@field:SerializedName("user")
 	val user: UserDetail,
 
 	@field:SerializedName("posts")
 	val posts: List<PostsItem>,
-
-	@field:SerializedName("followingCount")
-	val followingCount: Int
 ) : Parcelable
 
 @Parcelize

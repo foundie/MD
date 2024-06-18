@@ -17,6 +17,8 @@ import com.foundie.id.R
 import com.foundie.id.databinding.FragmentProfileBinding
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.loadImageWithCacheBusting
+import com.foundie.id.ui.home.makeup_analysis.result.RMakeUpFragment
+import com.foundie.id.ui.home.makeup_analysis.result.SkinToneFragment
 import com.foundie.id.ui.login.dataStore
 import com.foundie.id.ui.profile.profile_edit.ProfileEditFragment
 import com.foundie.id.ui.profile.settings.SettingFragment
@@ -25,6 +27,7 @@ import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.ProfileViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator
 
+@Suppress("DEPRECATION")
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
@@ -53,6 +56,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefen = SettingsPreferences.getInstance(requireContext().dataStore)
+        btnClick()
 
         val profilePagerAdapter = ProfilePagerAdapter(requireActivity())
         binding.viewPager.adapter = profilePagerAdapter
@@ -106,16 +110,29 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun btnClick() {
+        binding.apply {
+            tvMakeupAnalysis.setOnClickListener {
+                replaceFragment(RMakeUpFragment())
+            }
+            tvSkintoneAnalysis.setOnClickListener {
+                replaceFragment(SkinToneFragment())
+            }
+        }
+    }
+
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_profile, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_settings -> {

@@ -1,7 +1,7 @@
 package com.foundie.id.ui.profile.user_detail
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.foundie.id.R
-import com.foundie.id.data.local.response.UserDetail
 import com.foundie.id.databinding.FragmentUserDetailBinding
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.loadImageWithCacheBusting
@@ -43,6 +42,7 @@ class UserDetailFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefen = SettingsPreferences.getInstance(requireContext().dataStore)
@@ -51,12 +51,8 @@ class UserDetailFragment : Fragment() {
         authViewModel.getUserLoginToken().observe(viewLifecycleOwner) {
             token = it
             val email = arguments?.getString("USER_EMAIL")
-            Log.d("halo","$email")
             if (email != null) {
-                Log.d("UserDetailFragment", "User email: $email")
                 viewModel.getDetailUser(token, email)
-            } else {
-                Log.e("UserDetailFragment", "Email is null")
             }
         }
 
@@ -71,8 +67,8 @@ class UserDetailFragment : Fragment() {
                     tvLocation.text = detailUser.location
                     tvGender.text = detailUser.gender
                     tvDescriptionProfile.text = detailUser.description
-//                    tvFollowed.text = "Following: ${detailUserfollowersCount}"
-//                    tvFollowers.text = "Followers: ${detailUser.follo}"
+                    tvFollowed.text = "Following: ${detailUser.followingCount}"
+                    tvFollowers.text = "Followers: ${detailUser.followersCount}"
                     ivUser.loadImageWithCacheBusting(detailUser.profilePictureUrl)
                     ivBackgroundUser.loadImageWithCacheBusting(detailUser.coverPictureUrl)
                 }

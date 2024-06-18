@@ -59,11 +59,12 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
         setupViewPager()
         observeViewModel()
-        setupButtonClick()
+        btnClick()
         val authViewModel =
             ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
         authViewModel.getUserLoginToken().observe(viewLifecycleOwner) {
             token = it
+            viewModel.getProduct(token)
         }
     }
 
@@ -114,13 +115,13 @@ class HomeFragment : Fragment() {
                 binding.rvListCatalog.visibility = View.VISIBLE
             }
         }
-
-        viewModel.getProduct(token)
     }
 
-    private fun setupButtonClick() {
-        binding.imgMakeupAnalysis.setOnClickListener {
-            replaceFragment(MakeupAnalysisInputFragment())
+    private fun btnClick() {
+        binding.apply {
+            imgMakeupAnalysis.setOnClickListener {
+                replaceFragment(MakeupAnalysisInputFragment())
+            }
         }
     }
 

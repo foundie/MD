@@ -15,7 +15,6 @@ import com.foundie.id.ui.login.dataStore
 import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.CatalogViewModelFactory
-import com.google.android.material.snackbar.Snackbar
 
 @Suppress("DEPRECATION")
 class  CatalogAllFragment : Fragment() {
@@ -48,6 +47,7 @@ class  CatalogAllFragment : Fragment() {
             ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
         authViewModel.getUserLoginToken().observe(viewLifecycleOwner) {
             token = it
+            viewModel.getProduct(token)
         }
 
         viewModel.isLoadingProduct.observe(viewLifecycleOwner) {
@@ -57,16 +57,11 @@ class  CatalogAllFragment : Fragment() {
         viewModel.product.observe(viewLifecycleOwner) { productList ->
             setProductData(productList)
         }
-        viewModel.getProduct(token)
 
         viewModel.productStatus.observe(viewLifecycleOwner) { productStatus ->
             val isError = viewModel.isErrorProduct
 
             if (isError && !productStatus.isNullOrEmpty()) {
-                binding.rvListCatalog.visibility = View.VISIBLE
-                Snackbar.make(binding.root, productStatus, Snackbar.LENGTH_SHORT).show()
-
-            } else if (!isError && !productStatus.isNullOrEmpty()) {
                 binding.rvListCatalog.visibility = View.VISIBLE
             }
         }
