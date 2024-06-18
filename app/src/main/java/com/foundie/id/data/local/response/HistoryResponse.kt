@@ -22,6 +22,9 @@ data class PredictDataItem(
 	@field:SerializedName("prediction")
 	val prediction: String,
 
+	@field:SerializedName("result")
+	val result: String,
+
 	@field:SerializedName("message")
 	val message: String,
 
@@ -29,5 +32,51 @@ data class PredictDataItem(
 	val type: String,
 
 	@field:SerializedName("email")
-	val email: String
+	val email: String,
+
+	@field:SerializedName("products")
+	val product: List<RecomendationDataItem>
+
 ) : Parcelable
+
+@Parcelize
+data class RecomendationDataItem(
+
+	@field:SerializedName("Image")
+	val image: String,
+
+	@field:SerializedName("Brand")
+	val brand: String,
+
+	@field:SerializedName("Product Title")
+	val productTitle: String,
+
+	@field:SerializedName("Variant Name")
+	val variantName: String,
+
+	@field:SerializedName("Type")
+	val type: String,
+
+	@field:SerializedName("Color Hex")
+	val colorHex: String,
+
+	@field:SerializedName("Color RGB")
+	val colorRGB: String,
+
+	@field:SerializedName("Season 1 Name")
+	val season1Name: String,
+
+	@field:SerializedName("Season 1 Percent")
+	val season1Percent: Double,
+
+	@field:SerializedName("Season 2 Name")
+	val season2Name: String,
+
+	@field:SerializedName("Season 2 Percent")
+	val season2Percent: Double,
+
+	@field:SerializedName("Product URL")
+	val productURL: String
+
+) : Parcelable
+

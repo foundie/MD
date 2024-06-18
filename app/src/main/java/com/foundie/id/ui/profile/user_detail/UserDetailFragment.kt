@@ -1,6 +1,7 @@
 package com.foundie.id.ui.profile.user_detail
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -49,17 +50,19 @@ class UserDetailFragment : Fragment() {
             ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
         authViewModel.getUserLoginToken().observe(viewLifecycleOwner) {
             token = it
+            val email = arguments?.getString("USER_EMAIL")
+            Log.d("halo","$email")
+            if (email != null) {
+                Log.d("UserDetailFragment", "User email: $email")
+                viewModel.getDetailUser(token, email)
+            } else {
+                Log.e("UserDetailFragment", "Email is null")
+            }
         }
 
         viewModel.isLoadingProfile.observe(viewLifecycleOwner) {
             showLoading(it)
         }
-
-        val profileUser: UserDetail? = arguments?.getParcelable("USER_DATA")
-        Log.d("UserDetailFragment", "Profile user: $profileUser")
-        profileUser?.let {
-            viewModel.getDetailUser(token, it.email)
-    }
 
         viewModel.detailUser.observe(viewLifecycleOwner) { detailUser ->
             if (detailUser != null) {

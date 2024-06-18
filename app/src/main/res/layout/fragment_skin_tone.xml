@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.makeup_analysis.result.SkinToneFragment">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="24dp">
+            android:padding="24dp">
 
             <ImageView
                 android:id="@+id/iv_icon"
@@ -21,7 +23,6 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/image"
                 android:src="@drawable/ic_b_result"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,8 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:textStyle="bold"
-
-                app:layout_constraintStart_toEndOf="@+id/iv_icon"
+                app:layout_constraintStart_toEndOf="@id/iv_icon"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/result" />
 
@@ -44,26 +44,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
-
-                app:layout_constraintStart_toEndOf="@+id/iv_icon"
+                app:layout_constraintStart_toEndOf="@id/iv_icon"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_result"
                 tools:text="@string/description" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_list_catalog"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/rv_list_recomendation"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="16dp"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/tv_description_result"
-                app:reverseLayout="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:spanCount="2"
                 tools:listitem="@layout/item_catalog" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -73,4 +70,4 @@
         android:layout_gravity="center"
         android:visibility="gone"
         tools:visibility="visible" />
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

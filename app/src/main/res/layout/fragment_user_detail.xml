@@ -57,7 +57,8 @@
         <TextView
             android:id="@+id/tv_description_profile"
             style="@style/TextContent.BodyS"
-            android:layout_marginTop="12dp"
+            android:padding="12dp"
+            android:gravity="center"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -120,8 +121,7 @@
 
             <TextView
                 android:id="@+id/tv_followers"
-                style="@style/TextContent.BodyXS"
-                android:text="@string/followers" />
+                style="@style/TextContent.BodyXS" />
 
             <TextView
                 android:id="@+id/tv_followers_total"
@@ -138,8 +138,7 @@
 
             <TextView
                 android:id="@+id/tv_followed"
-                style="@style/TextContent.BodyXS"
-                android:text="@string/following" />
+                style="@style/TextContent.BodyXS" />
 
             <TextView
                 android:id="@+id/tv_followed_total"
@@ -163,7 +162,7 @@
             tools:visibility="visible" />
 
         <TextView
-            android:id="@+id/tv_join"
+            android:id="@+id/tv_follow"
             style="@style/TextContent.TextHeading5"
             android:layout_marginTop="16dp"
             android:background="@drawable/ic_background_join"
@@ -172,7 +171,7 @@
             android:paddingRight="32dp"
 
             android:paddingBottom="8dp"
-            android:text="@string/join"
+            android:text="@string/follow"
             android:textColor="@color/backgroundLayout"
 
             app:layout_constraintEnd_toEndOf="parent"
@@ -188,7 +187,7 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_join">
+            app:layout_constraintTop_toBottomOf="@+id/tv_follow">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"

@@ -12,10 +12,11 @@ import com.foundie.id.data.local.response.HistoryResponse
 import com.foundie.id.data.local.response.LoginGoogleResponse
 import com.foundie.id.data.local.response.LoginResponse
 import com.foundie.id.data.local.response.PredictDataItem
-import com.foundie.id.data.local.response.PredictResponse
+import com.foundie.id.data.local.response.MakeUpResponse
 import com.foundie.id.data.local.response.ProductData
 import com.foundie.id.data.local.response.ProductResponse
 import com.foundie.id.data.local.response.RegisterResponse
+import com.foundie.id.data.local.response.SkinToneResponse
 import com.foundie.id.data.local.response.User
 import com.foundie.id.data.local.response.UserDetail
 import com.foundie.id.data.local.response.UserDetailResponse
@@ -63,10 +64,9 @@ class MainRepository(private val apiService: ApiService) {
     val predictStatus: LiveData<String> = _predictStatus
     private val _isLoadingPredict = MutableLiveData<Boolean>()
     val isLoadingPredict: LiveData<Boolean> = _isLoadingPredict
-    private val _makeupStyle = MutableLiveData<PredictResponse>()
-    val makeupStyle: LiveData<PredictResponse> = _makeupStyle
+    private val _makeupStyle = MutableLiveData<MakeUpResponse>()
+    private val _skintoneStyle = MutableLiveData<SkinToneResponse>()
     var isErrorPredict: Boolean = false
-
 
     private val _editBiodataStatus = MutableLiveData<String>()
     val editBiodataStatus: LiveData<String> = _editBiodataStatus
@@ -99,10 +99,12 @@ class MainRepository(private val apiService: ApiService) {
     private val _detailUser = MutableLiveData<UserDetail>()
     val detailUser: LiveData<UserDetail> = _detailUser
 
-    private val _history = MutableLiveData<PredictDataItem>()
-    val history: LiveData<PredictDataItem> = _history
+    private val _historyMakeUp = MutableLiveData<PredictDataItem>()
+    val historyMakeUp: LiveData<PredictDataItem> = _historyMakeUp
 
-    //var product: List<ProductData> = listOf()
+    private val _historyskinTone = MutableLiveData<PredictDataItem>()
+    val historySkinTone: LiveData<PredictDataItem> = _historyskinTone
+
     var isError: Boolean = false
 
 
@@ -360,9 +362,9 @@ class MainRepository(private val apiService: ApiService) {
         })
     }
 
-    fun getProduct() {
+    fun getProduct(token: String) {
         _isLoading.value = true
-        val api = ApiConfig.getApiService2().getProduct()
+        val api = ApiConfig.getApiService().getProduct("Bearer $token")
         api.enqueue(object : retrofit2.Callback<ProductResponse> {
             override fun onResponse(
                 call: Call<ProductResponse>,
@@ -460,10 +462,10 @@ class MainRepository(private val apiService: ApiService) {
     fun styleMakeup(token: String, photo: MultipartBody.Part) {
         _isLoadingPredict.value = true
         val service = ApiConfig.getApiService().styleMakeup("Bearer $token", photo)
-        service.enqueue(object : Callback<PredictResponse> {
+        service.enqueue(object : Callback<MakeUpResponse> {
             override fun onResponse(
-                call: Call<PredictResponse>,
-                response: Response<PredictResponse>
+                call: Call<MakeUpResponse>,
+                response: Response<MakeUpResponse>
             ) {
                 _isLoadingPredict.value = false
                 if (response.isSuccessful) {
@@ -485,7 +487,43 @@ class MainRepository(private val apiService: ApiService) {
                 }
             }
 
-            override fun onFailure(call: Call<PredictResponse>, t: Throwable) {
+            override fun onFailure(call: Call<MakeUpResponse>, t: Throwable) {
+                isErrorPredict = true
+                _isLoadingPredict.value = false
+                _predictStatus.value = t.message
+            }
+        })
+    }
+
+    fun skintone(token: String, photo: MultipartBody.Part) {
+        _isLoadingPredict.value = true
+        val service = ApiConfig.getApiService().skintone("Bearer $token", photo)
+        service.enqueue(object : Callback<SkinToneResponse> {
+            override fun onResponse(
+                call: Call<SkinToneResponse>,
+                response: Response<SkinToneResponse>
+            ) {
+                _isLoadingPredict.value = false
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        isErrorPredict = false
+                        _skintoneStyle.value = it
+                        _predictStatus.value = it.message
+                    }
+                } else {
+                    isErrorPredict = true
+                    when (response.code()) {
+                        401 -> _predictStatus.value = "Data not found"
+                        408 -> _predictStatus.value =
+                            "Your internet connection is slow, please try again"
+
+                        500 -> _predictStatus.value = "Server not found. Please try again later."
+                        else -> _predictStatus.value = response.message()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<SkinToneResponse>, t: Throwable) {
                 isErrorPredict = true
                 _isLoadingPredict.value = false
                 _predictStatus.value = t.message
@@ -503,10 +541,10 @@ class MainRepository(private val apiService: ApiService) {
                     isError = false
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        val historyData = responseBody.data.firstOrNull()
+                        val historyData = responseBody.data
 
-                        // Kirim data PredictDataItem ke LiveData _history
-                        _history.value = historyData!!
+                        _historyMakeUp.value = historyData[0]
+                        _historyskinTone.value = historyData[1]
 
                         // Kirim message ke LiveData
                         _message.value = responseBody.message.toString()

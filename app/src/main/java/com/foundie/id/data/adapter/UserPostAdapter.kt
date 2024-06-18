@@ -52,8 +52,7 @@ class UserPostAdapter() : RecyclerView.Adapter<UserPostAdapter.ListViewHolder>()
             binding.apply {
                 ivCommunity.visibility = View.GONE
                 tvCommunityName.visibility = View.GONE
-                tvUsername.text = postuser.email // Menampilkan email sementara proses konversi berlangsung
-
+                tvUsername.text = postuser.name
                 tvPostDescription.text = postuser.title
 
                 val dateTime = postuser.timestamp
@@ -62,12 +61,6 @@ class UserPostAdapter() : RecyclerView.Adapter<UserPostAdapter.ListViewHolder>()
 
                 imgUser.loadImageWithCacheBusting(postuser.profileImageUrl)
                 ivPostImage.loadImageWithCacheBusting(postuser.imageUrls[0])
-
-                // Menggunakan ViewModel untuk mengubah email menjadi username
-//                profileViewModel.detailUser(postuser.email) { result ->
-//                    // Callback ketika konversi selesai
-//                    tvUsername.text = result ?: postuser.email // Tampilkan hasil username atau tetap tampilkan email jika gagal
-//                }
 
                 imgUser.setOnClickListener {
                     onItemClickCallback.onProfileImageClicked(postuser)

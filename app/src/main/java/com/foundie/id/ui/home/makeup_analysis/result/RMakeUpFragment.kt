@@ -51,7 +51,7 @@ class RMakeUpFragment : Fragment() {
             showLoading(it)
         }
 
-        viewModel.history.observe(viewLifecycleOwner) { history ->
+        viewModel.historyMakeUp.observe(viewLifecycleOwner) { history ->
             if (history != null && history.type == "face classification") {
                 binding.apply {
                     tvTitleResult.text = history.prediction

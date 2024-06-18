@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.foundie.id.R
 import com.foundie.id.data.adapter.UserPostAdapter
 import com.foundie.id.data.local.response.DataPostItem
+import com.foundie.id.data.local.response.UserDetail
 import com.foundie.id.databinding.FragmentCommunityAllBinding
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.ui.login.dataStore
@@ -91,23 +92,25 @@ class  CommunityAllFragment : Fragment() {
             }
 
             override fun onProfileImageClicked(data: DataPostItem) {
-                val userDetailFragment = UserDetailFragment()
-                val bundle = Bundle()
-                bundle.putParcelable("USER_DATA", data)
-                userDetailFragment.arguments = bundle
+                val email = data.email
+                val bundle = Bundle().apply {
+                    putString("USER_EMAIL", email)
+                }
+                val fragment = UserDetailFragment().apply {
+                    arguments = bundle
+                }
+
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.frame_layout, userDetailFragment)
-                    .addToBackStack(null)
+                    .replace(R.id.frame_layout, fragment)
                     .commit()
             }
+        })
+    }
 //        adapter.setOnItemClickCallback(object : CatalogAdapter.OnItemClickCallback {
 //            override fun onItemClicked(data: ProductData) {
 //                //selectedStory(data)
 //            }
 //        })
-    })
-    }
-
 
     private fun setPostData(postList: List<DataPostItem>) {
         if (::adapter.isInitialized) {

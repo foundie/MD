@@ -96,6 +96,7 @@
     <string name="IMAGE_CAPTURE_FAILED">Capture Image failed to initialize. See error logs for details</string>
     <string name="BIODATA_UPLOAD_SUCCESS">Biodata Updated Successfully</string>
     <string name="POST_UPLOAD_SUCCESS">Post successfully created</string>
+    <string name="PREDICT_UPLOAD_SUCCESS">Wait For Result....</string>
     <string name="ERROR_LOAD_IMAGES">Failed to load images</string>
     <string name="ERROR_UPLOAD_DATA">Error uploading data</string>
     <string name="ERROR_COMPRESSING_DATA">Error compressing file</string>
@@ -112,6 +113,7 @@
     <string name="top_communities">Top Communities</string>
     <string name="join">Join</string>
     <string name="favorites">favorites</string>
+    <string name="follow">Follow</string>
     <string name="search">search</string>
     <string name="create_community">create community</string>
     <string name="Create_Community">Create Community</string>

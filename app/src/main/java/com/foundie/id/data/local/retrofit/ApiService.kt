@@ -4,12 +4,14 @@ import com.foundie.id.data.local.response.AddPasswordResponse
 import com.foundie.id.data.local.response.AddPostUserResponse
 import com.foundie.id.data.local.response.CommunityUserResponse
 import com.foundie.id.data.local.response.EditProfileResponse
+import com.foundie.id.data.local.response.FollowResponse
 import com.foundie.id.data.local.response.HistoryResponse
 import com.foundie.id.data.local.response.LoginGoogleResponse
 import com.foundie.id.data.local.response.LoginResponse
-import com.foundie.id.data.local.response.PredictResponse
+import com.foundie.id.data.local.response.MakeUpResponse
 import com.foundie.id.data.local.response.ProductResponse
 import com.foundie.id.data.local.response.RegisterResponse
+import com.foundie.id.data.local.response.SkinToneResponse
 import com.foundie.id.data.local.response.UserDetailResponse
 import com.foundie.id.data.local.response.UserResponse
 import okhttp3.MultipartBody
@@ -23,7 +25,6 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface ApiService {
 
@@ -83,6 +84,7 @@ interface ApiService {
     // Get Products
     @GET("products")
     fun getProduct(
+        @Header("Authorization") token: String
     ): Call<ProductResponse>
 
     // Get Post Users
@@ -90,7 +92,6 @@ interface ApiService {
     fun getPostUser(
         @Header("Authorization") token: String
     ): Call<CommunityUserResponse>
-
 
     // Add Post Users
     @Multipart
@@ -108,7 +109,15 @@ interface ApiService {
     fun styleMakeup(
         @Header("Authorization") token: String,
         @Part image: MultipartBody.Part,
-    ): Call<PredictResponse>
+    ): Call<MakeUpResponse>
+
+    // Predict SkinTone
+    @Multipart
+    @POST("predict/skin")
+    fun skintone(
+        @Header("Authorization") token: String,
+        @Part image: MultipartBody.Part,
+    ): Call<SkinToneResponse>
 
     // Get History Predict Users
     @GET("predict/history")
@@ -120,7 +129,14 @@ interface ApiService {
     @GET("biodata/{email}")
     fun getdetailUser(
         @Header("Authorization") token: String,
-        @Path("Email") email: String
+        @Path("email") email: String
     ): Call<UserDetailResponse>
+
+    // Follow User
+    @POST("follow//{followingemail}")
+    @FormUrlEncoded
+    fun getfollow(
+        @Path("followingemail") following: String,
+    ): Call<FollowResponse>
 
 }

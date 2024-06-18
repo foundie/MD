@@ -2,22 +2,27 @@ package com.foundie.id.data.local.response
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
-data class ProductResponse(
-    @field:SerializedName("error")
-    val error: Boolean,
-
-    @field:SerializedName("status")
-    val message: String,
+data class SkinToneResponse(
 
     @field:SerializedName("data")
-    val data: List<ProductData>
+    val data: SkinToneStyleResponse,
+
+    @field:SerializedName("result")
+    val result: String,
+
+    @field:SerializedName("message")
+    val message: String,
+
+    @field:SerializedName("error")
+    val error: Boolean
+
 )
 
-@Suppress("DEPRECATED_ANNOTATION")
 @Parcelize
-data class ProductData(
+data class SkinToneStyleResponse(
+
     @field:SerializedName("Image")
     val image: String,
 
@@ -45,11 +50,17 @@ data class ProductData(
     @field:SerializedName("Season 1 Percent")
     val season1Percent: Double,
 
+    @field:SerializedName("S1 Closest Color")
+    val s1ClosestColor: Int,
+
     @field:SerializedName("Season 2 Name")
     val season2Name: String,
 
     @field:SerializedName("Season 2 Percent")
     val season2Percent: Double,
+
+    @field:SerializedName("S2 Closest Color")
+    val s2ClosestColor: Int,
 
     @field:SerializedName("Product URL")
     val productURL: String

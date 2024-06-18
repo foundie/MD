@@ -21,7 +21,7 @@ class CatalogViewModel(private val mainRepository: MainRepository) : ViewModel()
         }
     }
 
-    fun getProduct() {
-        mainRepository.getProduct()
+    fun getProduct(token:String) {
+        mainRepository.getProduct(token)
     }
 }

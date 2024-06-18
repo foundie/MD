@@ -4,7 +4,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-data class PredictResponse(
+data class MakeUpResponse(
 
     @field:SerializedName("data")
     val data: MakeUpStyleResponse,

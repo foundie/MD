@@ -1,13 +1,13 @@
 package com.foundie.id.ui.home.makeup_analysis
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -25,8 +25,6 @@ import com.foundie.id.R
 import com.foundie.id.databinding.FragmentMakeupAnalysisInputBinding
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.delayTime
-import com.foundie.id.ui.community.CommunityFragment
-import com.foundie.id.ui.home.makeup_analysis.result.RMakeUpFragment
 import com.foundie.id.ui.home.makeup_analysis.result.ResultMakeUpFragment
 import com.foundie.id.ui.login.dataStore
 import com.foundie.id.viewmodel.AuthModelFactory
@@ -126,11 +124,15 @@ class MakeupAnalysisInputFragment : Fragment() {
             showLoading(it)
         }
 
-        viewModel.makeUpStyleStatus.observe(viewLifecycleOwner) { predictStatus ->
+        viewModel.isLoadingskinTone.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
+        val observer: (String?) -> Unit = { predictStatus ->
             if (!predictStatus.isNullOrEmpty()) {
                 Snackbar.make(
                     binding.root,
-                    getString(R.string.POST_UPLOAD_SUCCESS),
+                    getString(R.string.PREDICT_UPLOAD_SUCCESS),
                     Snackbar.LENGTH_SHORT
                 ).show()
                 Handler(Looper.getMainLooper()).postDelayed({
@@ -140,7 +142,11 @@ class MakeupAnalysisInputFragment : Fragment() {
                 Snackbar.make(binding.root, predictStatus, Snackbar.LENGTH_SHORT).show()
             }
         }
+
+        viewModel.makeUpStyleStatus.observe(viewLifecycleOwner, observer)
+        viewModel.skinToneStyleStatus.observe(viewLifecycleOwner, observer)
     }
+
 
     private fun btnClick() {
         binding.apply {
@@ -178,6 +184,7 @@ class MakeupAnalysisInputFragment : Fragment() {
                             )
 
                             viewModel.makeupStyle(token, postImagePart)
+                            viewModel.skintone(token, postImagePart)
                         } catch (e: IOException) {
                             Snackbar.make(
                                 binding.root,
@@ -273,9 +280,13 @@ class MakeupAnalysisInputFragment : Fragment() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.frame_layout, fragment)
-            .commit()
+        if (isAdded) {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment)
+                .commit()
+        } else {
+            Log.e("MakeupAnalysisInputFragment", "Fragment is not attached to an activity.")
+        }
     }
 
     @Deprecated("Deprecated in Java")

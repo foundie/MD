@@ -1,23 +1,28 @@
 package com.foundie.id.ui.catalog
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.foundie.id.data.adapter.CatalogAdapter
 import com.foundie.id.data.local.response.ProductData
 import com.foundie.id.databinding.FragmentCatalogAllBinding
+import com.foundie.id.settings.SettingsPreferences
+import com.foundie.id.ui.login.dataStore
+import com.foundie.id.viewmodel.AuthModelFactory
+import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.CatalogViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
+@Suppress("DEPRECATION")
 class  CatalogAllFragment : Fragment() {
     private var _binding: FragmentCatalogAllBinding? = null
     private val binding get() = _binding!!
+    private lateinit var prefen: SettingsPreferences
+    private lateinit var token: String
 
     private lateinit var adapter: CatalogAdapter
     private val viewModel: CatalogViewModel by lazy {
@@ -36,8 +41,14 @@ class  CatalogAllFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        prefen = SettingsPreferences.getInstance(requireContext().dataStore)
         adapter = CatalogAdapter()
         showRecyclerView()
+        val authViewModel =
+            ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
+        authViewModel.getUserLoginToken().observe(viewLifecycleOwner) {
+            token = it
+        }
 
         viewModel.isLoadingProduct.observe(viewLifecycleOwner) {
             showLoading(it)
@@ -46,7 +57,7 @@ class  CatalogAllFragment : Fragment() {
         viewModel.product.observe(viewLifecycleOwner) { productList ->
             setProductData(productList)
         }
-        viewModel.getProduct()
+        viewModel.getProduct(token)
 
         viewModel.productStatus.observe(viewLifecycleOwner) { productStatus ->
             val isError = viewModel.isErrorProduct
@@ -76,18 +87,8 @@ class  CatalogAllFragment : Fragment() {
     private fun setProductData(productList: List<ProductData>) {
         if (::adapter.isInitialized) {
             if (productList.isNotEmpty()) {
-                Log.d("HomeFragment","data tidak kosong")
                 adapter.setData(productList)
-                Log.d("HomeFragment", "Product data set successfully")
-                // Mencetak data produk ke dalam log
-                for (product in productList) {
-                    Log.d("HomeFragment", "Product ID: ${product.brand}, Name: ${product.variantName}, Price: ${product.season1Name}")
-                }
-            } else {
-                Log.d("HomeFragment", "Product data is empty")
             }
-        } else {
-            Log.e("HomeFragment", "CatalogAdapter is not initialized")
         }
     }
 
