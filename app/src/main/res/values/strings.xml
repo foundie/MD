@@ -210,4 +210,9 @@
     <string name="product_type">Product Type</string>
     <string name="input_your_product_shade">Input your product shade...</string>
     <string name="product_shade">Product Shade</string>
+    <string name="likes_total">likes total</string>
+    <string name="_90_8k">90.8K</string>
+    <string name="likes">Likes</string>
+    <string name="replies">Replies</string>
+    <string name="icon">icon</string>
 </resources>
