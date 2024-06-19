@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -15,7 +16,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.foundie.id.R
+import com.foundie.id.data.local.response.CreateCommunityResponse
 import com.foundie.id.databinding.FragmentCommunityBinding
+import com.foundie.id.ui.community.community_create.CommunityCreateFragment
 import com.foundie.id.ui.community.community_post.CreatePostFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -90,6 +93,17 @@ class CommunityFragment : Fragment() {
         val searchIconResId = R.drawable.ic_menu_search
         menu.findItem(R.id.menu_search).icon =
             ContextCompat.getDrawable(requireContext(), searchIconResId)
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_make_community -> {
+                replaceFragment(CommunityCreateFragment())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun closeKeyboard() {

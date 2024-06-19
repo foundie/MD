@@ -3,6 +3,7 @@ package com.foundie.id.data.local.retrofit
 import com.foundie.id.data.local.response.AddPasswordResponse
 import com.foundie.id.data.local.response.AddPostUserResponse
 import com.foundie.id.data.local.response.CommunityUserResponse
+import com.foundie.id.data.local.response.CreateCommunityResponse
 import com.foundie.id.data.local.response.EditProfileResponse
 import com.foundie.id.data.local.response.FollowResponse
 import com.foundie.id.data.local.response.HistoryResponse
@@ -139,4 +140,21 @@ interface ApiService {
         @Path("followingemail") following: String,
     ): Call<FollowResponse>
 
+    // Create Community Group
+    @Multipart
+    @POST("/community/create")
+    fun createCommunity(
+        @Header("Authorization") token: String,
+        @Part coverImage: MultipartBody.Part,
+        @Part profileImage: MultipartBody.Part,
+        @Part("title") title: RequestBody,
+        @Part("topics") topics: RequestBody,
+        @Part("description") description: RequestBody,
+    ): Call<CreateCommunityResponse>
+
+    // Get Community Group
+    @GET("community/group/search")
+    fun getGroup(
+        @Header("Authorization") token: String
+    ): Call<HistoryResponse>
 }

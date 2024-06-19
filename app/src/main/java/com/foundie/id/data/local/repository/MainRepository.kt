@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.foundie.id.data.local.response.AddPasswordResponse
 import com.foundie.id.data.local.response.AddPostUserResponse
 import com.foundie.id.data.local.response.CommunityUserResponse
+import com.foundie.id.data.local.response.CreateCommunityResponse
 import com.foundie.id.data.local.response.DataPostItem
 import com.foundie.id.data.local.response.EditProfileResponse
 import com.foundie.id.data.local.response.HistoryResponse
@@ -73,6 +74,12 @@ class MainRepository(private val apiService: ApiService) {
     private val _isLoadingeditBiodata = MutableLiveData<Boolean>()
     val isLoadingeditBiodata: LiveData<Boolean> = _isLoadingeditBiodata
     var isErroreditBiodata: Boolean = false
+
+    private val _createCommunityStatus = MutableLiveData<String>()
+    val createCommunityStatus: LiveData<String> = _createCommunityStatus
+    private val _isLoadingCommunity = MutableLiveData<Boolean>()
+    val isLoadingCommunity: LiveData<Boolean> = _isLoadingCommunity
+    var isErrorCommunity: Boolean = false
 
     private val _addpostStatus = MutableLiveData<String>()
     val addpostStatus: LiveData<String> = _addpostStatus
@@ -358,6 +365,44 @@ class MainRepository(private val apiService: ApiService) {
                 _isLoadingeditBiodata.value = false
                 isErroreditBiodata = true
                 _editBiodataStatus.value = t.message
+            }
+        })
+    }
+
+    fun createCommunity(
+        token: String,
+        coverImage: MultipartBody.Part,
+        profileImage: MultipartBody.Part,
+        title: RequestBody,
+        topics: RequestBody,
+        description: RequestBody
+    ) {
+        _isLoadingCommunity.value = true
+        val service = ApiConfig.getApiService().createCommunity(
+            "Bearer $token", coverImage, profileImage, title, topics, description)
+        service.enqueue(object : Callback<CreateCommunityResponse> {
+            override fun onResponse(
+                call: Call<CreateCommunityResponse>,
+                response: Response<CreateCommunityResponse>
+            ) {
+                _isLoadingCommunity.value = false
+                if (response.isSuccessful) {
+                    isErrorCommunity = false
+                    val responseBody = response.body()
+                    if (responseBody != null && !responseBody.error) {
+                        _createCommunityStatus.value = responseBody.message
+                    }
+                } else {
+                    isErrorCommunity = true
+                    _createCommunityStatus.value = response.message()
+
+                }
+            }
+
+            override fun onFailure(call: Call<CreateCommunityResponse>, t: Throwable) {
+                _isLoadingCommunity.value = false
+                isErrorCommunity = true
+                _createCommunityStatus.value = t.message
             }
         })
     }
