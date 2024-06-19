@@ -82,6 +82,7 @@
                 android:background="@drawable/ic_background_tag"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
+                android:textColor="?attr/backgroundColor"
 
                 tools:text="@string/season" />
 
@@ -93,6 +94,7 @@
                 android:background="@drawable/ic_background_tag"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
+                android:textColor="?attr/backgroundColor"
                 tools:text="@string/season" />
 
         </LinearLayout>
