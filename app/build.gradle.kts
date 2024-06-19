@@ -170,4 +170,8 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
 
+    //CameraX
+    implementation ("androidx.camera:camera-camera2:1.1.0-beta03")
+    implementation ("androidx.camera:camera-lifecycle:1.1.0-beta03")
+    implementation ("androidx.camera:camera-view:1.1.0-beta03")
 }
