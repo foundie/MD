@@ -6,6 +6,7 @@ import com.foundie.id.data.local.response.CommunityUserResponse
 import com.foundie.id.data.local.response.CreateCommunityResponse
 import com.foundie.id.data.local.response.EditProfileResponse
 import com.foundie.id.data.local.response.FollowResponse
+import com.foundie.id.data.local.response.GroupCommunityResponse
 import com.foundie.id.data.local.response.HistoryResponse
 import com.foundie.id.data.local.response.LoginGoogleResponse
 import com.foundie.id.data.local.response.LoginResponse
@@ -156,5 +157,5 @@ interface ApiService {
     @GET("community/group/search")
     fun getGroup(
         @Header("Authorization") token: String
-    ): Call<HistoryResponse>
+    ): Call<GroupCommunityResponse>
 }

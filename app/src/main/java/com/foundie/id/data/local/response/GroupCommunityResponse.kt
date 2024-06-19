@@ -8,21 +8,13 @@ import com.google.gson.annotations.SerializedName
 data class GroupCommunityResponse(
 
 	@field:SerializedName("data")
-	val data: Data,
+	val data: List<GroupsDataItem>,
 
 	@field:SerializedName("message")
 	val message: String,
 
 	@field:SerializedName("error")
 	val error: Boolean
-
-) : Parcelable
-
-@Parcelize
-data class Data(
-
-	@field:SerializedName("groupsData")
-	val groupsData: List<GroupsDataItem>
 
 ) : Parcelable
 

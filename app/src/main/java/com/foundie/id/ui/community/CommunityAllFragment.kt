@@ -10,11 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.foundie.id.R
 import com.foundie.id.data.adapter.UserPostAdapter
 import com.foundie.id.data.local.response.DataPostItem
-import com.foundie.id.data.local.response.UserDetail
 import com.foundie.id.databinding.FragmentCommunityAllBinding
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.ui.login.dataStore
-import com.foundie.id.ui.profile.ProfileViewModel
 import com.foundie.id.ui.profile.user_detail.UserDetailFragment
 import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
@@ -33,10 +31,6 @@ class  CommunityAllFragment : Fragment() {
     private val viewModel: CommunityViewModel by lazy {
         ViewModelProvider(this, CommunityViewModelFactory(requireContext()))[CommunityViewModel::class.java]
     }
-    private val profileViewModel: ProfileViewModel by lazy {
-        ViewModelProvider(this, ProfileViewModelFactory(requireContext()))[ProfileViewModel::class.java]
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

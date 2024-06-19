@@ -9,6 +9,8 @@ import com.foundie.id.data.local.response.CommunityUserResponse
 import com.foundie.id.data.local.response.CreateCommunityResponse
 import com.foundie.id.data.local.response.DataPostItem
 import com.foundie.id.data.local.response.EditProfileResponse
+import com.foundie.id.data.local.response.GroupCommunityResponse
+import com.foundie.id.data.local.response.GroupsDataItem
 import com.foundie.id.data.local.response.HistoryResponse
 import com.foundie.id.data.local.response.LoginGoogleResponse
 import com.foundie.id.data.local.response.LoginResponse
@@ -93,6 +95,9 @@ class MainRepository(private val apiService: ApiService) {
 
     private val _postuser = MutableLiveData<List<DataPostItem>>()
     val postuser: LiveData<List<DataPostItem>> = _postuser
+
+    private val _listGroup = MutableLiveData<List<GroupsDataItem>>()
+    val listGroup: LiveData<List<GroupsDataItem>> = _listGroup
 
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> = _message
@@ -460,6 +465,36 @@ class MainRepository(private val apiService: ApiService) {
             }
 
             override fun onFailure(call: Call<CommunityUserResponse>, t: Throwable) {
+                _isLoading.value = false
+                isError = true
+                _message.value = t.message.toString()
+            }
+        })
+    }
+
+    fun getGroup(token: String) {
+        _isLoading.value = true
+        val api = ApiConfig.getApiService().getGroup("Bearer $token")
+        api.enqueue(object : retrofit2.Callback<GroupCommunityResponse> {
+            override fun onResponse(
+                call: Call<GroupCommunityResponse>,
+                response: Response<GroupCommunityResponse>
+            ) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    isError = false
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        _listGroup.value = responseBody.data
+                    }
+                    _message.value = responseBody?.message.toString()
+                } else {
+                    isError = true
+                    _message.value = response.message()
+                }
+            }
+
+            override fun onFailure(call: Call<GroupCommunityResponse>, t: Throwable) {
                 _isLoading.value = false
                 isError = true
                 _message.value = t.message.toString()

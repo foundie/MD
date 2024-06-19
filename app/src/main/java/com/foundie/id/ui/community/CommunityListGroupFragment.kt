@@ -5,56 +5,96 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.foundie.id.R
+import com.foundie.id.data.adapter.GroupCommunityAdapter
+import com.foundie.id.data.adapter.UserPostAdapter
+import com.foundie.id.data.local.response.DataPostItem
+import com.foundie.id.data.local.response.GroupsDataItem
+import com.foundie.id.databinding.FragmentCommunityListGroupBinding
+import com.foundie.id.settings.SettingsPreferences
+import com.foundie.id.ui.login.dataStore
+import com.foundie.id.ui.profile.user_detail.UserDetailFragment
+import com.foundie.id.viewmodel.AuthModelFactory
+import com.foundie.id.viewmodel.AuthViewModel
+import com.foundie.id.viewmodel.CommunityViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@Suppress("DEPRECATION")
+class  CommunityListGroupFragment : Fragment() {
+    private var _binding: FragmentCommunityListGroupBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var prefen: SettingsPreferences
+    private lateinit var token: String
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CommunityListGroupFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class CommunityListGroupFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private lateinit var adapter: GroupCommunityAdapter
+    private val viewModel: CommunityViewModel by lazy {
+        ViewModelProvider(this, CommunityViewModelFactory(requireContext()))[CommunityViewModel::class.java]
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_community_list_group, container, false)
+    ): View {
+        _binding = FragmentCommunityListGroupBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CommunityListGroupFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CommunityListGroupFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        prefen = SettingsPreferences.getInstance(requireContext().dataStore)
+        adapter = GroupCommunityAdapter()
+        showRecyclerView()
+
+        val authViewModel =
+            ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
+        authViewModel.getUserLoginToken().observe(viewLifecycleOwner) {
+            token = it
+            viewModel.getListGroup(token)
+        }
+
+        viewModel.isLoadingListGroup.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
+        viewModel.listGroup.observe(viewLifecycleOwner) { groupList ->
+            setPostData(groupList)
+        }
+
+        viewModel.listGroupStatus.observe(viewLifecycleOwner) { listGroupStatus ->
+            val isError = viewModel.isErrorListGroup
+
+            if (isError && !listGroupStatus.isNullOrEmpty()) {
+                binding.rvListCommunityGroup.visibility = View.VISIBLE
             }
+        }
+    }
+
+    private fun showRecyclerView() {
+        val layoutManager = GridLayoutManager(requireContext(),2)
+        binding.rvListCommunityGroup.layoutManager = layoutManager
+        binding.rvListCommunityGroup.setHasFixedSize(true)
+        binding.rvListCommunityGroup.adapter = adapter
+    }
+//        adapter.setOnItemClickCallback(object : CatalogAdapter.OnItemClickCallback {
+//            override fun onItemClicked(data: ProductData) {
+//                //selectedStory(data)
+//            }
+//        })
+
+    private fun setPostData(groupList: List<GroupsDataItem>) {
+        if (::adapter.isInitialized) {
+            if (groupList.isNotEmpty()) {
+                adapter.setData(groupList)
+            }
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
