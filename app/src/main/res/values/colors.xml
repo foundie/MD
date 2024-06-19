@@ -24,4 +24,7 @@
 
     <color name="primaryColor">#DC2F91</color>
     <color name="backgroundLayout">#FFFFFF</color>
+
+    <!--Color Brightness-->
+    <color name="brightness_one_2">#FEEAE9</color>
 </resources>

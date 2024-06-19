@@ -18,6 +18,7 @@ import com.foundie.id.databinding.FragmentHomeBinding
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.delayTimeSlider
 import com.foundie.id.ui.catalog.CatalogViewModel
+import com.foundie.id.ui.home.color_analysis.input.ColorAnalysisInputFirstFragment
 import com.foundie.id.ui.home.makeup_analysis.MakeupAnalysisInputFragment
 import com.foundie.id.ui.login.dataStore
 import com.foundie.id.viewmodel.AuthModelFactory
@@ -121,6 +122,12 @@ class HomeFragment : Fragment() {
         binding.apply {
             imgMakeupAnalysis.setOnClickListener {
                 replaceFragment(MakeupAnalysisInputFragment())
+            }
+        }
+
+        binding.apply {
+            imgColorAnalysis.setOnClickListener {
+                replaceFragment(ColorAnalysisInputFirstFragment())
             }
         }
     }
