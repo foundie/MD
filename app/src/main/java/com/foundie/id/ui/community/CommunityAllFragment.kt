@@ -1,13 +1,21 @@
 package com.foundie.id.ui.community
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.foundie.id.R
+import com.foundie.id.data.adapter.CatalogAdapter
 import com.foundie.id.data.adapter.UserPostAdapter
 import com.foundie.id.data.local.response.DataPostItem
 import com.foundie.id.databinding.FragmentCommunityAllBinding
@@ -17,11 +25,10 @@ import com.foundie.id.ui.profile.user_detail.UserDetailFragment
 import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.CommunityViewModelFactory
-import com.foundie.id.viewmodel.ProfileViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 @Suppress("DEPRECATION")
-class  CommunityAllFragment : Fragment() {
+class CommunityAllFragment : Fragment() {
     private var _binding: FragmentCommunityAllBinding? = null
     private val binding get() = _binding!!
     private lateinit var prefen: SettingsPreferences
@@ -29,7 +36,10 @@ class  CommunityAllFragment : Fragment() {
 
     private lateinit var adapter: UserPostAdapter
     private val viewModel: CommunityViewModel by lazy {
-        ViewModelProvider(this, CommunityViewModelFactory(requireContext()))[CommunityViewModel::class.java]
+        ViewModelProvider(
+            this,
+            CommunityViewModelFactory(requireContext())
+        )[CommunityViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -41,11 +51,13 @@ class  CommunityAllFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefen = SettingsPreferences.getInstance(requireContext().dataStore)
         adapter = UserPostAdapter()
         showRecyclerView()
+
 
         val authViewModel =
             ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
@@ -88,7 +100,7 @@ class  CommunityAllFragment : Fragment() {
             override fun onProfileImageClicked(data: DataPostItem) {
                 val email = data.email
                 val bundle = Bundle().apply {
-                    putString("USER_EMAIL", email)
+                    putString(UserDetailFragment.EXTRA_EMAIL, email)
                 }
                 val fragment = UserDetailFragment().apply {
                     arguments = bundle

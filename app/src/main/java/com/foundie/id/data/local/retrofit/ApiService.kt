@@ -5,6 +5,7 @@ import com.foundie.id.data.local.response.AddPostUserResponse
 import com.foundie.id.data.local.response.CommunityUserResponse
 import com.foundie.id.data.local.response.CreateCommunityResponse
 import com.foundie.id.data.local.response.EditProfileResponse
+import com.foundie.id.data.local.response.FilterProductResponse
 import com.foundie.id.data.local.response.FollowResponse
 import com.foundie.id.data.local.response.GroupCommunityResponse
 import com.foundie.id.data.local.response.HistoryResponse
@@ -121,6 +122,17 @@ interface ApiService {
         @Part image: MultipartBody.Part,
     ): Call<SkinToneResponse>
 
+    // Filter Products
+    @Multipart
+    @POST("/products/filter")
+    fun filterProduct(
+        @Header("Authorization") token: String,
+        @Part("product_title") title: RequestBody?,
+        @Part("type") type: RequestBody?,
+        @Part("brand") brand: RequestBody?,
+        @Part("variant_name") variant: RequestBody?
+    ): Call<FilterProductResponse>
+
     // Get History Predict Users
     @GET("predict/history")
     fun getHistory(
@@ -152,6 +164,7 @@ interface ApiService {
         @Part("topics") topics: RequestBody,
         @Part("description") description: RequestBody,
     ): Call<CreateCommunityResponse>
+
 
     // Get Community Group
     @GET("community/group/search")

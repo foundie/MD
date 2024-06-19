@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.core.util.Pair
 import com.bumptech.glide.Glide
+import com.foundie.id.data.local.response.GroupsDataItem
 import com.foundie.id.data.local.response.ProductData
 import com.foundie.id.databinding.ItemCatalogBinding
 import com.foundie.id.settings.loadImageWithCacheBusting
@@ -18,7 +19,12 @@ import com.foundie.id.settings.loadImageWithCacheBusting
 class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.ListViewHolder>() {
 
     private val listCatalog = ArrayList<ProductData>()
+    private var filteredList = ArrayList<ProductData>()
     private lateinit var onItemClickCallback: OnItemClickCallback
+
+    init {
+        filteredList = listCatalog
+    }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
@@ -39,7 +45,7 @@ class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.ListViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val currentCatalog = listCatalog[position]
+        val currentCatalog = filteredList[position]
 
         holder.itemView.setOnClickListener {
             onItemClickCallback.onItemClicked(currentCatalog)
@@ -49,7 +55,7 @@ class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.ListViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return listCatalog.size
+        return filteredList.size
     }
 
     class ListViewHolder(private val binding: ItemCatalogBinding) :
@@ -81,6 +87,22 @@ class CatalogAdapter : RecyclerView.Adapter<CatalogAdapter.ListViewHolder>() {
 
     interface OnItemClickCallback {
         fun onItemClicked(data: ProductData)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun filter(query: String) {
+        filteredList = if (query.isEmpty()) {
+            listCatalog
+        } else {
+            val filtered = ArrayList<ProductData>()
+            for (item in listCatalog) {
+                if (item.productTitle.contains(query, ignoreCase = true)) {
+                    filtered.add(item)
+                }
+            }
+            filtered
+        }
+        notifyDataSetChanged()
     }
 
     class DiffUtilCallback(

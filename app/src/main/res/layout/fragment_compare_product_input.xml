@@ -96,7 +96,7 @@
                 app:layout_constraintWidth_default="spread">
 
                 <AutoCompleteTextView
-                    android:id="@+id/actv_gender"
+                    android:id="@+id/actv_type"
                     style="@style/TextContent.BodyM"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -109,39 +109,32 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/tv_shade"
+                android:id="@+id/tv_Ptitle"
                 style="@style/TextContent.BodyS"
                 android:layout_marginTop="16dp"
-                android:text="@string/product_shade"
+                android:text="@string/product_title"
                 android:textStyle="bold"
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/TIL_product_type" />
 
-            <TextView
-                android:id="@+id/tv_shade_example"
-                style="@style/TextContent.BodyXS"
-                android:text="@string/example_input_08"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_shade" />
 
             <EditText
-                android:id="@+id/et_shade"
+                android:id="@+id/et_Ptitle"
                 style="@style/TextContent.BodyM"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/ic_background_input_when_theres_dropdown"
 
-                android:hint="@string/input_your_product_shade"
+                android:hint="@string/input_your_product_title"
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:padding="12dp"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_shade_example"
+                app:layout_constraintTop_toBottomOf="@id/tv_Ptitle"
                 app:layout_constraintWidth_default="spread" />
 
             <TextView
@@ -152,7 +145,7 @@
                 android:textStyle="bold"
 
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_shade" />
+                app:layout_constraintTop_toBottomOf="@+id/et_Ptitle" />
 
             <TextView
                 android:id="@+id/tv_variant_example"
@@ -181,7 +174,7 @@
                 app:layout_constraintWidth_default="spread" />
 
             <Button
-                android:id="@+id/btn_save"
+                android:id="@+id/btn_filter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"

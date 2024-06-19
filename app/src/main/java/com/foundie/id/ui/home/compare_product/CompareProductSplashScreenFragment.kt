@@ -3,10 +3,14 @@ package com.foundie.id.ui.home.compare_product
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.Fragment
 import com.foundie.id.R
 import com.foundie.id.ThemeActivity
+import com.foundie.id.settings.delayTime
 
 @SuppressLint("CustomSplashScreen")
 class CompareProductSplashScreenFragment : ThemeActivity() {
@@ -27,5 +31,15 @@ class CompareProductSplashScreenFragment : ThemeActivity() {
             findViewById<View>(R.id.backgroundImageViewLight).visibility = View.VISIBLE
             findViewById<View>(R.id.backgroundImageViewDark).visibility = View.GONE
         }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            replaceFragment(CompareProductInputFragment())
+        }, delayTime)
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout, fragment)
+            .commit()
     }
 }

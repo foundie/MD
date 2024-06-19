@@ -50,7 +50,7 @@ class UserDetailFragment : Fragment() {
             ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
         authViewModel.getUserLoginToken().observe(viewLifecycleOwner) {
             token = it
-            val email = arguments?.getString("USER_EMAIL")
+            val email = arguments?.getString(EXTRA_EMAIL)
             if (email != null) {
                 viewModel.getDetailUser(token, email)
             }
@@ -96,5 +96,9 @@ class UserDetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val EXTRA_EMAIL = "extra_email"
     }
 }

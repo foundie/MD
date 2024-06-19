@@ -12,7 +12,12 @@ import com.foundie.id.settings.loadImageWithCacheBusting
 class GroupCommunityAdapter : RecyclerView.Adapter<GroupCommunityAdapter.ListViewHolder>() {
 
     private val listGroup = ArrayList<GroupsDataItem>()
+    private var filteredList = ArrayList<GroupsDataItem>()
     private lateinit var onItemClickCallback: OnItemClickCallback
+
+    init {
+        filteredList = listGroup
+    }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
@@ -33,7 +38,7 @@ class GroupCommunityAdapter : RecyclerView.Adapter<GroupCommunityAdapter.ListVie
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val currentGroup = listGroup[position]
+        val currentGroup = filteredList[position]
 
         holder.itemView.setOnClickListener {
             onItemClickCallback.onItemClicked(currentGroup)
@@ -43,7 +48,7 @@ class GroupCommunityAdapter : RecyclerView.Adapter<GroupCommunityAdapter.ListVie
     }
 
     override fun getItemCount(): Int {
-        return listGroup.size
+        return filteredList.size
     }
 
     class ListViewHolder(private val binding: ItemCommunityBinding) :
@@ -58,23 +63,40 @@ class GroupCommunityAdapter : RecyclerView.Adapter<GroupCommunityAdapter.ListVie
                 ivCommunity.loadImageWithCacheBusting(group.coverImageUrl)
             }
 
-            itemView.setOnClickListener {
-                //val intent = Intent(itemView.context, StoryDetailActivity::class.java)
-                //intent.putExtra(StoryDetailActivity.EXTRA_DETAIL_STORY, product)
-
-//                val optionsCompat: ActivityOptionsCompat =
-//                    ActivityOptionsCompat.makeSceneTransitionAnimation(
-//                        itemView.context as Activity,
-////                        Pair(binding.imgItemPhoto, "image"),
-//                    )
-//                itemView.context.startActivity(intent, optionsCompat.toBundle())
-            }
+//            itemView.setOnClickListener {
+//                //val intent = Intent(itemView.context, StoryDetailActivity::class.java)
+//                //intent.putExtra(StoryDetailActivity.EXTRA_DETAIL_STORY, product)
+//
+////                val optionsCompat: ActivityOptionsCompat =
+////                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+////                        itemView.context as Activity,
+//////                        Pair(binding.imgItemPhoto, "image"),
+////                    )
+////                itemView.context.startActivity(intent, optionsCompat.toBundle())
+//            }
         }
     }
 
     interface OnItemClickCallback {
         fun onItemClicked(data: GroupsDataItem)
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun filter(query: String) {
+        filteredList = if (query.isEmpty()) {
+            listGroup
+        } else {
+            val filtered = ArrayList<GroupsDataItem>()
+            for (item in listGroup) {
+                if (item.title.contains(query, ignoreCase = true)) {
+                    filtered.add(item)
+                }
+            }
+            filtered
+        }
+        notifyDataSetChanged()
+    }
+
 
     class DiffUtilCallback(
         private val oldList: List<GroupsDataItem>,

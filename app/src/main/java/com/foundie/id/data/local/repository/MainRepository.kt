@@ -7,8 +7,10 @@ import com.foundie.id.data.local.response.AddPasswordResponse
 import com.foundie.id.data.local.response.AddPostUserResponse
 import com.foundie.id.data.local.response.CommunityUserResponse
 import com.foundie.id.data.local.response.CreateCommunityResponse
+import com.foundie.id.data.local.response.DataFilterProduct
 import com.foundie.id.data.local.response.DataPostItem
 import com.foundie.id.data.local.response.EditProfileResponse
+import com.foundie.id.data.local.response.FilterProductResponse
 import com.foundie.id.data.local.response.GroupCommunityResponse
 import com.foundie.id.data.local.response.GroupsDataItem
 import com.foundie.id.data.local.response.HistoryResponse
@@ -92,6 +94,9 @@ class MainRepository(private val apiService: ApiService) {
 
     private val _product = MutableLiveData<List<ProductData>>()
     val product: LiveData<List<ProductData>> = _product
+
+    private val _filter = MutableLiveData<List<DataFilterProduct>>()
+    val filterProduct: LiveData<List<DataFilterProduct>> = _filter
 
     private val _postuser = MutableLiveData<List<DataPostItem>>()
     val postuser: LiveData<List<DataPostItem>> = _postuser
@@ -282,7 +287,7 @@ class MainRepository(private val apiService: ApiService) {
     fun getBiodata(token: String) {
         _isLoading.value = true
         val api = ApiConfig.getApiService().getBiodata("Bearer $token")
-        api.enqueue(object : retrofit2.Callback<UserResponse> {
+        api.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
@@ -309,7 +314,7 @@ class MainRepository(private val apiService: ApiService) {
     fun getDetailUser(token: String, email: String) {
         _isLoading.value = true
         val api = ApiConfig.getApiService().getdetailUser("Bearer $token",email)
-        api.enqueue(object : retrofit2.Callback<UserDetailResponse> {
+        api.enqueue(object : Callback<UserDetailResponse> {
             override fun onResponse(call: Call<UserDetailResponse>, response: Response<UserDetailResponse>) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
@@ -415,7 +420,7 @@ class MainRepository(private val apiService: ApiService) {
     fun getProduct(token: String) {
         _isLoading.value = true
         val api = ApiConfig.getApiService().getProduct("Bearer $token")
-        api.enqueue(object : retrofit2.Callback<ProductResponse> {
+        api.enqueue(object : Callback<ProductResponse> {
             override fun onResponse(
                 call: Call<ProductResponse>,
                 response: Response<ProductResponse>
@@ -445,7 +450,7 @@ class MainRepository(private val apiService: ApiService) {
     fun getPostUser(token: String) {
         _isLoading.value = true
         val api = ApiConfig.getApiService().getPostUser("Bearer $token")
-        api.enqueue(object : retrofit2.Callback<CommunityUserResponse> {
+        api.enqueue(object : Callback<CommunityUserResponse> {
             override fun onResponse(
                 call: Call<CommunityUserResponse>,
                 response: Response<CommunityUserResponse>
@@ -475,7 +480,7 @@ class MainRepository(private val apiService: ApiService) {
     fun getGroup(token: String) {
         _isLoading.value = true
         val api = ApiConfig.getApiService().getGroup("Bearer $token")
-        api.enqueue(object : retrofit2.Callback<GroupCommunityResponse> {
+        api.enqueue(object : Callback<GroupCommunityResponse> {
             override fun onResponse(
                 call: Call<GroupCommunityResponse>,
                 response: Response<GroupCommunityResponse>
@@ -535,6 +540,36 @@ class MainRepository(private val apiService: ApiService) {
                 _isLoadingAddPost.value = false
                 isErrorAddPost = true
                 _addpostStatus.value = t.message
+            }
+        })
+    }
+
+    fun filterProduct(token: String,title: RequestBody?,type: RequestBody?, brand: RequestBody?, variant: RequestBody?) {
+        _isLoading.value = true
+        val api = ApiConfig.getApiService().filterProduct("Bearer $token",title,type,brand,variant)
+        api.enqueue(object : Callback<FilterProductResponse> {
+            override fun onResponse(
+                call: Call<FilterProductResponse>,
+                response: Response<FilterProductResponse>
+            ) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    isError = false
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        _filter.value = responseBody.data
+                    }
+                    _message.value = responseBody?.status.toString()
+                } else {
+                    isError = true
+                    _message.value = response.message()
+                }
+            }
+
+            override fun onFailure(call: Call<FilterProductResponse>, t: Throwable) {
+                _isLoading.value = false
+                isError = true
+                _message.value = t.message.toString()
             }
         })
     }
@@ -614,7 +649,7 @@ class MainRepository(private val apiService: ApiService) {
     fun getHistory(token: String) {
         _isLoading.value = true
         val api = ApiConfig.getApiService().getHistory("Bearer $token")
-        api.enqueue(object : retrofit2.Callback<HistoryResponse> {
+        api.enqueue(object : Callback<HistoryResponse> {
             override fun onResponse(call: Call<HistoryResponse>, response: Response<HistoryResponse>) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
@@ -627,7 +662,7 @@ class MainRepository(private val apiService: ApiService) {
                         _historyskinTone.value = historyData[1]
 
                         // Kirim message ke LiveData
-                        _message.value = responseBody.message.toString()
+                        _message.value = responseBody.message
                 } else {
                     isError = true
                     _message.value = response.message()

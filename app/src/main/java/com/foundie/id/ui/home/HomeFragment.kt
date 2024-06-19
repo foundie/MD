@@ -11,19 +11,25 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.foundie.id.R
 import com.foundie.id.data.adapter.CatalogAdapter
+import com.foundie.id.data.adapter.GroupCommunityAdapter
 import com.foundie.id.data.adapter.ImageSliderAdapter
+import com.foundie.id.data.local.response.GroupsDataItem
 import com.foundie.id.data.local.response.ImageDataResponse
 import com.foundie.id.data.local.response.ProductData
 import com.foundie.id.databinding.FragmentHomeBinding
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.delayTimeSlider
 import com.foundie.id.ui.catalog.CatalogViewModel
+import com.foundie.id.ui.community.CommunityViewModel
 import com.foundie.id.ui.home.color_analysis.input.ColorAnalysisInputFirstFragment
+import com.foundie.id.ui.home.compare_product.CompareProductInputFragment
+import com.foundie.id.ui.home.compare_product.CompareProductSplashScreenFragment
 import com.foundie.id.ui.home.makeup_analysis.MakeupAnalysisInputFragment
 import com.foundie.id.ui.login.dataStore
 import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.CatalogViewModelFactory
+import com.foundie.id.viewmodel.CommunityViewModelFactory
 
 @Suppress("DEPRECATION")
 class HomeFragment : Fragment() {
@@ -39,11 +45,18 @@ class HomeFragment : Fragment() {
     private var currentPage = 0
     private lateinit var runnable: Runnable
     private lateinit var catalogAdapter: CatalogAdapter
-    private val viewModel: CatalogViewModel by lazy {
+    private lateinit var groupAdapter: GroupCommunityAdapter
+    private val catalogviewModel: CatalogViewModel by lazy {
         ViewModelProvider(
             this,
             CatalogViewModelFactory(requireContext())
         )[CatalogViewModel::class.java]
+    }
+    private val groupviewModel: CommunityViewModel by lazy {
+        ViewModelProvider(
+            this,
+            CommunityViewModelFactory(requireContext())
+        )[CommunityViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -65,7 +78,8 @@ class HomeFragment : Fragment() {
             ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
         authViewModel.getUserLoginToken().observe(viewLifecycleOwner) {
             token = it
-            viewModel.getProduct(token)
+            catalogviewModel.getProduct(token)
+            groupviewModel.getListGroup(token)
         }
     }
 
@@ -75,6 +89,12 @@ class HomeFragment : Fragment() {
             setHasFixedSize(true)
             catalogAdapter = CatalogAdapter()
             adapter = catalogAdapter
+        }
+        binding.rvListCommunity.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+            groupAdapter = GroupCommunityAdapter()
+            adapter = groupAdapter
         }
     }
 
@@ -102,18 +122,33 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.isLoadingProduct.observe(viewLifecycleOwner) {
+        catalogviewModel.isLoadingProduct.observe(viewLifecycleOwner) {
             showLoading(it)
         }
 
-        viewModel.product.observe(viewLifecycleOwner) { productList ->
+        groupviewModel.isLoadingListGroup.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
+        catalogviewModel.product.observe(viewLifecycleOwner) { productList ->
             setProductData(productList)
         }
 
-        viewModel.productStatus.observe(viewLifecycleOwner) { productStatus ->
-            val isError = viewModel.isErrorProduct
+        groupviewModel.listGroup.observe(viewLifecycleOwner) { productList ->
+            setGroupData(productList)
+        }
+
+        catalogviewModel.productStatus.observe(viewLifecycleOwner) { productStatus ->
+            val isError = catalogviewModel.isErrorProduct
             if (isError && !productStatus.isNullOrEmpty()) {
                 binding.rvListCatalog.visibility = View.VISIBLE
+            }
+        }
+
+        groupviewModel.listGroupStatus.observe(viewLifecycleOwner) { groupStatus ->
+            val isError = groupviewModel.isErrorListGroup
+            if (isError && !groupStatus.isNullOrEmpty()) {
+                binding.rvListCommunity.visibility = View.VISIBLE
             }
         }
     }
@@ -123,11 +158,11 @@ class HomeFragment : Fragment() {
             imgMakeupAnalysis.setOnClickListener {
                 replaceFragment(MakeupAnalysisInputFragment())
             }
-        }
-
-        binding.apply {
             imgColorAnalysis.setOnClickListener {
                 replaceFragment(ColorAnalysisInputFirstFragment())
+            }
+            imgCompareProduct.setOnClickListener {
+                replaceFragment(CompareProductInputFragment())
             }
         }
     }
@@ -142,6 +177,14 @@ class HomeFragment : Fragment() {
         if (::catalogAdapter.isInitialized) {
             if (productList.isNotEmpty()) {
                 catalogAdapter.setData(productList)
+            }
+        }
+    }
+
+    private fun setGroupData(groupList: List<GroupsDataItem>) {
+        if (::groupAdapter.isInitialized) {
+            if (groupList.isNotEmpty()) {
+                groupAdapter.setData(groupList)
             }
         }
     }

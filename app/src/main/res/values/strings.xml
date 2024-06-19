@@ -213,8 +213,8 @@
     <string name="input_your_product_brand_s_name">Input your product brand\'s name</string>
     <string name="input_your_brand_name_product">Input your brand name product...</string>
     <string name="product_type">Product Type</string>
-    <string name="input_your_product_shade">Input your product shade...</string>
-    <string name="product_shade">Product Shade</string>
+    <string name="input_your_product_title">Input your product Title...</string>
+    <string name="product_title">Product Title</string>
     <string name="likes_total">likes total</string>
     <string name="_90_8k">90.8K</string>
     <string name="likes">Likes</string>

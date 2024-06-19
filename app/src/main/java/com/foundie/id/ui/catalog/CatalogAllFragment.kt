@@ -1,12 +1,20 @@
 package com.foundie.id.ui.catalog
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.foundie.id.R
 import com.foundie.id.data.adapter.CatalogAdapter
 import com.foundie.id.data.local.response.ProductData
 import com.foundie.id.databinding.FragmentCatalogAllBinding
@@ -16,12 +24,14 @@ import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.CatalogViewModelFactory
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION", "CAST_NEVER_SUCCEEDS")
 class  CatalogAllFragment : Fragment() {
     private var _binding: FragmentCatalogAllBinding? = null
     private val binding get() = _binding!!
     private lateinit var prefen: SettingsPreferences
     private lateinit var token: String
+    private var extraSearch: String? = null
+    private lateinit var searchView: SearchView
 
     private lateinit var adapter: CatalogAdapter
     private val viewModel: CatalogViewModel by lazy {
@@ -77,6 +87,55 @@ class  CatalogAllFragment : Fragment() {
 //                //selectedStory(data)
 //            }
 //        })
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_catalog, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+
+        val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView = menu.findItem(R.id.menu_search).actionView as SearchView
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
+        searchView.queryHint = getString(R.string.search_hint)
+        searchView.maxWidth = Integer.MAX_VALUE
+
+        if (extraSearch != null && extraSearch != "") {
+            searchView.run {
+                onActionViewExpanded()
+                requestFocusFromTouch()
+                setQuery(extraSearch, false)
+            }
+        }
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                closeKeyboard()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                filterList(newText)
+                return false
+            }
+        })
+
+        val searchIconResId = R.drawable.ic_menu_search
+        menu.findItem(R.id.menu_search).icon =
+            ContextCompat.getDrawable(requireContext(), searchIconResId)
+    }
+
+    private fun filterList(query: String) {
+        (binding.rvListCatalog.adapter as? CatalogAdapter)?.filter(query)
+    }
+
+    private fun closeKeyboard() {
+        val view = activity?.currentFocus
+        if (view != null) {
+            val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
     private fun setProductData(productList: List<ProductData>) {
