@@ -230,4 +230,10 @@
     <string name="is_this_what_you_re_looking_for">Is this what you\'re looking for...</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="analyze_your_season_color">Analyze Your Season Color</string>
+    <string name="find_your_perfect_color">Find your perfect color</string>
+    <string name="choose_the_perfect_brightness">Choose the perfect brightness</string>
+    <string name="option_1">Option 1</string>
+    
+    <string name="explore">Explore</string>
 </resources>

@@ -132,6 +132,7 @@ class CommunityFragment : Fragment() {
         @StringRes
         private val TAB_TITLES_COMMUNITY = intArrayOf(
             R.string.all,
+            R.string.explore,
             R.string.joined,
             R.string.popular
         )
