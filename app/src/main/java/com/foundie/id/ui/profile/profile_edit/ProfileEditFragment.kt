@@ -8,7 +8,6 @@ import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -150,11 +149,7 @@ class ProfileEditFragment : Fragment() {
             autoComplete.setText(selectedGender)
         }
 
-        val actionBar = (activity as AppCompatActivity).supportActionBar
-        actionBar?.apply {
-            title = ""
-            setDisplayHomeAsUpEnabled(true)
-        }
+        (activity as? AppCompatActivity)?.supportActionBar?.hide()
 
         return binding.root
     }
@@ -165,6 +160,7 @@ class ProfileEditFragment : Fragment() {
 
         (activity as? AppCompatActivity)?.supportActionBar?.elevation = 0f
         btnClick()
+
         val authViewModel =
             ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
         authViewModel.getUserLoginToken().observe(viewLifecycleOwner) {
@@ -184,8 +180,13 @@ class ProfileEditFragment : Fragment() {
             if (biodata != null) {
                 lifecycleScope.launch {
                     try {
-                        val profileImageFile = downloadImageAndSave(requireContext(), biodata.profileImageUrl,"Profile")
-                        val coverImageFile = downloadImageAndSave(requireContext(), biodata.coverImageUrl,"Cover")
+                        val profileImageFile = downloadImageAndSave(
+                            requireContext(),
+                            biodata.profileImageUrl,
+                            "Profile"
+                        )
+                        val coverImageFile =
+                            downloadImageAndSave(requireContext(), biodata.coverImageUrl, "Cover")
 
                         profileImageFile?.let {
                             binding.imgProfile.setImageURI(Uri.fromFile(it))
@@ -206,7 +207,11 @@ class ProfileEditFragment : Fragment() {
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        Snackbar.make(binding.root,  getString(R.string.ERROR_LOAD_IMAGES), Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.ERROR_LOAD_IMAGES),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
@@ -301,7 +306,16 @@ class ProfileEditFragment : Fragment() {
                             val nameBody = name.toRequestBody("text/plain".toMediaType())
                             val descBody = description.toRequestBody("text/plain".toMediaType())
 
-                            viewModel.editBiodata(token, coverImagePart, profileImagePart, nameBody, phoneBody, descBody, locationBody, genderBody)
+                            viewModel.editBiodata(
+                                token,
+                                coverImagePart,
+                                profileImagePart,
+                                nameBody,
+                                phoneBody,
+                                descBody,
+                                locationBody,
+                                genderBody
+                            )
                         } catch (e: IOException) {
                             Snackbar.make(
                                 binding.root,
@@ -418,12 +432,6 @@ class ProfileEditFragment : Fragment() {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.frame_layout, fragment)
-            .commit()
-    }
-
     @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -463,16 +471,13 @@ class ProfileEditFragment : Fragment() {
         return file
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                requireActivity().onBackPressed()
-                return true
-            }
-            else -> return super.onOptionsItemSelected(item)
-        }
+    private fun replaceFragment(fragment: Fragment) {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout, fragment)
+            .addToBackStack(null)
+            .commit()
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -102,10 +102,7 @@ class MakeupAnalysisInputFragment : Fragment() {
         _binding = FragmentMakeupAnalysisInputBinding.inflate(inflater, container, false)
 
         val actionBar = (activity as AppCompatActivity).supportActionBar
-        actionBar?.apply {
-            title = getString(R.string.makeup_style_analysis)
-            setDisplayHomeAsUpEnabled(true)
-        }
+        (activity as? AppCompatActivity)?.supportActionBar?.hide()
 
         return binding.root
     }
@@ -345,6 +342,7 @@ class MakeupAnalysisInputFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        (activity as? AppCompatActivity)?.supportActionBar?.show()
         _binding = null
     }
 
