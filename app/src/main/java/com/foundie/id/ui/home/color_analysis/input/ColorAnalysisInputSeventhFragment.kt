@@ -15,6 +15,7 @@ import com.foundie.id.data.adapter.ImageSliderAdapterColorCamera
 import com.foundie.id.data.local.response.ImageDataResponse
 import com.foundie.id.databinding.FragmentColorAnalysisInputSeventhBinding
 import com.foundie.id.settings.delayTimeSlider
+import com.foundie.id.ui.home.color_analysis.result.ColorAnalysisOutputFragment
 import java.io.File
 import java.util.concurrent.ExecutorService
 
@@ -55,7 +56,7 @@ class ColorAnalysisInputSeventhFragment : Fragment() {
     private fun btnClick() {
         binding.apply {
             btnNext.setOnClickListener {
-
+                replaceFragment(ColorAnalysisOutputFragment())
             }
         }
     }
