@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.color_analysis.input.ColorAnalysisInputFirstFragment">
+    tools:context=".ui.home.color_analysis.input.ColorAnalysisInputSecondFragment">
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -32,7 +32,7 @@
                 android:id="@+id/tv_title"
                 style="@style/TextContent.BodyL"
                 android:layout_marginTop="24dp"
-                android:text="@string/choose_the_perfect_brightness"
+                android:text="@string/choose_the_perfect_clarity"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -133,7 +133,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:button="@null"
-                        android:drawableTop="@drawable/ca_brigtness_one"
+                        android:drawableTop="@drawable/ca_clarity_one"
                         android:gravity="center"
                         android:paddingStart="12dp"
                         android:paddingEnd="12dp" />
@@ -143,7 +143,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:button="@null"
-                        android:drawableTop="@drawable/ca_brigtness_two"
+                        android:drawableTop="@drawable/ca_clarity_two"
                         android:gravity="center"
                         android:paddingStart="12dp"
                         android:paddingEnd="12dp" />
@@ -153,7 +153,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:button="@null"
-                        android:drawableTop="@drawable/ca_brigtness_three"
+                        android:drawableTop="@drawable/ca_clarity_three"
                         android:gravity="center"
                         android:paddingStart="12dp"
                         android:paddingEnd="12dp" />
@@ -163,7 +163,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:button="@null"
-                        android:drawableTop="@drawable/ca_brigtness_four"
+                        android:drawableTop="@drawable/ca_clarity_four"
                         android:gravity="center"
                         android:paddingStart="12dp"
                         android:paddingEnd="12dp" />
@@ -173,7 +173,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:button="@null"
-                        android:drawableTop="@drawable/ca_brigtness_five"
+                        android:drawableTop="@drawable/ca_clarity_five"
                         android:gravity="center"
                         android:paddingStart="12dp"
                         android:paddingEnd="12dp" />
