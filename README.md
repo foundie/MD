@@ -36,7 +36,7 @@ _this data is primary data that has been collected in 2024 with 112 resondens in
 ## Application Preview
 
 ## Developer Contributor
-<img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" width="24" height="24"> https://github.com/louismichaell
+[![GitHub](https://img.shields.io/badge/--181717?logo=github&logoColor=ffffff)](https://github.com/) https://github.com/louismichaell
 
 <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" width="24" height="24"> https://github.com/Lovrisca
 
