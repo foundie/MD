@@ -12,7 +12,7 @@ This application is the solution for the users that have pain point, like :
 _this data is primary data that has been collected in 2024 with 112 resondens in age 13-50_
 
 ## Powerd By
-[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
+[![N|Foundie](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
 
 ## Features One-Stop-Solution (CCOR | Choose - Compare - Order - Review)
 ### Choose
