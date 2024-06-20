@@ -12,11 +12,10 @@ This application is the solution for the users that have pain point, like :
 _this data is primary data that has been collected in 2024 with 112 resondens in age 13-50_
 
 ## Powerd By
-[![forthebadge](https://img.shields.io/badge/Made%20with-Kotlin-1f425f.svg)](https://kotlinlang.org/)
-
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
-[![forthebadge](https://img.shields.io/badge/Made_with-Kotlin-1f425f?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
+[![forthebadge](https://img.shields.io/badge/Made_with-Kotlin-3FA9F2?style=for-the-badge&logo=kotlin&logoColor=F15921)](https://kotlinlang.org/)
+
 
 
 
