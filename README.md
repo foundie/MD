@@ -11,6 +11,9 @@ This application is the solution for the users that have pain point, like :
 
 _this data is primary data that has been collected in 2024 with 112 resondens in age 13-50_
 
+## Powerd By
+[![N|Solid](https://cldup.com/dTxpPi9l0f.thunb.ong)](https://nodesource.com/products/nsolid)
+
 ## Features One-Stop-Solution (CCOR | Choose - Compare - Order - Review)
 ### Choose
 - Makeup Analysis
@@ -18,9 +21,10 @@ _this data is primary data that has been collected in 2024 with 112 resondens in
 - Color Analysis
 ### Compare
 - Compare Products
+- Virtual Try-On _coming soon_
 ### Order
 - E-commerce _coming soon_
 - Make-Up-Artist Service _coming soon_
 - MakeUp Course _coming soon_
 ### Review
-- Community
+- Community Sharing 
