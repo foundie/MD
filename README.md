@@ -34,3 +34,7 @@ _this data is primary data that has been collected in 2024 with 112 resondens in
 - Community Sharing 
 
 ## Application Preview
+
+## Developer Contributor
+[![GitHub contributors](https://img.shields.io/github/contributors/Naereen/badges.svg?color=success)](https://github.com/Naereen/badges/graphs/contributors?&color=success)
+
