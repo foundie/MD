@@ -12,14 +12,14 @@ import androidx.viewpager2.widget.ViewPager2
 import com.foundie.id.R
 import com.foundie.id.data.adapter.ImageSliderAdapterColorCamera
 import com.foundie.id.data.local.response.ImageDataResponse
-import com.foundie.id.databinding.FragmentColorAnalysisInputFirstBinding
+import com.foundie.id.databinding.FragmentColorAnalysisInputSeventhBinding
 import com.foundie.id.settings.delayTimeSlider
 import java.io.File
 import java.util.concurrent.ExecutorService
 
-class ColorAnalysisInputFirstFragment : Fragment() {
+class ColorAnalysisInputSeventhFragment : Fragment() {
 
-    private var _binding: FragmentColorAnalysisInputFirstBinding? = null
+    private var _binding: FragmentColorAnalysisInputSeventhBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var adapter: ImageSliderAdapterColorCamera
@@ -40,7 +40,7 @@ class ColorAnalysisInputFirstFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentColorAnalysisInputFirstBinding.inflate(inflater, container, false)
+        _binding = FragmentColorAnalysisInputSeventhBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -53,7 +53,7 @@ class ColorAnalysisInputFirstFragment : Fragment() {
     private fun btnClick() {
         binding.apply {
             btnNext.setOnClickListener {
-                replaceFragment(ColorAnalysisInputSecondFragment())
+
             }
         }
     }
@@ -64,6 +64,7 @@ class ColorAnalysisInputFirstFragment : Fragment() {
             .addToBackStack(null)
             .commit()
     }
+
 
     private fun setupViewPager() {
         // Add image URLs to the list

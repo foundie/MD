@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.color_analysis.input.ColorAnalysisInputFirstFragment">
+    tools:context=".ui.home.color_analysis.input.ColorAnalysisInputThirdFragment">
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -32,11 +32,25 @@
                 android:id="@+id/tv_title"
                 style="@style/TextContent.BodyL"
                 android:layout_marginTop="24dp"
-                android:text="@string/choose_the_perfect_brightness"
+                android:text="@string/warm_or_cool_preferences"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                style="@style/TextContent.BodyS"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:gravity="center"
+                android:maxWidth="239dp"
+                android:text="@string/select_a_color_that_complements_your_skin_tone_and_contains_no_stains"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/view_pager"
@@ -46,7 +60,7 @@
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_description" />
 
             <androidx.camera.view.PreviewView
                 android:id="@+id/preview_view"
@@ -92,33 +106,6 @@
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp" />
 
-                    <RadioButton
-                        android:id="@+id/rb_three_pick"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:gravity="center"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp" />
-
-                    <RadioButton
-                        android:id="@+id/rb_four_pick"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:gravity="center"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp" />
-
-                    <RadioButton
-                        android:id="@+id/rb_five_pick"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:gravity="center"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp" />
-
                 </RadioGroup>
 
                 <RadioGroup
@@ -133,7 +120,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:button="@null"
-                        android:drawableTop="@drawable/ca_brigtness_one"
+                        android:drawableTop="@drawable/ca_personal_brown_one"
                         android:gravity="center"
                         android:paddingStart="12dp"
                         android:paddingEnd="12dp" />
@@ -143,37 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:button="@null"
-                        android:drawableTop="@drawable/ca_brigtness_two"
-                        android:gravity="center"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp" />
-
-                    <RadioButton
-                        android:id="@+id/rb_three"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@null"
-                        android:drawableTop="@drawable/ca_brigtness_three"
-                        android:gravity="center"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp" />
-
-                    <RadioButton
-                        android:id="@+id/rb_four"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@null"
-                        android:drawableTop="@drawable/ca_brigtness_four"
-                        android:gravity="center"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp" />
-
-                    <RadioButton
-                        android:id="@+id/rb_five"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@null"
-                        android:drawableTop="@drawable/ca_brigtness_five"
+                        android:drawableTop="@drawable/ca_personal_brown_two"
                         android:gravity="center"
                         android:paddingStart="12dp"
                         android:paddingEnd="12dp" />
