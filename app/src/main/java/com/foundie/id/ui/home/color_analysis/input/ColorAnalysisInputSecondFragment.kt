@@ -6,6 +6,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.ImageCapture
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -41,6 +42,7 @@ class ColorAnalysisInputSecondFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentColorAnalysisInputSecondBinding.inflate(inflater, container, false)
+        (activity as? AppCompatActivity)?.supportActionBar?.hide()
         return binding.root
     }
 
