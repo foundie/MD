@@ -15,6 +15,9 @@ _this data is primary data that has been collected in 2024 with 112 resondens in
 [![forthebadge](https://img.shields.io/badge/Made_with-Kotlin-F15921?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
 [![forthebadge](https://img.shields.io/badge/Made_with-OpenAI_GPT-ff6961?style=for-the-badge&logo=openai&logoColor=white)](https://www.openai.com/)
 
+[![forthebadge](https://img.shields.io/badge/Made_with-OpenAI_GPT-ffffff?style=for-the-badge&logo=openai&logoColor=black)](https://www.openai.com/)
+
+
 
 
 ## Features One-Stop-Solution (CCOR | Choose - Compare - Order - Review)
