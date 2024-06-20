@@ -23,7 +23,6 @@ import com.foundie.id.ui.catalog.CatalogViewModel
 import com.foundie.id.ui.community.CommunityViewModel
 import com.foundie.id.ui.home.color_analysis.input.ColorAnalysisInputFirstFragment
 import com.foundie.id.ui.home.compare_product.CompareProductInputFragment
-import com.foundie.id.ui.home.compare_product.CompareProductSplashScreenFragment
 import com.foundie.id.ui.home.makeup_analysis.MakeupAnalysisInputFragment
 import com.foundie.id.ui.login.dataStore
 import com.foundie.id.viewmodel.AuthModelFactory
@@ -64,6 +63,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
+        activity?.title = getString(R.string.hi_gorgeous)
         return binding.root
     }
 
@@ -170,6 +171,7 @@ class HomeFragment : Fragment() {
     private fun replaceFragment(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
             .replace(R.id.frame_layout, fragment)
+            .addToBackStack(null)
             .commit()
     }
 

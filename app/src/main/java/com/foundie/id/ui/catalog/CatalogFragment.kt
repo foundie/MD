@@ -1,22 +1,13 @@
 package com.foundie.id.ui.catalog
 
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.foundie.id.R
-import com.foundie.id.data.adapter.CatalogAdapter
-import com.foundie.id.data.adapter.GroupCommunityAdapter
 import com.foundie.id.databinding.FragmentCatalogBinding
 import com.google.android.material.tabs.TabLayoutMediator
 

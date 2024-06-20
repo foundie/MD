@@ -76,6 +76,7 @@ class FragmentActivity : AppCompatActivity() {
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.frame_layout, fragment)
+            .addToBackStack(null)
             .commit()
     }
 }
