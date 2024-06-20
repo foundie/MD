@@ -8,4 +8,5 @@ This application is the solution for the users that have pain point, like :
 | Struggling to find a makeup style that suits the proportions of their face shape | 38.4% |
 | Struggling to compare and know the shades between different brands | 29.5% |
 | Even after knowing the right makeup and products, they can’t use make up | 12.5% |
+
 _this data is primary data that has been collected in 2024 with 112 resondens in age 13-50_
