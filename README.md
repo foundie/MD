@@ -16,6 +16,9 @@ _this data is primary data that has been collected in 2024 with 112 resondens in
 
 [![forthebadge](https://img.shields.io/badge/Made_with-Kotlin-3FA9F2?style=for-the-badge&logo=kotlin&logoColor=F15921)](https://kotlinlang.org/)
 
+[![forthebadge](https://img.shields.io/badge/Made_with-Kotlin-F15921?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
+[![forthebadge](https://img.shields.io/badge/Made_with-Kotlin-3FA9F2?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
+[![forthebadge](https://img.shields.io/badge/Made_with-Kotlin-7259B6?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
 
 
 
