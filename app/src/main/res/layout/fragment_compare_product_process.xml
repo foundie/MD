@@ -22,52 +22,44 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="24dp">
+            android:layout_marginTop="24dp">
 
             <TextView
                 android:id="@+id/tv_title"
                 style="@style/TextContent.TextHeading1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
                 android:text="@string/is_this_what_you_re_looking_for"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <include
-                android:id="@+id/item_catalog"
-                layout="@layout/item_catalog"
+            <TextView
+                android:id="@+id/tv_description"
+                style="@style/TextContent.BodyM"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:text="@string/please_click_the_right_products_that_you_are_looking_for"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
-            <Button
-                android:id="@+id/btn_no"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_list_catalog"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:background="@drawable/ic_background_button_sign_in_up"
-                android:text="@string/no"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/item_catalog"
-                app:layout_constraintWidth_default="spread"
-                app:layout_constraintWidth_percent="0.45" />
-
-            <Button
-                android:id="@+id/btn_yes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/ic_background_button_sign_in_up"
-                android:text="@string/yes"
-
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/item_catalog"
-                app:layout_constraintWidth_default="spread"
-                app:layout_constraintWidth_percent="0.45" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_description"
+
+                app:reverseLayout="false"
+                app:spanCount="2"
+                tools:listitem="@layout/item_catalog" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
