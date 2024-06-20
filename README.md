@@ -10,3 +10,17 @@ This application is the solution for the users that have pain point, like :
 | Even after knowing the right makeup and products, they can’t use make up | 12.5% |
 
 _this data is primary data that has been collected in 2024 with 112 resondens in age 13-50_
+
+## Features One-Stop-Solution (CCOR | Choose - Compare - Order - Review)
+### Choose
+- Makeup Analysis
+- Skin Tone Analysis
+- Color Analysis
+### Compare
+- Compare Products
+### Order
+- E-commerce _coming soon_
+- Make-Up-Artist Service _coming soon_
+- MakeUp Course _coming soon_
+### Review
+- Community
