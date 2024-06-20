@@ -66,7 +66,7 @@ class CommunityViewModel(private val mainRepository: MainRepository) : ViewModel
 
     fun addPostUser(
         token: String,
-        postImage: MultipartBody.Part,
+        postImage: MultipartBody.Part?,
         title: RequestBody,
         desc: RequestBody,
     ) {

@@ -162,8 +162,8 @@
 
     <string name="post">Post</string>
     <string name="review">Review</string>
-    <string name="you_have_not_write_any_post_yet">you have not write any post yet</string>
-    <string name="you_have_not_write_any_review_yet">you have not write any review yet</string>
+    <string name="you_have_not_write_any_post_yet">You have not write any post yet</string>
+    <string name="you_have_not_write_any_review_yet">You have not write any review yet</string>
     <string name="update">Update…</string>
     <string name="save">Save</string>
     <string name="gender">gender</string>

@@ -27,7 +27,6 @@ import com.foundie.id.settings.delayTime
 import com.foundie.id.ui.community.CommunityFragment
 import com.foundie.id.ui.community.CommunityViewModel
 import com.foundie.id.ui.login.dataStore
-import com.foundie.id.ui.profile.ProfileFragment
 import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.CommunityViewModelFactory
@@ -48,6 +47,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.UUID
 
+@Suppress("DEPRECATION", "SameParameterValue")
 class CreatePostFragment : Fragment() {
 
     private var _binding: FragmentCreatePostBinding? = null
@@ -206,12 +206,6 @@ class CreatePostFragment : Fragment() {
                             ).show()
                         }
                     }
-                } else {
-                    Snackbar.make(
-                        binding.root,
-                        getString(R.string.ERROR_IMAGE_EMPTY),
-                        Snackbar.LENGTH_SHORT
-                    ).show()
                 }
             }
             ivUploadCamera.setOnClickListener {
@@ -316,6 +310,7 @@ class CreatePostFragment : Fragment() {
         return file
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {

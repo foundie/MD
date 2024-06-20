@@ -101,7 +101,7 @@ interface ApiService {
     @POST("/community/post")
     fun addPostUser(
         @Header("Authorization") token: String,
-        @Part image: MultipartBody.Part,
+        @Part image: MultipartBody.Part?,
         @Part("title") title: RequestBody,
         @Part("text") text: RequestBody,
     ): Call<AddPostUserResponse>

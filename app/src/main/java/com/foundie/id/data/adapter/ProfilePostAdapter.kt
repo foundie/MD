@@ -6,27 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.foundie.id.data.local.response.DataPostItem
+import com.foundie.id.data.local.response.PostsItem
 import com.foundie.id.databinding.ItemCommunityTweetBinding
 import com.foundie.id.settings.getTimeAgo
 import com.foundie.id.settings.loadImageWithCacheBusting
 import java.text.SimpleDateFormat
 import java.util.*
 
-class UserPostAdapter : RecyclerView.Adapter<UserPostAdapter.ListViewHolder>() {
+class ProfilePostAdapter : RecyclerView.Adapter<ProfilePostAdapter.ListViewHolder>() {
 
-    private val listPostUser = ArrayList<DataPostItem>()
+    private val listPostProfile = ArrayList<PostsItem>()
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
-    fun setData(data: List<DataPostItem>) {
-        val diffCallback = DiffUtilCallback(listPostUser, data)
+    fun setData(data: List<PostsItem>) {
+        val diffCallback = DiffUtilCallback(listPostProfile, data)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
-        listPostUser.clear()
-        listPostUser.addAll(data)
+        listPostProfile.clear()
+        listPostProfile.addAll(data)
         diffResult.dispatchUpdatesTo(this)
     }
 
@@ -36,34 +36,30 @@ class UserPostAdapter : RecyclerView.Adapter<UserPostAdapter.ListViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bind(listPostUser[position])
+        holder.bind(listPostProfile[position])
     }
 
     override fun getItemCount(): Int {
-        return listPostUser.size
+        return listPostProfile.size
     }
 
     inner class ListViewHolder(private val binding: ItemCommunityTweetBinding, private val onItemClickCallback: OnItemClickCallback) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(postuser: DataPostItem) {
+        fun bind(postuser: PostsItem) {
             binding.apply {
                 ivCommunity.visibility = View.GONE
                 tvCommunityName.visibility = View.GONE
-                tvUsername.text = postuser.name
-                tvPostDescription.text = postuser.title
+                tvUsername.text = "Samuel"
+                tvPostDescription.text = postuser.text
 
                 val dateTime = postuser.timestamp
                 val dateTimeMillis = SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).parse(dateTime)!!.time
                 tvTimestamp.text = getTimeAgo(dateTimeMillis)
 
-                imgUser.loadImageWithCacheBusting(postuser.profileImageUrl)
-                ivPostImage.loadImageWithCacheBusting(postuser.imageUrls[0])
-
-                imgUser.setOnClickListener {
-                    onItemClickCallback.onProfileImageClicked(postuser)
-                }
+                imgUser.loadImageWithCacheBusting("https://www.greenscene.co.id/wp-content/uploads/2022/01/Naruto-1-696x497.jpghttps://www.greenscene.co.id/wp-content/uploads/2022/01/Naruto-1-696x497.jpg")
+                //ivPostImage.loadImageWithCacheBusting(postuser.imageUrls[0].toString())
 
                 itemView.setOnClickListener {
                     onItemClickCallback.onItemClicked(postuser)
@@ -73,13 +69,12 @@ class UserPostAdapter : RecyclerView.Adapter<UserPostAdapter.ListViewHolder>() {
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: DataPostItem)
-        fun onProfileImageClicked(data: DataPostItem)
+        fun onItemClicked(data: PostsItem)
     }
 
     class DiffUtilCallback(
-        private val oldList: List<DataPostItem>,
-        private val newList: List<DataPostItem>
+        private val oldList: List<PostsItem>,
+        private val newList: List<PostsItem>
     ) : DiffUtil.Callback() {
 
         override fun getOldListSize(): Int = oldList.size

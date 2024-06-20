@@ -18,6 +18,7 @@ import com.foundie.id.data.local.response.LoginGoogleResponse
 import com.foundie.id.data.local.response.LoginResponse
 import com.foundie.id.data.local.response.PredictDataItem
 import com.foundie.id.data.local.response.MakeUpResponse
+import com.foundie.id.data.local.response.PostsItem
 import com.foundie.id.data.local.response.ProductData
 import com.foundie.id.data.local.response.ProductResponse
 import com.foundie.id.data.local.response.RegisterResponse
@@ -115,6 +116,9 @@ class MainRepository(private val apiService: ApiService) {
 
     private val _detailUser = MutableLiveData<UserDetail>()
     val detailUser: LiveData<UserDetail> = _detailUser
+
+    private val _detailUserPost = MutableLiveData<List<PostsItem>>()
+    val detailUserPost: LiveData<List<PostsItem>> = _detailUserPost
 
     private val _historyMakeUp = MutableLiveData<PredictDataItem>()
     val historyMakeUp: LiveData<PredictDataItem> = _historyMakeUp
@@ -322,6 +326,7 @@ class MainRepository(private val apiService: ApiService) {
                     val responseBody = response.body()
                     if (responseBody != null) {
                         _detailUser.value = responseBody.data.user
+                        _detailUserPost.value = responseBody.data.posts
                     }
                     _message.value = responseBody?.message.toString()
                 } else {
@@ -509,7 +514,7 @@ class MainRepository(private val apiService: ApiService) {
 
     fun addPostUser(
         token: String,
-        postImage: MultipartBody.Part,
+        postImage: MultipartBody.Part?,
         title: RequestBody,
         text: RequestBody
     ) {
