@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/mainLayout"
     tools:context=".ui.home.color_analysis.result.ColorAnalysisOutputFragment">
 
     <ProgressBar
@@ -82,7 +83,7 @@
             <ImageView
                 android:id="@+id/iv_inspo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
@@ -105,9 +106,7 @@
             <TextView
                 android:id="@+id/tv_inspo_description_detail"
                 style="@style/TextContent.BodyS"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
+                android:padding="24dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_inspo_description"
                 tools:text="@string/your_personal_color_features" />
@@ -123,11 +122,11 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_list_color_palette"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="24dp"
 
                 android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_inspo_color_palette"

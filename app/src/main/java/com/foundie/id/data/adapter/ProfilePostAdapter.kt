@@ -1,6 +1,5 @@
 package com.foundie.id.data.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,7 @@ class ProfilePostAdapter : RecyclerView.Adapter<ProfilePostAdapter.ListViewHolde
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val binding = ItemCommunityTweetBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ListViewHolder(binding, onItemClickCallback)
+        return ListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
@@ -43,27 +42,28 @@ class ProfilePostAdapter : RecyclerView.Adapter<ProfilePostAdapter.ListViewHolde
         return listPostProfile.size
     }
 
-    inner class ListViewHolder(private val binding: ItemCommunityTweetBinding, private val onItemClickCallback: OnItemClickCallback) :
+    inner class ListViewHolder(private val binding: ItemCommunityTweetBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        @SuppressLint("SetTextI18n")
+        init {
+            itemView.setOnClickListener {
+                onItemClickCallback.onItemClicked(listPostProfile[adapterPosition])
+            }
+        }
+
         fun bind(postuser: PostsItem) {
             binding.apply {
-                ivCommunity.visibility = View.GONE
-                tvCommunityName.visibility = View.GONE
-                tvUsername.text = "Samuel"
+//                ivCommunity.visibility = View.GONE
+//                tvCommunityName.visibility = View.GONE
+                tvUsername.text = postuser.name
                 tvPostDescription.text = postuser.text
 
                 val dateTime = postuser.timestamp
                 val dateTimeMillis = SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).parse(dateTime)!!.time
                 tvTimestamp.text = getTimeAgo(dateTimeMillis)
 
-                imgUser.loadImageWithCacheBusting("https://www.greenscene.co.id/wp-content/uploads/2022/01/Naruto-1-696x497.jpghttps://www.greenscene.co.id/wp-content/uploads/2022/01/Naruto-1-696x497.jpg")
-                //ivPostImage.loadImageWithCacheBusting(postuser.imageUrls[0].toString())
-
-                itemView.setOnClickListener {
-                    onItemClickCallback.onItemClicked(postuser)
-                }
+                imgUser.loadImageWithCacheBusting("https://www.greenscene.co.id/wp-content/uploads/2022/01/Naruto-1-696x497.jpg")
+                // ivPostImage.loadImageWithCacheBusting(postuser.imageUrls[0].toString())
             }
         }
     }
@@ -83,7 +83,7 @@ class ProfilePostAdapter : RecyclerView.Adapter<ProfilePostAdapter.ListViewHolde
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             val oldItem = oldList[oldItemPosition]
             val newItem = newList[newItemPosition]
-            return oldItem == newItem
+            return oldItem == newItem// Assuming PostsItem has an id field
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

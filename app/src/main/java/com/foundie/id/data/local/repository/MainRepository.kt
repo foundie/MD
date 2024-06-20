@@ -5,8 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.foundie.id.data.local.response.AddPasswordResponse
 import com.foundie.id.data.local.response.AddPostUserResponse
+import com.foundie.id.data.local.response.ColorAnalysisResponse
 import com.foundie.id.data.local.response.CommunityUserResponse
+import com.foundie.id.data.local.response.CompareProductResponse
 import com.foundie.id.data.local.response.CreateCommunityResponse
+import com.foundie.id.data.local.response.DataAnalysis
 import com.foundie.id.data.local.response.DataFilterProduct
 import com.foundie.id.data.local.response.DataPostItem
 import com.foundie.id.data.local.response.EditProfileResponse
@@ -22,6 +25,7 @@ import com.foundie.id.data.local.response.PostsItem
 import com.foundie.id.data.local.response.ProductData
 import com.foundie.id.data.local.response.ProductResponse
 import com.foundie.id.data.local.response.RegisterResponse
+import com.foundie.id.data.local.response.SimilarProductsItem
 import com.foundie.id.data.local.response.SkinToneResponse
 import com.foundie.id.data.local.response.User
 import com.foundie.id.data.local.response.UserDetail
@@ -116,6 +120,12 @@ class MainRepository(private val apiService: ApiService) {
 
     private val _detailUser = MutableLiveData<UserDetail>()
     val detailUser: LiveData<UserDetail> = _detailUser
+
+    private val _compareProduct = MutableLiveData<List<SimilarProductsItem>>()
+    val compareProduct: LiveData<List<SimilarProductsItem>> = _compareProduct
+
+    private val _coloranalysis = MutableLiveData<DataAnalysis>()
+    val colorAnalysis: LiveData<DataAnalysis> = _coloranalysis
 
     private val _detailUserPost = MutableLiveData<List<PostsItem>>()
     val detailUserPost: LiveData<List<PostsItem>> = _detailUserPost
@@ -445,6 +455,80 @@ class MainRepository(private val apiService: ApiService) {
             }
 
             override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
+                _isLoading.value = false
+                isError = true
+                _message.value = t.message.toString()
+            }
+        })
+    }
+
+    fun getCompare(token: String, index: Int) {
+        _isLoading.value = true
+        val api = ApiConfig.getApiService().getCompare("Bearer $token", index)
+        api.enqueue(object : Callback<CompareProductResponse> {
+            override fun onResponse(call: Call<CompareProductResponse>, response: Response<CompareProductResponse>) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    isError = false
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        _compareProduct.value = responseBody.similarProducts
+                    }
+                    _message.value = responseBody?.status.toString()
+                } else {
+                    isError = true
+                    _message.value = response.message()
+                }
+            }
+
+            override fun onFailure(call: Call<CompareProductResponse>, t: Throwable) {
+                _isLoading.value = false
+                isError = true
+                _message.value = t.message.toString()
+            }
+        })
+    }
+
+    fun colorAnalysis(
+        token: String,
+        bright: Int,
+        blue: Int,
+        yellow: Int,
+        green: Int,
+        pink: Int,
+        brown: Int,
+        clarity: Int
+    ) {
+        _isLoading.value = true
+
+        val request = ApiService.ColorAnalysisRequest(
+            brightnessLevel = bright,
+            bluePreferences = blue,
+            yellowPreferences = yellow,
+            greenPreferences = green,
+            pinkPreferences = pink,
+            brownPreferences = brown,
+            clarityLevel = clarity
+        )
+
+        val api = ApiConfig.getApiService().colorAnalysis("Bearer $token", request)
+        api.enqueue(object : Callback<ColorAnalysisResponse> {
+            override fun onResponse(call: Call<ColorAnalysisResponse>, response: Response<ColorAnalysisResponse>) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    isError = false
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        _coloranalysis.value = responseBody.data
+                    }
+                    _message.value = responseBody?.message.toString()
+                } else {
+                    isError = true
+                    _message.value = response.message()
+                }
+            }
+
+            override fun onFailure(call: Call<ColorAnalysisResponse>, t: Throwable) {
                 _isLoading.value = false
                 isError = true
                 _message.value = t.message.toString()

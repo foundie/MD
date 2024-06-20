@@ -16,6 +16,7 @@ import com.foundie.id.ui.login.dataStore
 import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.ProfileViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
 @Suppress("DEPRECATION")
 class TweetFragment : Fragment() {
@@ -50,17 +51,18 @@ class TweetFragment : Fragment() {
 
         val authViewModel =
             ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
-        authViewModel.getUserLoginToken().observe(viewLifecycleOwner) {
-            token = it
+        // Observasi token dan email dari AuthViewModel
+        authViewModel.getUserLoginToken().observe(viewLifecycleOwner) { token ->
             Log.d("TweetFragment", "Token: $token")
-        }
-        authViewModel.getUserLoginEmail().observe(viewLifecycleOwner) {
-            email = it
-            Log.d("TweetFragment", "Email: $email")
-            viewModel.getDetailUser(token, email)
+            authViewModel.getUserLoginEmail().observe(viewLifecycleOwner) { email ->
+                Log.d("TweetFragment", "Email: $email")
+                // Setelah mendapatkan token dan email, panggil getDetailUser() pada viewModel
+                viewModel.getDetailUser(token, email)
+            }
         }
 
-        viewModel.isLoadingProfile.observe(viewLifecycleOwner) {
+
+        viewModel.isLoadingDetail.observe(viewLifecycleOwner) {
             showLoading(it)
             Log.d("TweetFragment", "isLoadingProfile: $it")
         }
@@ -71,22 +73,13 @@ class TweetFragment : Fragment() {
         }
 
 
-        viewModel.profileStatus.observe(viewLifecycleOwner) { productStatus ->
-            val isError = viewModel.isErrorProfile
-            Log.d("TweetFragment", "ProfileStatus: $productStatus, isError: $isError")
-
-            if (isError && !productStatus.isNullOrEmpty()) {
-                binding.apply {
-                    rvListCommunity.visibility = View.VISIBLE
-                    errorMessageFollow.visibility = View.GONE
-                }
-            }
-            if (isError && productStatus.isNullOrEmpty()) {
-                binding.apply {
-//                    rvListCommunity.visibility = View.GONE
-                    progressBar.visibility = View.GONE
-                    errorMessageFollow.visibility = View.VISIBLE
-                }
+        viewModel.profileStatus.observe(viewLifecycleOwner) { profileStatus ->
+            if (profileStatus.isNullOrEmpty()) {
+                Snackbar.make(
+                    requireView(),
+                    "Error fetching profile data",
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -109,6 +102,7 @@ class TweetFragment : Fragment() {
             }
         }
     }
+
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE

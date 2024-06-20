@@ -31,6 +31,7 @@ const val SETTINGS_KEY = "settings"
 const val delayTime: Long = 1000
 const val delayshortTime: Long = 500
 const val delayTimeSlider: Long = 2000
+val selectedNumbers = mutableListOf<Int>()
 
 fun lightStatusBar(window: Window, isLight: Boolean = true) {
     val wic = WindowInsetsControllerCompat(window, window.decorView)

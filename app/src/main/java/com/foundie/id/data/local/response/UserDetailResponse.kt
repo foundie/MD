@@ -91,6 +91,9 @@ data class PostsItem(
 	@field:SerializedName("email")
 	val email: String,
 
+	@field:SerializedName("name")
+	val name: String,
+
 	@field:SerializedName("timestamp")
 	val timestamp: String
 ) : Parcelable

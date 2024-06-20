@@ -2,7 +2,9 @@ package com.foundie.id.data.local.retrofit
 
 import com.foundie.id.data.local.response.AddPasswordResponse
 import com.foundie.id.data.local.response.AddPostUserResponse
+import com.foundie.id.data.local.response.ColorAnalysisResponse
 import com.foundie.id.data.local.response.CommunityUserResponse
+import com.foundie.id.data.local.response.CompareProductResponse
 import com.foundie.id.data.local.response.CreateCommunityResponse
 import com.foundie.id.data.local.response.EditProfileResponse
 import com.foundie.id.data.local.response.FilterProductResponse
@@ -20,6 +22,7 @@ import com.foundie.id.data.local.response.UserResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -28,6 +31,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -85,7 +89,7 @@ interface ApiService {
     ): Call<EditProfileResponse>
 
     // Get Products
-    @GET("products")
+    @GET("products?limit=50&skip=20")
     fun getProduct(
         @Header("Authorization") token: String
     ): Call<ProductResponse>
@@ -133,11 +137,34 @@ interface ApiService {
         @Part("variant_name") variant: RequestBody?
     ): Call<FilterProductResponse>
 
+    // Get Compare Product
+    @GET("products/compare/")
+    fun getCompare(
+        @Header("Authorization") token: String,
+        @Query("index") index: Int
+    ): Call<CompareProductResponse>
+
     // Get History Predict Users
     @GET("predict/history")
     fun getHistory(
         @Header("Authorization") token: String
     ): Call<HistoryResponse>
+
+    data class ColorAnalysisRequest(
+        val brightnessLevel: Int,
+        val bluePreferences: Int,
+        val yellowPreferences: Int,
+        val greenPreferences: Int,
+        val pinkPreferences: Int,
+        val brownPreferences: Int,
+        val clarityLevel: Int
+    )
+
+    @POST("/predict/color")
+    fun colorAnalysis(
+        @Header("Authorization") token: String,
+        @Body request: ColorAnalysisRequest
+    ): Call<ColorAnalysisResponse>
 
     // Get Email Detail
     @GET("biodata/{email}")

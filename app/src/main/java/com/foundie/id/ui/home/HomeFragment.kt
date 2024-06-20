@@ -23,7 +23,6 @@ import com.foundie.id.ui.catalog.CatalogViewModel
 import com.foundie.id.ui.community.CommunityViewModel
 import com.foundie.id.ui.home.color_analysis.input.ColorAnalysisInputFirstFragment
 import com.foundie.id.ui.home.compare_product.CompareProductInputFragment
-import com.foundie.id.ui.home.compare_product.CompareProductSplashScreenFragment
 import com.foundie.id.ui.home.makeup_analysis.MakeupAnalysisInputFragment
 import com.foundie.id.ui.login.dataStore
 import com.foundie.id.viewmodel.AuthModelFactory
@@ -99,8 +98,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupViewPager() {
-        list.add(ImageDataResponse("https://i.pinimg.com/564x/bb/ad/bd/bbadbd23bef414504a195612e289a407.jpg"))
-        list.add(ImageDataResponse("https://i.pinimg.com/736x/c1/2b/64/c12b649924fe3865221f7791fbd3b6b5.jpg"))
+        list.add(ImageDataResponse("https://storage.googleapis.com/storage-foundie/data/images/slider-home/1.png"))
+        list.add(ImageDataResponse("https://storage.googleapis.com/storage-foundie/data/images/slider-home/2.png"))
 
         adapter = ImageSliderAdapter(list)
         binding.viewPager.adapter = adapter

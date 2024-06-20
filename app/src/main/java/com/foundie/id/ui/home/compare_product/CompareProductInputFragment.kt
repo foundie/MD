@@ -18,7 +18,6 @@ import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.delayTime
 import com.foundie.id.ui.home.makeup_analysis.PredictViewModel
 import com.foundie.id.ui.login.dataStore
-import com.foundie.id.ui.profile.user_detail.UserDetailFragment
 import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.PredictViewModelFactory
@@ -86,7 +85,7 @@ class CompareProductInputFragment : Fragment() {
             if (!filterStatus.isNullOrEmpty()) {
                 Snackbar.make(
                     binding.root,
-                    getString(R.string.POST_UPLOAD_SUCCESS),
+                    getString(R.string.PREDICT_UPLOAD_SUCCESS),
                     Snackbar.LENGTH_SHORT
                 ).show()
                 Handler(Looper.getMainLooper()).postDelayed({
@@ -127,7 +126,7 @@ class CompareProductInputFragment : Fragment() {
                     putString(CompareProductProcessFragment.EXTRA_BRAND, brand)
                     putString(CompareProductProcessFragment.EXTRA_VARIANT, variant)
                 }
-                val fragment = UserDetailFragment().apply {
+                val fragment = CompareProductProcessFragment().apply {
                     arguments = bundle
                 }
 

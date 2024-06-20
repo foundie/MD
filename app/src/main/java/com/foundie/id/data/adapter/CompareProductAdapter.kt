@@ -2,27 +2,29 @@ package com.foundie.id.data.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.foundie.id.data.local.response.DataFilterProduct
+import com.foundie.id.data.local.response.SimilarProductsItem
 import com.foundie.id.databinding.ItemCatalogBinding
 import com.foundie.id.settings.loadImageWithCacheBusting
 
-class FilterAdapter : RecyclerView.Adapter<FilterAdapter.ListViewHolder>() {
+class CompareProductAdapter : RecyclerView.Adapter<CompareProductAdapter.ListViewHolder>() {
 
-    private val listFilter = ArrayList<DataFilterProduct>()
+    private val listCompare = ArrayList<SimilarProductsItem>()
     private lateinit var onItemClickCallback: OnItemClickCallback
+
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
-    fun setData(data: List<DataFilterProduct>) {
-        val diffCallback = DiffUtilCallback(listFilter, data)
+    fun setData(data: List<SimilarProductsItem>) {
+        val diffCallback = DiffUtilCallback(listCompare, data)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
-        listFilter.clear()
-        listFilter.addAll(data)
+        listCompare.clear()
+        listCompare.addAll(data)
         diffResult.dispatchUpdatesTo(this)
     }
 
@@ -33,41 +35,53 @@ class FilterAdapter : RecyclerView.Adapter<FilterAdapter.ListViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val currentFilter = listFilter[position]
+        val currentCompare = listCompare[position]
 
         holder.itemView.setOnClickListener {
-            onItemClickCallback.onItemClicked(currentFilter)
+            onItemClickCallback.onItemClicked(currentCompare)
         }
 
-        holder.bind(currentFilter)
+        holder.bind(currentCompare)
     }
 
     override fun getItemCount(): Int {
-        return listFilter.size
+        return listCompare.size
     }
 
     class ListViewHolder(private val binding: ItemCatalogBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(product: DataFilterProduct) {
+        fun bind(product: SimilarProductsItem) {
             binding.apply {
                 tvProductName.text = product.productTitle
                 tvProductCategory.text = product.type
                 tvProductSeasonOne.text = product.season1Name
-                tvProductSeasonTwo.text = product.season2Name
+                tvProductSeasonTwo.visibility = View.GONE
                 ivProduct.loadImageWithCacheBusting(product.image)
+            }
+
+            itemView.setOnClickListener {
+                //val intent = Intent(itemView.context, StoryDetailActivity::class.java)
+                //intent.putExtra(StoryDetailActivity.EXTRA_DETAIL_STORY, product)
+
+//                val optionsCompat: ActivityOptionsCompat =
+//                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+//                        itemView.context as Activity,
+////                        Pair(binding.imgItemPhoto, "image"),
+//                    )
+//                itemView.context.startActivity(intent, optionsCompat.toBundle())
             }
         }
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: DataFilterProduct)
+        fun onItemClicked(data: SimilarProductsItem)
     }
 
     class DiffUtilCallback(
-        private val oldList: List<DataFilterProduct>,
-        private val newList: List<DataFilterProduct>
+        private val oldList: List<SimilarProductsItem>,
+        private val newList: List<SimilarProductsItem>
     ) : DiffUtil.Callback() {
 
         override fun getOldListSize(): Int = oldList.size

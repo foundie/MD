@@ -49,8 +49,6 @@ class CompareProductProcessFragment : Fragment() {
             title = ""
             setDisplayHomeAsUpEnabled(true)
         }
-
-        Log.d("CompareProductProcessFragment", "onCreateView: Binding created")
         return binding.root
     }
 
@@ -85,17 +83,12 @@ class CompareProductProcessFragment : Fragment() {
         }
 
         viewModel.filterProduct.observe(viewLifecycleOwner) { postList ->
-            Log.d("CompareProductProcessFragment", "Data received: $postList")
             setPostData(postList)
         }
 
         viewModel.filterStatus.observe(viewLifecycleOwner) { filterStatus ->
             if (!filterStatus.isNullOrEmpty()) {
-                Snackbar.make(
-                    binding.root,
-                    "Berhasil",
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                Log.d("CompareProductProcessFragment", "Load Images Success")
             } else if (viewModel.isErrorFilter && !filterStatus.isNullOrEmpty()) {
                 Snackbar.make(binding.root, filterStatus, Snackbar.LENGTH_SHORT).show()
             }
@@ -107,31 +100,33 @@ class CompareProductProcessFragment : Fragment() {
         binding.rvListCatalog.layoutManager = layoutManager
         binding.rvListCatalog.setHasFixedSize(true)
         binding.rvListCatalog.adapter = adapter
-        Log.d("CompareProductProcessFragment", "RecyclerView setup completed")
+        adapter.setOnItemClickCallback(object : FilterAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: DataFilterProduct) {
+                val index = data.index
+                val bundle = Bundle().apply {
+                    putInt(CompareProductResultFragment.EXTRA_INDEX, index)
+                }
+                val fragment = CompareProductResultFragment().apply {
+                    arguments = bundle
+                }
+
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, fragment)
+                    .commit()
+            }
+        })
     }
 
     private fun setPostData(filterList: List<DataFilterProduct>) {
-        Log.d("CompareProductProcessFragment", "setPostData: Data received: $filterList")
         if (::adapter.isInitialized) {
             if (filterList.isNotEmpty()) {
                 adapter.setData(filterList)
-                Log.d("CompareProductProcessFragment", "Adapter set with data")
-            } else {
-                Log.d("CompareProductProcessFragment", "Filter list is empty")
             }
-        } else {
-            Log.d("CompareProductProcessFragment", "Adapter is not initialized")
         }
     }
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.frame_layout, fragment)
-            .commit()
     }
 
     companion object {

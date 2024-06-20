@@ -1,60 +1,110 @@
 package com.foundie.id.ui.home.compare_product
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.foundie.id.R
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import com.foundie.id.data.adapter.CompareProductAdapter
+import com.foundie.id.data.local.response.SimilarProductsItem
+import com.foundie.id.databinding.FragmentCompareProductResultBinding
+import com.foundie.id.settings.SettingsPreferences
+import com.foundie.id.ui.home.makeup_analysis.PredictViewModel
+import com.foundie.id.ui.login.dataStore
+import com.foundie.id.viewmodel.AuthModelFactory
+import com.foundie.id.viewmodel.AuthViewModel
+import com.foundie.id.viewmodel.PredictViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CompareProductResultFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CompareProductResultFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private var _binding: FragmentCompareProductResultBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var prefen: SettingsPreferences
+    private lateinit var token: String
+    private lateinit var adapter: CompareProductAdapter
+
+    private val viewModel: PredictViewModel by lazy {
+        ViewModelProvider(
+            this,
+            PredictViewModelFactory(requireContext())
+        )[PredictViewModel::class.java]
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_compare_product_result, container, false)
+    ): View {
+        _binding = FragmentCompareProductResultBinding.inflate(inflater, container, false)
+
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar?.apply {
+            title = ""
+            setDisplayHomeAsUpEnabled(true)
+        }
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        prefen = SettingsPreferences.getInstance(requireContext().dataStore)
+
+        (activity as? AppCompatActivity)?.supportActionBar?.elevation = 0f
+        prefen = SettingsPreferences.getInstance(requireContext().dataStore)
+        adapter = CompareProductAdapter()
+        showRecyclerView()
+        val authViewModel =
+            ViewModelProvider(this, AuthModelFactory(prefen))[AuthViewModel::class.java]
+        authViewModel.getUserLoginToken().observe(viewLifecycleOwner) {
+            token = it
+            val index = arguments?.getInt(EXTRA_INDEX)
+            if (index != null) {
+                viewModel.getCompare(token, index)
+            }
+        }
+
+        viewModel.isLoadingCompare.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
+        viewModel.compareProduct.observe(viewLifecycleOwner) { postList ->
+            setPostData(postList)
+        }
+
+        viewModel.compareStatus.observe(viewLifecycleOwner) { compareStatus ->
+            if (!compareStatus.isNullOrEmpty()) {
+                Log.d("CompareProductProcessFragment", "Load Images Success")
+            } else if (viewModel.isErrorCompare && !compareStatus.isNullOrEmpty()) {
+                Snackbar.make(binding.root, compareStatus, Snackbar.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun showRecyclerView() {
+        val layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.rvListCatalog.layoutManager = layoutManager
+        binding.rvListCatalog.setHasFixedSize(true)
+        binding.rvListCatalog.adapter = adapter
+    }
+
+    private fun setPostData(compareList: List<SimilarProductsItem>) {
+        if (::adapter.isInitialized) {
+            if (compareList.isNotEmpty()) {
+                adapter.setData(compareList)
+            }
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CompareProductResultFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CompareProductResultFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        const val EXTRA_INDEX = "extra_index"
     }
 }

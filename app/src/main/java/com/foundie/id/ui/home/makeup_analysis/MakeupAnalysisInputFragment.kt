@@ -67,6 +67,7 @@ class MakeupAnalysisInputFragment : Fragment() {
             if (success) {
                 currentPostPhotoPath?.let {
                     val file = File(it)
+                    binding.ivImageOne.visibility = View.GONE
                     binding.ivImage.setImageURI(Uri.fromFile(file))
                 }
             } else {
@@ -81,6 +82,7 @@ class MakeupAnalysisInputFragment : Fragment() {
     private val profileGalleryLauncher =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
             uri?.let {
+                binding.ivImageOne.visibility = View.GONE
                 binding.ivImage.setImageURI(it)
                 postImageUri = it
                 currentPostPhotoPath = uriToFile(it).absolutePath
