@@ -25,10 +25,12 @@ _this data is primary data that has been collected in 2024 with 112 resondens in
 - Color Analysis
 ### Compare
 - Compare Products
-- Virtual Try-On _coming soon_
+- Virtual Try-On (_coming soon_)
 ### Order
-- E-commerce _coming soon_
-- Make-Up-Artist Service _coming soon_
-- MakeUp Course _coming soon_
+- E-commerce (_coming soon_)
+- Make-Up-Artist Service (_coming soon_)
+- MakeUp Course (_coming soon_)
 ### Review
 - Community Sharing 
+
+## Application Preview
