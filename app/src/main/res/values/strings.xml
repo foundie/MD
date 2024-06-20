@@ -265,4 +265,5 @@
     <string name="summer_cool">Summer Cool :</string>
     <string name="winter_cool">Winter Cool :</string>
     <string name="upload_your_photo">Upload your photo</string>
+    <string name="there_s_no_data_match_in_our_database">There\'s no data match in our database</string>
 </resources>
