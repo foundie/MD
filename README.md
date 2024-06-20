@@ -16,6 +16,8 @@ _this data is primary data that has been collected in 2024 with 112 resondens in
 
 [![forthebadge](https://img.shields.io/badge/Made%20with-Kotlin-1f425f.svg)](https://kotlinlang.org/)
 
+[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+
 
 ## Features One-Stop-Solution (CCOR | Choose - Compare - Order - Review)
 ### Choose
