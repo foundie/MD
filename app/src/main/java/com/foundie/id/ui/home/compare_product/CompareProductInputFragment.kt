@@ -1,7 +1,8 @@
 package com.foundie.id.ui.home.compare_product
 
-
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +15,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.foundie.id.R
 import com.foundie.id.databinding.FragmentCompareProductInputBinding
 import com.foundie.id.settings.SettingsPreferences
+import com.foundie.id.settings.delayTime
 import com.foundie.id.ui.home.makeup_analysis.PredictViewModel
 import com.foundie.id.ui.login.dataStore
+import com.foundie.id.ui.profile.user_detail.UserDetailFragment
 import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.PredictViewModelFactory
@@ -54,7 +57,6 @@ class CompareProductInputFragment : Fragment() {
             autoComplete.setText(selectedItems)
         }
 
-
         val actionBar = (activity as AppCompatActivity).supportActionBar
         actionBar?.apply {
             title = ""
@@ -87,9 +89,9 @@ class CompareProductInputFragment : Fragment() {
                     getString(R.string.POST_UPLOAD_SUCCESS),
                     Snackbar.LENGTH_SHORT
                 ).show()
-//                Handler(Looper.getMainLooper()).postDelayed({
-//                    replaceFragment(CommunityFragment())
-//                }, delayTime)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    replaceFragment(CompareProductProcessFragment())
+                }, delayTime)
             } else if (viewModel.isErrorFilter && !filterStatus.isNullOrEmpty()) {
                 Snackbar.make(binding.root, filterStatus, Snackbar.LENGTH_SHORT).show()
             }
@@ -107,7 +109,7 @@ class CompareProductInputFragment : Fragment() {
                 if (title.isEmpty()) {
                     Snackbar.make(
                         binding.root,
-                        getString(R.string.ERROR_TITLE_DESC_EMPTY),
+                        getString(R.string.ERROR_TITLE_EMPTY),
                         Snackbar.LENGTH_SHORT
                     ).show()
                     return@setOnClickListener
@@ -119,9 +121,22 @@ class CompareProductInputFragment : Fragment() {
                 val variantBody = variant.toRequestBody("text/plain".toMediaType())
 
                 viewModel.filter(token, titleBody, typeBody, brandBody, variantBody)
+                val bundle = Bundle().apply {
+                    putString(CompareProductProcessFragment.EXTRA_TITLE, title)
+                    putString(CompareProductProcessFragment.EXTRA_TYPE, type)
+                    putString(CompareProductProcessFragment.EXTRA_BRAND, brand)
+                    putString(CompareProductProcessFragment.EXTRA_VARIANT, variant)
+                }
+                val fragment = UserDetailFragment().apply {
+                    arguments = bundle
+                }
+
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, fragment)
+                    .commit()
             }
         }
-    }
+            }
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE

@@ -103,6 +103,7 @@
     <string name="ERROR_COMPRESSING_DATA">Error compressing file</string>
     <string name="ERROR_IMAGE_EMPTY">Image cannot be empty</string>
     <string name="ERROR_TITLE_DESC_EMPTY">Title and Description cannot be empty</string>
+    <string name="ERROR_TITLE_EMPTY">Title cannot be empty</string>
 
     <string name="makeup">MakeUp</string>
     <string name="analysis">Analysis</string>

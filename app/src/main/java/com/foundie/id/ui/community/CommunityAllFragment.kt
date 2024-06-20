@@ -79,10 +79,6 @@ class CommunityAllFragment : Fragment() {
 
             if (isError && !postStatus.isNullOrEmpty()) {
                 binding.rvListCommunity.visibility = View.VISIBLE
-                Snackbar.make(binding.root, postStatus, Snackbar.LENGTH_SHORT).show()
-
-            } else if (!isError && !postStatus.isNullOrEmpty()) {
-                binding.rvListCommunity.visibility = View.VISIBLE
             }
         }
     }
