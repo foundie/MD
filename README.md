@@ -36,6 +36,21 @@ _this data is primary data that has been collected in 2024 with 112 resondens in
 Skincare and Condition Skin Checker
 
 ## Application Preview
+### Sign In
+<img src="https://github.com/foundie/MD/assets/170089559/6ab1da2e-c563-4410-b904-bc4989f59f05" width="200">
+<img src="https://github.com/foundie/MD/assets/170089559/d20d72b3-ae76-4388-9296-d7faf1d73bb6" width="200">
+
+### Home
+<img src="https://github.com/foundie/MD/assets/170089559/efe2cbd8-d51b-4969-8443-cbcab4b84e9e" width="200">
+
+### Catalog Product
+<img src="https://github.com/foundie/MD/assets/170089559/220c9e9f-da4b-44c1-9e7c-50ebcf0f021f" width="200">
+
+### Profile
+<img src="https://github.com/foundie/MD/assets/170089559/f9d76c54-2699-4a15-b41b-8695c331b7c2" width="200">
+
+### Community
+<img src="https://github.com/foundie/MD/assets/170089559/95fe5793-6534-44d7-863b-a1e51c470a1f" width="200">
 
 ## Developer Contributor
 <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" width="24" height="24"> https://github.com/louismichaell
