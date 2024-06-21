@@ -33,7 +33,7 @@ _this data is primary data that has been collected in 2024 with 112 resondens in
 ### Review
 - Community Sharing
 
-## Upcoming Features
+## Upcoming Beauty Field
 Skincare and Condition Skin Checker
 
 ## Application Preview
