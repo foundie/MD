@@ -130,6 +130,9 @@ class MainRepository(private val apiService: ApiService) {
     private val _detailUserPost = MutableLiveData<List<PostsItem>>()
     val detailUserPost: LiveData<List<PostsItem>> = _detailUserPost
 
+    private val _historyColorAnalysis= MutableLiveData<PredictDataItem>()
+    val historyColorAnalysis: LiveData<PredictDataItem> = _historyColorAnalysis
+
     private val _historyMakeUp = MutableLiveData<PredictDataItem>()
     val historyMakeUp: LiveData<PredictDataItem> = _historyMakeUp
 
@@ -747,8 +750,9 @@ class MainRepository(private val apiService: ApiService) {
                     if (responseBody != null) {
                         val historyData = responseBody.data
 
-                        _historyMakeUp.value = historyData[0]
-                        _historyskinTone.value = historyData[1]
+                        _historyColorAnalysis.value = historyData[0]
+                        _historyMakeUp.value = historyData[1]
+                        _historyskinTone.value = historyData[2]
 
                         // Kirim message ke LiveData
                         _message.value = responseBody.message

@@ -6,19 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.color_analysis.input.ColorAnalysisInputSecondFragment">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -48,7 +35,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/preview_view"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
@@ -56,7 +43,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/view_pager"
                 app:layout_constraintEnd_toEndOf="@+id/view_pager"
                 app:layout_constraintStart_toStartOf="@+id/view_pager"
-                app:layout_constraintTop_toTopOf="@+id/view_pager" />
+                app:layout_constraintTop_toTopOf="@+id/view_pager"
+                tools:src="@tools:sample/avatars"/>
 
             <LinearLayout
                 android:id="@+id/LL_radioButton"

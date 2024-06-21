@@ -36,7 +36,7 @@
             android:theme="@style/Theme.Foundie.NoActionBar" />
 
         <activity android:name=".ui.navigation.FragmentActivity" />
-        <activity android:name=".ui.home.compare_product.CompareProductSplashScreenFragment" />
+        <activity android:name=".ui.profile.settings.privacy.PrivacyActivity" />
 
         <activity
             android:name=".ui.splashscreen.SplashScreenActivity"

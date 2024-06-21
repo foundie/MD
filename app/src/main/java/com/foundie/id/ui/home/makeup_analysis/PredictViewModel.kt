@@ -56,6 +56,7 @@ class PredictViewModel(private val mainRepository: MainRepository) : ViewModel()
 
     val historyMakeUp:  LiveData<PredictDataItem> = mainRepository.historyMakeUp
     val historySkinTone:  LiveData<PredictDataItem> = mainRepository.historySkinTone
+    val historyColorAnalysis:  LiveData<PredictDataItem> = mainRepository.historyColorAnalysis
     val filterProduct:  LiveData<List<DataFilterProduct>> = mainRepository.filterProduct
     val compareProduct: LiveData<List<SimilarProductsItem>> = mainRepository.compareProduct
     val colorAnalysis: LiveData<DataAnalysis> = mainRepository.colorAnalysis

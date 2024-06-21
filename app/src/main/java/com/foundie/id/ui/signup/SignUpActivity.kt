@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.os.Parcelable
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
@@ -17,6 +16,7 @@ import com.foundie.id.ThemeActivity
 import com.foundie.id.databinding.ActivitySignUpBinding
 import com.foundie.id.settings.delayTime
 import com.foundie.id.ui.login.LoginActivity
+import com.foundie.id.ui.profile.settings.privacy.PrivacyActivity
 import com.google.android.material.snackbar.Snackbar
 
 @Suppress("DEPRECATION")
@@ -55,6 +55,10 @@ class SignUpActivity : ThemeActivity() {
 
             tvSignInNow.setOnClickListener {
                 startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+            }
+
+            tvPrivacyPolicy.setOnClickListener{
+                startActivity(Intent(this@SignUpActivity, PrivacyActivity::class.java))
             }
         }
 
@@ -143,9 +147,5 @@ class SignUpActivity : ThemeActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
-    companion object {
-        const val EXTRA_DETAIL_USER = "extra_detail_user"
     }
 }

@@ -17,6 +17,7 @@ import com.foundie.id.R
 import com.foundie.id.databinding.FragmentProfileBinding
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.loadImageWithCacheBusting
+import com.foundie.id.ui.home.color_analysis.result.ColorAnalysisHistoryFragment
 import com.foundie.id.ui.home.makeup_analysis.result.RMakeUpFragment
 import com.foundie.id.ui.home.makeup_analysis.result.SkinToneFragment
 import com.foundie.id.ui.login.dataStore
@@ -118,6 +119,9 @@ class ProfileFragment : Fragment() {
             tvSkintoneAnalysis.setOnClickListener {
                 replaceFragment(SkinToneFragment())
             }
+            tvColorAnalysis.setOnClickListener {
+                replaceFragment(ColorAnalysisHistoryFragment())
+            }
         }
     }
 
@@ -132,6 +136,7 @@ class ProfileFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_settings -> {

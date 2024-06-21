@@ -68,7 +68,11 @@ class SkinToneFragment : Fragment() {
         }
 
         viewModel.historyStatus.observe(viewLifecycleOwner) { historyStatus ->
-            if (historyStatus.isNullOrEmpty()) return@observe
+            if (historyStatus.isNullOrEmpty()){
+                binding.ivIcon.visibility = View.GONE
+                binding.tvError.visibility = View.VISIBLE
+                return@observe
+            }
 
             val isError = viewModel.isErrorHistory
             val message = if (isError && historyStatus == "Unauthorized") {

@@ -78,25 +78,37 @@ class ColorAnalysisOutputFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btnClick()
+        binding.WcPredict.visibility = View.GONE
 
         viewModel.colorAnalysis.observe(viewLifecycleOwner) { colorAnalysis ->
             if (colorAnalysis != null) {
                 binding.apply {
                     tvTitleSeasonResult.text = colorAnalysis.colorSeason
                     tvInspoDescriptionDetail.text = colorAnalysis.description
-                    tvSeasonPersentageOne.text = colorAnalysis.seasonCompatibilityPercentages.autumnDeep.toString() + "%"
-                    tvSeasonPersentageTwo.text = colorAnalysis.seasonCompatibilityPercentages.winterDeep.toString() + "%"
-                    tvSeasonPersentageThree.text = colorAnalysis.seasonCompatibilityPercentages.springLight.toString() + "%"
-                    tvSeasonPersentageFour.text = colorAnalysis.seasonCompatibilityPercentages.summerLight.toString() + "%"
-                    tvSeasonPersentageFive.text = colorAnalysis.seasonCompatibilityPercentages.autumnSoft.toString() + "%"
-                    tvSeasonPersentageSix.text = colorAnalysis.seasonCompatibilityPercentages.summerSoft.toString() + "%"
-                    tvSeasonPersentageSeven.text = colorAnalysis.seasonCompatibilityPercentages.springClear.toString() + "%"
-                    tvSeasonPersentageEight.text = colorAnalysis.seasonCompatibilityPercentages.winterClear.toString() + "%"
-                    tvSeasonPersentageNine.text = colorAnalysis.seasonCompatibilityPercentages.autumnWarm.toString() + "%"
-                    tvSeasonPersentageTen.text = colorAnalysis.seasonCompatibilityPercentages.springWarm.toString() + "%"
-                    tvSeasonPersentageEleven.text = colorAnalysis.seasonCompatibilityPercentages.summerCool.toString() + "%"
-                    tvSeasonPersentageTwelve.text = colorAnalysis.seasonCompatibilityPercentages.winterCool.toString() + "%"
+                    tvSeasonPersentageOne.text =
+                        colorAnalysis.seasonCompatibilityPercentages.autumnDeep.toString() + "%"
+                    tvSeasonPersentageTwo.text =
+                        colorAnalysis.seasonCompatibilityPercentages.winterDeep.toString() + "%"
+                    tvSeasonPersentageThree.text =
+                        colorAnalysis.seasonCompatibilityPercentages.springLight.toString() + "%"
+                    tvSeasonPersentageFour.text =
+                        colorAnalysis.seasonCompatibilityPercentages.summerLight.toString() + "%"
+                    tvSeasonPersentageFive.text =
+                        colorAnalysis.seasonCompatibilityPercentages.autumnSoft.toString() + "%"
+                    tvSeasonPersentageSix.text =
+                        colorAnalysis.seasonCompatibilityPercentages.summerSoft.toString() + "%"
+                    tvSeasonPersentageSeven.text =
+                        colorAnalysis.seasonCompatibilityPercentages.springClear.toString() + "%"
+                    tvSeasonPersentageEight.text =
+                        colorAnalysis.seasonCompatibilityPercentages.winterClear.toString() + "%"
+                    tvSeasonPersentageNine.text =
+                        colorAnalysis.seasonCompatibilityPercentages.autumnWarm.toString() + "%"
+                    tvSeasonPersentageTen.text =
+                        colorAnalysis.seasonCompatibilityPercentages.springWarm.toString() + "%"
+                    tvSeasonPersentageEleven.text =
+                        colorAnalysis.seasonCompatibilityPercentages.summerCool.toString() + "%"
+                    tvSeasonPersentageTwelve.text =
+                        colorAnalysis.seasonCompatibilityPercentages.winterCool.toString() + "%"
                     ivColorOne.setBackgroundColor(Color.parseColor(colorAnalysis.palette[0]))
                     ivColorTwo.setBackgroundColor(Color.parseColor(colorAnalysis.palette[1]))
                     ivColorThree.setBackgroundColor(Color.parseColor(colorAnalysis.palette[2]))
@@ -110,13 +122,17 @@ class ColorAnalysisOutputFragment : Fragment() {
                     ivColorEleven.setBackgroundColor(Color.parseColor(colorAnalysis.palette[10]))
                     ivColorTwelve.setBackgroundColor(Color.parseColor(colorAnalysis.palette[11]))
                     ivInspo.loadImageWithCacheBusting(colorAnalysis.seasonImage)
-                    mainLayout.visibility = View.VISIBLE
+                    binding.WcPredict.visibility = View.VISIBLE
                 }
             }
         }
 
         viewModel.colorAnalysisStatus.observe(viewLifecycleOwner) { colorStatus ->
-            if (colorStatus.isNullOrEmpty()) return@observe
+            if (colorStatus.isNullOrEmpty()) {
+                    binding.WcPredict.visibility = View.GONE
+                    binding.tvError.visibility = View.VISIBLE
+                return@observe
+            }
 
             val isError = viewModel.isErrorColors
             val message = if (isError && colorStatus == "Unauthorized") {
@@ -126,19 +142,6 @@ class ColorAnalysisOutputFragment : Fragment() {
             }
             Log.d("ColorAnalysisOutputFragment", message)
         }
-    }
-
-    private fun btnClick() {
-        binding.apply {
-
-        }
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.frame_layout, fragment)
-            .addToBackStack(null)
-            .commit()
     }
 
     private fun showLoading(isLoading: Boolean) {

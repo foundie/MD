@@ -33,6 +33,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/result" />
 
+
         <TextView
             android:id="@+id/tv_description_result"
             style="@style/TextContent.BodyM"
@@ -46,6 +47,15 @@
             tools:text="@string/description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_error"
+        style="@style/TextContent.BodyS"
+        android:text="@string/there_s_no_data_match_in_our_database"
+        android:textColor="?attr/colorPrimary"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progressBar"

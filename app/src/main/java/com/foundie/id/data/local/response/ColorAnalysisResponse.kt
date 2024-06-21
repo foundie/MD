@@ -76,7 +76,7 @@ data class DataAnalysis(
 	val description: String,
 
 	@field:SerializedName("seasonCompatibilityPercentages")
-	val seasonCompatibilityPercentages: SeasonCompatibilityPercentages,
+	val seasonCompatibilityPercentages: SeasonCompatibilityPercentage,
 
 	@field:SerializedName("palette")
 	val palette: List<String>,

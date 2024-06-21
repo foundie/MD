@@ -24,7 +24,6 @@ import com.foundie.id.data.local.response.ImageDataResponseColor
 import com.foundie.id.databinding.FragmentColorAnalysisInputFirstBinding
 import com.foundie.id.settings.delayTimeSlider
 import com.foundie.id.settings.selectedNumbers
-import com.foundie.id.ui.community.community_post.CreatePostFragment
 import com.foundie.id.ui.home.color_analysis.result.ColorAnalysisOutputFragment
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
@@ -50,6 +49,7 @@ class ColorAnalysisInputFirstFragment : Fragment() {
             if (success) {
                 currentPostPhotoPath?.let {
                     val file = File(it)
+                    binding.ivUploadCamera.visibility = View.GONE
                     binding.previewView.setImageURI(Uri.fromFile(file))
                 }
             } else {
@@ -101,8 +101,11 @@ class ColorAnalysisInputFirstFragment : Fragment() {
         binding.apply {
             btnNext.setOnClickListener {
                 val checkedId = radioGroupOne.checkedRadioButtonId
+
                 if (checkedId == -1) {
                     Snackbar.make(root, getString(R.string.ERROR_COLOR_EMPTY), Snackbar.LENGTH_SHORT).show()
+                } else if (currentPostPhotoPath.isNullOrEmpty()) {
+                    Snackbar.make(root, getString(R.string.ERROR_IMAGE_EMPTY), Snackbar.LENGTH_SHORT).show()
                 } else {
                     val selectedNumber = when (checkedId) {
                         R.id.rb_one_pick -> 1
@@ -136,7 +139,7 @@ class ColorAnalysisInputFirstFragment : Fragment() {
                 }
             }
 
-            previewView.setOnClickListener{
+            ivUploadCamera.setOnClickListener {
                 if (ContextCompat.checkSelfPermission(
                         requireContext(),
                         Manifest.permission.CAMERA

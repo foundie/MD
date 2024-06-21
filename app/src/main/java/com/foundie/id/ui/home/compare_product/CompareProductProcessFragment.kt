@@ -19,7 +19,6 @@ import com.foundie.id.ui.login.dataStore
 import com.foundie.id.viewmodel.AuthModelFactory
 import com.foundie.id.viewmodel.AuthViewModel
 import com.foundie.id.viewmodel.PredictViewModelFactory
-import com.google.android.material.snackbar.Snackbar
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 
@@ -90,9 +89,8 @@ class CompareProductProcessFragment : Fragment() {
             if (!filterStatus.isNullOrEmpty()) {
                 binding.tvError.visibility = View.GONE
                 Log.d("CompareProductProcessFragment", "Load Images Success")
-            } else if (viewModel.isErrorFilter && filterStatus.isNullOrEmpty()) {
+            } else if (viewModel.isErrorFilter || filterStatus.isNullOrEmpty()) {
                 binding.tvError.visibility = View.VISIBLE
-                Snackbar.make(binding.root, filterStatus, Snackbar.LENGTH_SHORT).show()
             }
         }
     }

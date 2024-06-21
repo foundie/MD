@@ -19,9 +19,6 @@ data class HistoryResponse(
 @Parcelize
 data class PredictDataItem(
 
-	@field:SerializedName("prediction")
-	val prediction: String,
-
 	@field:SerializedName("result")
 	val result: String,
 
@@ -34,8 +31,72 @@ data class PredictDataItem(
 	@field:SerializedName("email")
 	val email: String,
 
+	@field:SerializedName("prediction")
+	val prediction: String,
+
+	@field:SerializedName("dominantCharacteristic")
+	val dominantCharacteristic: String,
+
+	@field:SerializedName("seasonImage")
+	val seasonImage: String,
+
+	@field:SerializedName("colorSeason")
+	val colorSeason: String,
+
+	@field:SerializedName("description")
+	val description: String,
+
+	@field:SerializedName("palette")
+	val palette: List<String>,
+
+	@field:SerializedName("seasonCompatibilityPercentages")
+	val seasonCompatibilityPercentages: SeasonCompatibilityPercentage,
+
+	@field:SerializedName("secondaryCharacteristic")
+	val secondaryCharacteristic: String,
+
 	@field:SerializedName("products")
 	val product: List<RecomendationDataItem>
+) : Parcelable
+
+@Parcelize
+data class SeasonCompatibilityPercentage(
+
+	@field:SerializedName("Autumn Soft")
+	val autumnSoft: Int,
+
+	@field:SerializedName("Spring Warm")
+	val springWarm: Int,
+
+	@field:SerializedName("Summer Cool")
+	val summerCool: Int,
+
+	@field:SerializedName("Spring Clear")
+	val springClear: Int,
+
+	@field:SerializedName("Spring Light")
+	val springLight: Int,
+
+	@field:SerializedName("Autumn Warm")
+	val autumnWarm: Int,
+
+	@field:SerializedName("Summer Soft")
+	val summerSoft: Int,
+
+	@field:SerializedName("Summer Light")
+	val summerLight: Int,
+
+	@field:SerializedName("Winter Clear")
+	val winterClear: Int,
+
+	@field:SerializedName("Autumn Deep")
+	val autumnDeep: Int,
+
+	@field:SerializedName("Winter Cool")
+	val winterCool: Int,
+
+	@field:SerializedName("Winter Deep")
+	val winterDeep: Int
 
 ) : Parcelable
 
