@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/LL_feature_makeup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:orientation="vertical"
+
+            app:layout_constraintEnd_toStartOf="@+id/LL_feature_color"
+            app:layout_constraintTop_toBottomOf="@+id/view_pager">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_makeup_analysis"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_background_features"
+                android:padding="6dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_button_makeup_analysis" />
+
+            <TextView
+                android:id="@+id/tv_makeup"
+                style="@style/TextContent.BodyXS"
+                android:text="@string/makeup"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/tv_makeup_analysis"
+                style="@style/TextContent.BodyXS"
+                android:text="@string/analysis"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LL_feature_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:orientation="vertical"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_pager">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_color_analysis"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_background_features"
+                android:padding="6dp"
+                android:src="@drawable/ic_button_color_analysis" />
+
+            <TextView
+                android:id="@+id/tv_color"
+                style="@style/TextContent.BodyXS"
+                android:text="@string/color"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/tv_color_analysis"
+                style="@style/TextContent.BodyXS"
+                android:text="@string/analysis"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LL_feature_compare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:orientation="vertical"
+
+            app:layout_constraintStart_toEndOf="@+id/LL_feature_color"
+            app:layout_constraintTop_toBottomOf="@+id/view_pager">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_compare_product"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_background_features"
+                android:padding="6dp"
+                android:src="@drawable/ic_button_compare_product" />
+
+            <TextView
+                android:id="@+id/tv_compare"
+                style="@style/TextContent.BodyXS"
+                android:text="@string/compare"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/tv_compare_product"
+                style="@style/TextContent.BodyXS"
+                android:text="@string/product"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_hot_products"
+            style="@style/TextContent.TextHeading4"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+
+            android:text="@string/hot_products"
+            android:textStyle="bold"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/LL_feature_compare" />
+
+        <TextView
+            android:id="@+id/tv_view_all_products"
+            style="@style/TextContent.BodyM"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+
+            android:text="@string/view_all"
+            android:textColor="?attr/colorPrimary"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/LL_feature_compare" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list_catalog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_hot_products"
+            tools:listitem="@layout/item_catalog" />
+
+        <TextView
+            android:id="@+id/tv_top_communities"
+            style="@style/TextContent.TextHeading4"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+
+            android:text="@string/top_communities"
+            android:textStyle="bold"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_list_catalog" />
+
+        <TextView
+            android:id="@+id/tv_view_all_community"
+            style="@style/TextContent.BodyM"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+
+            android:text="@string/view_all"
+            android:textColor="?attr/colorPrimary"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_list_catalog" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list_community"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_top_communities"
+            app:reverseLayout="false"
+            tools:listitem="@layout/item_community" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -1,9 +1,92 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Foundie" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.Foundie" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="backgroundColor">@color/backgroundLayout</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorAccent">@color/neutral_500</item>
+        <item name="colorOnTertiary">@color/dropdown_light</item>
+        <item name="colorOnPrimary">@color/pink_100</item>
+        <item name="colorContainer">@color/info_000</item>
+        <item name="colorOnContainer">@color/backgroundNav</item>
+    </style>
+
+    <style name="Theme.Foundie.NoActionBar" parent="Base.Theme.Foundie">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:fitsSystemWindows">false</item>
     </style>
 
     <style name="Theme.Foundie" parent="Base.Theme.Foundie" />
+
+    <style name="TextContent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="TextContent.TextHeading1">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.TitleLarge</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextContent.TextHeading2">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.TitleLarge</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextContent.TextHeading3">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.TitleLarge</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextContent.TextHeading4">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.TitleLarge</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextContent.TextHeading5">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.TitleLarge</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextContent.BodyXL">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextContent.BodyL">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextContent.BodyM">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextContent.BodyS">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextContent.BodyXS">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="TextContent.BodyXXS">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
+        <item name="android:textSize">8sp</item>
+    </style>
+
 </resources>

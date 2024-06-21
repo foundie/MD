@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="neutral_500">#63646A</color>
+    <color name="neutral_400">#63646A</color>
+    <color name="neutral_300">#BDBEC8</color>
+    <color name="neutral_200">#D4D6DD</color>
+
+    <color name="pink_100">#FFDAEF</color>
+    <color name="pink_000">#FFF5FB</color>
+
+    <color name="backgroundNav">#30262E</color>
+
+    <color name="info_000">#F5F6FF</color>
+    <color name="info_100">#e4e6fe</color>
+
+    <color name="primaryColor">#F297C1</color>
+    <color name="backgroundLayout">#121212</color>
+</resources>

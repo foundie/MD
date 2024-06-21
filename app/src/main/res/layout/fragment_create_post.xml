@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.community.community_post.CreatePostFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_post"
+            style="@style/TextContent.TextHeading5"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/ic_background_join"
+            android:paddingLeft="32dp"
+            android:paddingTop="8dp"
+            android:paddingRight="32dp"
+
+            android:paddingBottom="8dp"
+            android:text="@string/post"
+            android:textColor="@color/backgroundLayout"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_user"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="6dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_post"
+
+            tools:ignore="ContentDescription"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            style="@style/TextContent.BodyM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="24dp"
+            android:textStyle="bold"
+
+            app:layout_constraintStart_toEndOf="@+id/img_user"
+            app:layout_constraintTop_toBottomOf="@+id/tv_post"
+            tools:text="@string/username" />
+
+        <EditText
+            android:id="@+id/ed_title"
+            style="@style/TextContent.BodyM"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:autofillHints=""
+            android:background="@drawable/ic_background_tweet"
+            android:hint="@string/input_your_title"
+
+            android:inputType="text"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toEndOf="@+id/img_user"
+            app:layout_constraintTop_toBottomOf="@+id/tv_username" />
+
+        <EditText
+            android:id="@+id/ed_description"
+            style="@style/TextContent.BodyM"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:autofillHints=""
+            android:background="@drawable/ic_background_tweet"
+            android:hint="@string/what_s_new"
+
+            android:inputType="text"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toEndOf="@+id/img_user"
+            app:layout_constraintTop_toBottomOf="@+id/ed_title" />
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="24dp"
+            android:contentDescription="@string/image_post"
+
+            app:layout_constraintStart_toEndOf="@+id/img_user"
+            app:layout_constraintTop_toBottomOf="@+id/ed_description"
+            tools:src="@tools:sample/avatars"
+            tools:text="@string/description" />
+
+        <ImageView
+            android:id="@+id/iv_upload_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:contentDescription="@string/image_post"
+            android:src="@drawable/ic_b_photo"
+
+            app:layout_constraintStart_toEndOf="@+id/img_user"
+            app:layout_constraintTop_toBottomOf="@+id/iv_image"
+            tools:text="@string/description" />
+
+        <ImageView
+            android:id="@+id/iv_upload_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:contentDescription="@string/image_post"
+            android:src="@drawable/ic_b_camera"
+
+            app:layout_constraintStart_toEndOf="@+id/iv_upload_photo"
+            app:layout_constraintTop_toBottomOf="@+id/iv_image"
+            tools:text="@string/description" />
+
+        <View
+            android:id="@+id/v_horizontal_divider"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="16dp"
+            android:background="?attr/colorAccent"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_upload_camera"
+            app:layout_constraintWidth_default="spread" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

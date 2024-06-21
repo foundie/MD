@@ -1,3 +1,276 @@
 <resources>
     <string name="app_name">Foundie</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.\n\n
+        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
+        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
+        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
+        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
+        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
+        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
+        est.\n\n
+        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
+        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
+        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
+        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
+        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
+        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
+        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
+        convallis.\n\n
+        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
+        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
+        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
+        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
+        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
+        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    </string>
+    <string name="logo_foundie">Logo Foundie</string>
+    <string name="Home">Home</string>
+    <string name="Catalog">Catalog</string>
+    <string name="Community">Comunnity</string>
+    <string name="Notification">Notification</string>
+    <string name="Profile">Profile</string>
+    <string name="foundie">foundie.</string>
+    <string name="welcome_gorgeous">Welcome, gorgeous!</string>
+    <string name="hi_gorgeous">Hi, gorgeous!</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up_now">Sign up now</string>
+    <string name="google">google</string>
+    <string name="facebook">facebook</string>
+    <string name="apple">apple</string>
+    <string name="or_continue_with">Or continue with</string>
+    <string name="create_an_account">Create an account!</string>
+    <string name="fill_your_information_below_or_register_with_your_social_account">Fill your information below or register with your social account</string>
+    <string name="name">Name</string>
+    <string name="input_your_name">Input your name</string>
+    <string name="input_your_email">Input your email</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="fill_password">Please fill in your password</string>
+    <string name="create_a_password">Create a password</string>
+    <string name="i_ve_read_and_agree_with_the">I\'ve read and agree with the</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="and_the"> and the </string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="login_now">Login now</string>
+    <string name="ERROR_EMAIL_INVALID_FORMAT">The email format entered is invalid</string>
+    <string name="ERROR_EMAIL_ALREADY_REGISTERED">This email is already registered</string>
+    <string name="ERROR_EMAIL_EMPTY">Email cannot be empty</string>
+    <string name="ERROR_NAME_EMPTY">Name cannot be empty</string>
+    <string name="ERROR_PASSWORD_EMPTY">Password cannot be empty</string>
+    <string name="ERROR_PASSWORD_LENGTH">Password must be at least 8 characters long</string>
+    <string name="ERROR_PASSWORD_MISMATCH">Password and confirm password do not match</string>
+    <string name="ERROR_PASSWORD_NOTSAME">The password or email you entered is incorrect</string>
+    <string name="ERROR_NAME_TOOLONG">Name cannot exceed 25 characters</string>
+    <string name="ERROR_EDITEXT_EMPTY">Please fill in all fields correctly</string>
+    <string name="ERROR_LOGIN_GOOGLE">An error occurred while trying to log in. Please try again</string>
+    <string name="ERROR_AGREEMENT_NOT_CHECKED">You must agree to the terms and conditions before registering</string>
+    <string name="ERROR_UNAUTHORIZED">Sorry Your Account Unauthorized</string>
+    <string name="SUCCESS_LOGIN_GOOGLE">Successfully logged in with Google</string>
+    <string name="IMAGE_SHOW_FAILED">Show Image failed to initialize. See error logs for details</string>
+    <string name="IMAGE_CAPTURE_FAILED">Capture Image failed to initialize. See error logs for details</string>
+    <string name="BIODATA_UPLOAD_SUCCESS">Biodata Updated Successfully</string>
+    <string name="POST_UPLOAD_SUCCESS">Post successfully created</string>
+    <string name="COMMUNITY_CREATE_SUCCESS">Post successfully created</string>
+    <string name="PREDICT_UPLOAD_SUCCESS">Wait For Result....</string>
+    <string name="ERROR_LOAD_IMAGES">Failed to load images</string>
+    <string name="ERROR_UPLOAD_DATA">Error uploading data</string>
+    <string name="ERROR_COMPRESSING_DATA">Error compressing file</string>
+    <string name="ERROR_IMAGE_EMPTY">Image cannot be empty</string>
+    <string name="ERROR_TITLE_DESC_EMPTY">Title and Description cannot be empty</string>
+    <string name="ERROR_TITLE_EMPTY">Title cannot be empty</string>
+    <string name="ERROR_COLOR_EMPTY">Please choose one before click next</string>
+    <string name="LOGOUT">Log Out</string>
+    <string name="LOGOUT_CONFIRMATION_TITLE">Logout Confirmation</string>
+    <string name="LOGOUT_CONFIRMATION_MESSAGE">Are you sure you want to logout?</string>
+    <string name="LOGOUT_CONFIRMATION_YES">Yes</string>
+    <string name="LOGOUT_CONFIRMATION_CANCEL">Cancel</string>
+
+    <string name="makeup">MakeUp</string>
+    <string name="analysis">Analysis</string>
+    <string name="color">Color</string>
+    <string name="compare">Compare</string>
+    <string name="product">Product</string>
+    <string name="hot_products">Hot Products</string>
+    <string name="view_all">View all</string>
+    <string name="top_communities">Top Communities</string>
+    <string name="join">Join</string>
+    <string name="favorites">favorites</string>
+    <string name="follow">Follow</string>
+    <string name="search">search</string>
+    <string name="create_community">create community</string>
+    <string name="Create_Community">Create Community</string>
+    <string name="Create_New_Community">Create New Community</string>
+    <string name="bookmarks">bookmarks</string>
+    <string name="notification">notification</string>
+    <string name="settings">settings</string>
+    <string name="Settings">Settings</string>
+    <string name="total_members">Total Members</string>
+    <string name="community_name">Community Name</string>
+    <string name="season">#season</string>
+    <string name="product_category">Product Category</string>
+    <string name="product_name">Product Name</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+
+    <string name="all">All</string>
+    <string name="all_community">All Community</string>
+    <string name="joined">Joined</string>
+    <string name="popular">Popular</string>
+    <string name="you_have_not_joined_any_communities_yet">You have not joined any communities yet</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="post_title">Post Title</string>
+    <string name="post_description">post description</string>
+    <string name="username">Username</string>
+
+    <string name="catalog">Catalog</string>
+    <string name="community">Community</string>
+
+    <string name="search_hint">Search…</string>
+    <string name="Location">Location</string>
+    <string name="input_your_community_name">Input your community name</string>
+    <string name="input_your_community_s_description">Input your community\'s description</string>
+    <string name="community_s_description">Community\'s Description</string>
+    <string name="community_s_topic">Community\'s Topic</string>
+    <string name="input_your_community_s_topic">Input your community\'s topic</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="followers">Followers :</string>
+    <string name="total_followers">Total Followers</string>
+    <string name="total_following">total following</string>
+    <string name="following">Following :</string>
+    <string name="make_up_style_result">Make Up Style Result</string>
+    <string name="skin_tone_result">Skin Tone Result</string>
+    <string name="color_analysis_result">Color Analysis Result</string>
+
+    <string name="post">Post</string>
+    <string name="review">Review</string>
+    <string name="you_have_not_write_any_post_yet">You have not write any post yet</string>
+    <string name="you_have_not_write_any_review_yet">You have not write any review yet</string>
+    <string name="update">Update…</string>
+    <string name="save">Save</string>
+    <string name="gender">gender</string>
+    <string name="Gender">Gender</string>
+    <string name="select_item">Select Item</string>
+    <string name="posts_saved">Posts Saved</string>
+    <string name="products_liked">Products Liked</string>
+    <string name="privacy">Privacy</string>
+    <string name="account">Account</string>
+    <string name="language">Language</string>
+    <string name="theme">Theme</string>
+    <string name="help">Help</string>
+    <string name="about">About</string>
+    <string name="log_out">Log out</string>
+
+    <string name="item_label">Items</string>
+    <string name="todo">TODO</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="privacy_statement">Privacy Statement</string>
+    <string name="_14_june_2024">14 June 2024</string>
+    <string name="policy_description">
+    Welcome to Foundie. Your privacy is important to us, and we are committed to protecting your personal information. We collect personal data such as your name, email, phone number, and location when you register or update your profile, as well as any photos, descriptions, and reviews you upload. Automatically collected data includes your IP address, device type, OS, log data, and location (with permission). This information is used to provide and improve our services, customize user experience, manage accounts, send updates, and analyze trends. We do not share your personal information with third parties unless you consent, it is with our service providers, or required by law. We implement various security measures to protect your data but cannot guarantee absolute security. You have the right to access, update, or delete your information at any time by contacting us. Our Privacy Policy may be updated periodically, and we will notify you of any changes. For any questions, please contact us at support@foundie.com or Jl. Contoh No.123, Kota Contoh, Indonesia. Thank you for trusting Foundie.
+    </string>
+    <string name="statement_one">Welcome to Foundie. Your privacy is important to us, and we are committed to protecting your personal information with the utmost care and diligence. We understand the sensitivity of your data and take this responsibility seriously.</string>
+    <string name="statement_two">We collect various types of personal data, including your name, email address, phone number, and location, especially when you register or update your profile on our platform. Additionally, we gather any photos, descriptions, and reviews that you upload. This personal data helps us identify and communicate with you effectively. Automatically collected data includes your IP address, device type, operating system, log data, and location information, provided you have given permission for location access. This automatically collected data assists us in understanding how our app is used and helps us enhance its performance and functionality.</string>
+    <string name="statement_three">The information we collect is utilized to provide, maintain, and improve our services. We use it to customize your user experience, ensuring that the content and features you encounter are tailored to your preferences. Your data allows us to manage your account efficiently, offer customer support, send important updates, promotional content, and other information related to our services. Moreover, we analyze trends, usage patterns, and activities within our application to make informed decisions on further development and improvements.</string>
+    <string name="statement_four">Your personal information is not shared with third parties unless you give explicit consent. We may share your data with our trusted service providers who assist us in delivering our services or as required by law to comply with legal obligations, protect our rights, property, or ensure the safety of our users and the public. We have implemented robust security measures to protect your data from unauthorized access, use, or disclosure. Despite our best efforts, no method of internet transmission or electronic storage is completely secure, and we cannot guarantee absolute security.</string>
+    <string name="statement_five">You have the right to access, update, or delete your personal information at any time. Should you wish to exercise these rights, please contact us at your convenience. We strive to respond promptly and ensure your data remains accurate and up-to-date. Our Privacy Policy may be updated periodically to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any significant changes through our app and via email. You are encouraged to review this policy regularly to stay informed about how we are protecting your information.</string>
+    <string name="statement_six">For any questions or concerns about this Privacy Policy or our data practices, please do not hesitate to contact us at support@foundie.com. Alternatively, you can reach us at our physical address: Jl. Contoh No.123, Kota Contoh, Indonesia. We value your trust and are committed to maintaining the highest standards of privacy and security. Thank you for choosing Foundie and for entrusting us with your personal information. We are dedicated to providing you with a safe and enjoyable experience on our platform.</string>
+    <string name="back">back</string>
+    <string name="image_post">image post</string>
+    <string name="what_s_new">What\'s new?</string>
+    <string name="audience_type">Audience Type</string>
+    <string name="input_your_title">Input your title</string>
+    <string name="find_out_your_makeup_style">Find out your makeup style</string>
+    <string name="know_your_skin_type_and_choose_make_up_style_that_are_suitable_for_you">Know your skin type and choose make up style that are suitable for you</string>
+    <string name="analyze">Analyze</string>
+    <string name="image">image</string>
+    <string name="result">Result</string>
+
+    <string name="makeup_result">MakeUp Result</string>
+    <string name="makeup_style_analysis">Makeup Style Analysis</string>
+    <string name="compare_and_shine_find_your_perfect_product">Compare and Shine: Find Your Perfect Product</string>
+    <string name="know_your_perfect_shade_in_another_brand">Know your perfect shade in another brand</string>
+    <string name="compare_product">Compare Product</string>
+    <string name="brand_name">Brand Name</string>
+    <string name="input_your_product_brand_s_name">Input your product brand\'s name</string>
+    <string name="input_your_brand_name_product">Input your brand name product...</string>
+    <string name="product_type">Product Type</string>
+    <string name="input_your_product_title">Input your product Title...</string>
+    <string name="product_title">Product Title</string>
+    <string name="likes_total">likes total</string>
+    <string name="_90_8k">90.8K</string>
+    <string name="likes">Likes</string>
+    <string name="replies">Replies</string>
+    <string name="icon">icon</string>
+    <string name="example_input_skintific">Example input : Skintific</string>
+    <string name="example_input_cushion">Example input : Cushion</string>
+    <string name="product_variant">Product Variant</string>
+    <string name="input_your_product_variant">Input your product variant...</string>
+    <string name="example_input_wardah">Example Input : Wardah</string>
+    <string name="example_input_08">Example Input : 08</string>
+    <string name="input_example_pink_me">Input Example : Pink Me</string>
+    <string name="is_this_what_you_re_looking_for">Is this what you\'re looking for...</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="analyze_your_season_color">Analyze Your Season Color</string>
+    <string name="find_your_perfect_color">Find your perfect color</string>
+    <string name="choose_the_perfect_brightness">Choose the perfect brightness</string>
+    <string name="option_1">Option 1</string>
+
+    <string name="explore">Explore</string>
+    <string name="product_didn_t_found">Product didn\'t found</string>
+    <string name="topics">Topics</string>
+    <string name="please_click_the_right_products_that_you_are_looking_for">Please click the right products that you are looking for</string>
+    <string name="choose_the_perfect_clarity">Choose the perfect clarity</string>
+    <string name="warm_or_cool_preferences">Warm or cool preferences</string>
+    <string name="select_a_color_that_complements_your_skin_tone_and_contains_no_stains">Select a color that complements your skin tone and contains no stains</string>
+    <string name="select_a_color_that_enhances_the_natural_brightness_of_the_eyes_and_features">Select a color that enhances the natural brightness of the eyes and features</string>
+    <string name="select_a_color_that_compliment_your_lips_and_minimize_the_appearance_of_dark_circles">Select a color that compliment your lips and minimize the appearance of dark circles</string>
+    <string name="season_color_result">Season Color result</string>
+    <string name="autumn_deep">Autumn Deep</string>
+    <string name="inspo">Inspo 🔥</string>
+    <string name="your_personal_color_features">Your personal color features</string>
+    <string name="color_pallete">Color Pallete</string>
+    <string name="color_palette">Color Palette</string>
+    <string name="season_color_percentages">Season color percentages</string>
+    <string name="autumn_deep_">Autumn Deep :</string>
+    <string name="_20">20%</string>
+    <string name="winter_deep">Winter Deep:</string>
+    <string name="spring_light">Spring Light:</string>
+    <string name="summer_light">Summer Light:</string>
+    <string name="autumn_soft">Autumn Soft:</string>
+    <string name="summer_soft">Summer Soft:</string>
+    <string name="spring_clear">Spring Clear:</string>
+    <string name="winter_clear">Winter Clear:</string>
+    <string name="autumn_warm">Autumn Warm:</string>
+    <string name="spring_warm">Spring Warm:</string>
+    <string name="summer_cool">Summer Cool:</string>
+    <string name="winter_cool">Winter Cool:</string>
+    <string name="upload_your_photo">Upload your photo</string>
+    <string name="there_s_no_data_match_in_our_database">There\'s no data match in our database</string>
 </resources>

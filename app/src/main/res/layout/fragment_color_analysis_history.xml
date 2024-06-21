@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.color_analysis.result.ColorAnalysisOutputFragment">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tv_error"
+        style="@style/TextContent.BodyS"
+        android:text="@string/there_s_no_data_match_in_our_database"
+        android:textColor="?attr/colorPrimary"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/Wc_History"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/LL_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorOnPrimary"
+                android:padding="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_title_result"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/ic_ca_result" />
+
+                <LinearLayout
+                    android:id="@+id/LL_title_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_title_season"
+                        style="@style/TextContent.BodyXS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/season_color_result" />
+
+                    <TextView
+                        android:id="@+id/tv_title_season_result"
+                        style="@style/TextContent.TextHeading1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/season_color_result"
+                        android:textStyle="bold"
+                        tools:text="@string/autumn_deep" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_inspo"
+                style="@style/TextContent.TextHeading4"
+                android:layout_margin="24dp"
+                android:text="@string/inspo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/LL_title" />
+
+            <ImageView
+                android:id="@+id/iv_inspo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:contentDescription="@string/image"
+
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_inspo"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tv_inspo_description"
+                style="@style/TextContent.TextHeading4"
+                android:layout_margin="24dp"
+                android:text="@string/your_personal_color_features"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_inspo" />
+
+            <TextView
+                android:id="@+id/tv_inspo_description_detail"
+                style="@style/TextContent.BodyS"
+                android:padding="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_inspo_description"
+                tools:text="@string/your_personal_color_features" />
+
+            <TextView
+                android:id="@+id/tv_inspo_color_palette"
+                style="@style/TextContent.TextHeading4"
+                android:layout_margin="24dp"
+                android:text="@string/color_palette"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_inspo_description_detail" />
+
+            <LinearLayout
+                android:id="@+id/LL_palette_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_margin="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:orientation="horizontal"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_inspo_color_palette">
+
+                <ImageView
+                    android:id="@+id/iv_color_one"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+
+                    android:contentDescription="@string/image"
+                    tools:background="?attr/colorAccent" />
+
+                <ImageView
+                    android:id="@+id/iv_color_two"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="8dp"
+
+                    android:contentDescription="@string/image"
+                    tools:background="?attr/colorAccent" />
+
+                <ImageView
+                    android:id="@+id/iv_color_three"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="8dp"
+
+                    android:contentDescription="@string/image"
+                    tools:background="?attr/colorAccent" />
+
+                <ImageView
+                    android:id="@+id/iv_color_four"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="8dp"
+
+                    android:contentDescription="@string/image"
+                    tools:background="?attr/colorAccent" />
+
+                <ImageView
+                    android:id="@+id/iv_color_five"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="8dp"
+
+                    android:contentDescription="@string/image"
+                    tools:background="?attr/colorAccent" />
+
+                <ImageView
+                    android:id="@+id/iv_color_six"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="8dp"
+
+                    android:contentDescription="@string/image"
+                    tools:background="?attr/colorAccent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LL_palette_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/LL_palette_one">
+
+                <ImageView
+                    android:id="@+id/iv_color_seven"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+
+                    android:contentDescription="@string/image"
+                    tools:background="?attr/colorAccent" />
+
+                <ImageView
+                    android:id="@+id/iv_color_eight"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="8dp"
+
+                    android:contentDescription="@string/image"
+                    tools:background="?attr/colorAccent" />
+
+                <ImageView
+                    android:id="@+id/iv_color_nine"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="8dp"
+
+                    android:contentDescription="@string/image"
+                    tools:background="?attr/colorAccent" />
+
+                <ImageView
+                    android:id="@+id/iv_color_ten"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="8dp"
+
+                    android:contentDescription="@string/image"
+                    tools:background="?attr/colorAccent" />
+
+                <ImageView
+                    android:id="@+id/iv_color_eleven"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="8dp"
+
+                    android:contentDescription="@string/image"
+                    tools:background="?attr/colorAccent" />
+
+                <ImageView
+                    android:id="@+id/iv_color_twelve"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="8dp"
+
+                    android:contentDescription="@string/image"
+                    tools:background="?attr/colorAccent" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_inspo_persentage"
+                style="@style/TextContent.TextHeading4"
+                android:layout_margin="24dp"
+                android:text="@string/season_color_percentages"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/LL_palette_two" />
+
+            <TextView
+                android:id="@+id/tv_season_title_one"
+                style="@style/TextContent.BodyS"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/autumn_deep_"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_inspo_persentage" />
+
+            <TextView
+                android:id="@+id/tv_season_persentage_one"
+                style="@style/TextContent.BodyS"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toEndOf="@+id/tv_season_title_one"
+                app:layout_constraintTop_toBottomOf="@id/tv_inspo_persentage"
+                tools:text="@string/_20" />
+
+            <TextView
+                android:id="@+id/tv_season_title_two"
+                style="@style/TextContent.BodyS"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/winter_deep"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_one" />
+
+            <TextView
+                android:id="@+id/tv_season_persentage_two"
+                style="@style/TextContent.BodyS"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toEndOf="@+id/tv_season_title_two"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_one"
+                tools:text="@string/_20" />
+
+            <TextView
+                android:id="@+id/tv_season_title_three"
+                style="@style/TextContent.BodyS"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/spring_light"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_two" />
+
+            <TextView
+                android:id="@+id/tv_season_persentage_three"
+                style="@style/TextContent.BodyS"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toEndOf="@+id/tv_season_title_three"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_two"
+                tools:text="@string/_20" />
+
+            <TextView
+                android:id="@+id/tv_season_title_four"
+                style="@style/TextContent.BodyS"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/summer_light"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_three" />
+
+            <TextView
+                android:id="@+id/tv_season_persentage_four"
+                style="@style/TextContent.BodyS"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toEndOf="@+id/tv_season_title_four"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_three"
+                tools:text="@string/_20" />
+
+            <TextView
+                android:id="@+id/tv_season_title_five"
+                style="@style/TextContent.BodyS"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/autumn_soft"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_four" />
+
+            <TextView
+                android:id="@+id/tv_season_persentage_five"
+                style="@style/TextContent.BodyS"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toEndOf="@+id/tv_season_title_five"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_four"
+                tools:text="@string/_20" />
+
+            <TextView
+                android:id="@+id/tv_season_title_six"
+                style="@style/TextContent.BodyS"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/summer_soft"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_five" />
+
+            <TextView
+                android:id="@+id/tv_season_persentage_six"
+                style="@style/TextContent.BodyS"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toEndOf="@+id/tv_season_title_six"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_five"
+                tools:text="@string/_20" />
+
+            <TextView
+                android:id="@+id/tv_season_title_seven"
+                style="@style/TextContent.BodyS"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/spring_clear"
+                app:layout_constraintEnd_toStartOf="@+id/tv_season_persentage_seven"
+                app:layout_constraintTop_toBottomOf="@id/tv_inspo_persentage" />
+
+            <TextView
+                android:id="@+id/tv_season_persentage_seven"
+                style="@style/TextContent.BodyS"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_inspo_persentage"
+                tools:text="@string/_20" />
+
+            <TextView
+                android:id="@+id/tv_season_title_eight"
+                style="@style/TextContent.BodyS"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/winter_clear"
+                app:layout_constraintEnd_toStartOf="@+id/tv_season_persentage_eight"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_seven" />
+
+            <TextView
+                android:id="@+id/tv_season_persentage_eight"
+                style="@style/TextContent.BodyS"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_seven"
+                tools:text="@string/_20" />
+
+            <TextView
+                android:id="@+id/tv_season_title_nine"
+                style="@style/TextContent.BodyS"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/autumn_warm"
+                app:layout_constraintEnd_toStartOf="@+id/tv_season_persentage_nine"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_eight" />
+
+            <TextView
+                android:id="@+id/tv_season_persentage_nine"
+                style="@style/TextContent.BodyS"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_eight"
+                tools:text="@string/_20" />
+
+            <TextView
+                android:id="@+id/tv_season_title_ten"
+                style="@style/TextContent.BodyS"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/spring_warm"
+                app:layout_constraintEnd_toStartOf="@+id/tv_season_persentage_ten"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_nine" />
+
+            <TextView
+                android:id="@+id/tv_season_persentage_ten"
+                style="@style/TextContent.BodyS"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_nine"
+                tools:text="@string/_20" />
+
+            <TextView
+                android:id="@+id/tv_season_title_eleven"
+                style="@style/TextContent.BodyS"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/summer_cool"
+                app:layout_constraintEnd_toStartOf="@+id/tv_season_persentage_eleven"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_ten" />
+
+            <TextView
+                android:id="@+id/tv_season_persentage_eleven"
+                style="@style/TextContent.BodyS"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_ten"
+                tools:text="@string/_20" />
+
+            <TextView
+                android:id="@+id/tv_season_title_twelve"
+                style="@style/TextContent.BodyS"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/winter_cool"
+                app:layout_constraintEnd_toStartOf="@+id/tv_season_persentage_twelve"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_eleven" />
+
+            <TextView
+                android:id="@+id/tv_season_persentage_twelve"
+                style="@style/TextContent.BodyS"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_eleven"
+                tools:text="@string/_20" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</FrameLayout>

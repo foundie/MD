@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:menuCategory="container">
+        <item
+            android:id="@+id/menu_search"
+            android:title="@string/search"
+            app:actionViewClass="androidx.appcompat.widget.SearchView"
+            app:showAsAction="collapseActionView|ifRoom" />
+
+        <item
+            android:id="@+id/menu_bookmarks"
+            android:title="@string/bookmarks"
+            android:icon="@drawable/ic_menu_bookmarks"
+            app:showAsAction="collapseActionView|always"/>
+
+        <item
+            android:id="@+id/menu_make_community"
+            android:title="@string/create_community"
+            android:icon="@drawable/ic_menu_make_community"
+            app:showAsAction="collapseActionView|always"/>
+    </group>
+</menu>
