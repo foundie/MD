@@ -13,7 +13,6 @@ _this data is primary data that has been collected in 2024 with 112 resondens in
 
 ## Powerd By
 [![forthebadge](https://img.shields.io/badge/Made_with-Kotlin-F15921?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
-[![forthebadge](https://img.shields.io/badge/Made_with-OpenAI_GPT-ffffff?style=for-the-badge&logo=openai&logoColor=white)](https://www.openai.com/)
 [![forthebadge](https://img.shields.io/badge/Made_with-Android_Studio-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://developer.android.com/studio)
 [![forthebadge](https://img.shields.io/badge/Made_with-GitHub-8330A5?style=for-the-badge&logo=github&logoColor=white)](https://github.com/)
 [![forthebadge](https://img.shields.io/badge/Made_with-Firebase-FEC92B?style=for-the-badge&logo=firebase&logoColor=white)](https://firebase.google.com/)
