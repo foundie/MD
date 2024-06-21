@@ -102,6 +102,8 @@ class HomeFragment : Fragment() {
     private fun setupViewPager() {
         list.add(ImageDataResponse("https://storage.googleapis.com/storage-foundie/data/images/slider-home/1.png"))
         list.add(ImageDataResponse("https://storage.googleapis.com/storage-foundie/data/images/slider-home/2.png"))
+        list.add(ImageDataResponse("https://storage.googleapis.com/storage-foundie/data/images/slider-home/3.png"))
+        list.add(ImageDataResponse("https://storage.googleapis.com/storage-foundie/data/images/slider-home/4.png"))
 
         adapter = ImageSliderAdapter(list)
         binding.viewPager.adapter = adapter

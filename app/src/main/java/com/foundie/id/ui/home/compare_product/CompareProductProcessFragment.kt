@@ -88,8 +88,10 @@ class CompareProductProcessFragment : Fragment() {
 
         viewModel.filterStatus.observe(viewLifecycleOwner) { filterStatus ->
             if (!filterStatus.isNullOrEmpty()) {
+                binding.tvError.visibility = View.GONE
                 Log.d("CompareProductProcessFragment", "Load Images Success")
-            } else if (viewModel.isErrorFilter && !filterStatus.isNullOrEmpty()) {
+            } else if (viewModel.isErrorFilter && filterStatus.isNullOrEmpty()) {
+                binding.tvError.visibility = View.VISIBLE
                 Snackbar.make(binding.root, filterStatus, Snackbar.LENGTH_SHORT).show()
             }
         }

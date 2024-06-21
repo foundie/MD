@@ -1,6 +1,7 @@
 package com.foundie.id.ui.home.color_analysis.result
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,9 +10,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.foundie.id.R
-import com.foundie.id.data.adapter.ColorPaletteAdapter
 import com.foundie.id.databinding.FragmentColorAnalysisOutputBinding
 import com.foundie.id.settings.SettingsPreferences
 import com.foundie.id.settings.loadImageWithCacheBusting
@@ -25,7 +24,6 @@ class ColorAnalysisOutputFragment : Fragment() {
 
     private var _binding: FragmentColorAnalysisOutputBinding? = null
     private val binding get() = _binding!!
-    private lateinit var colorAdapter: ColorPaletteAdapter
     private lateinit var prefen: SettingsPreferences
 
     private val viewModel: PredictViewModel by lazy {
@@ -74,7 +72,6 @@ class ColorAnalysisOutputFragment : Fragment() {
             showLoading(it)
         }
 
-        setupRecyclerView()
         return binding.root
     }
 
@@ -100,8 +97,19 @@ class ColorAnalysisOutputFragment : Fragment() {
                     tvSeasonPersentageTen.text = colorAnalysis.seasonCompatibilityPercentages.springWarm.toString() + "%"
                     tvSeasonPersentageEleven.text = colorAnalysis.seasonCompatibilityPercentages.summerCool.toString() + "%"
                     tvSeasonPersentageTwelve.text = colorAnalysis.seasonCompatibilityPercentages.winterCool.toString() + "%"
+                    ivColorOne.setBackgroundColor(Color.parseColor(colorAnalysis.palette[0]))
+                    ivColorTwo.setBackgroundColor(Color.parseColor(colorAnalysis.palette[1]))
+                    ivColorThree.setBackgroundColor(Color.parseColor(colorAnalysis.palette[2]))
+                    ivColorFour.setBackgroundColor(Color.parseColor(colorAnalysis.palette[3]))
+                    ivColorFive.setBackgroundColor(Color.parseColor(colorAnalysis.palette[4]))
+                    ivColorSix.setBackgroundColor(Color.parseColor(colorAnalysis.palette[5]))
+                    ivColorSeven.setBackgroundColor(Color.parseColor(colorAnalysis.palette[6]))
+                    ivColorEight.setBackgroundColor(Color.parseColor(colorAnalysis.palette[7]))
+                    ivColorNine.setBackgroundColor(Color.parseColor(colorAnalysis.palette[8]))
+                    ivColorTen.setBackgroundColor(Color.parseColor(colorAnalysis.palette[9]))
+                    ivColorEleven.setBackgroundColor(Color.parseColor(colorAnalysis.palette[10]))
+                    ivColorTwelve.setBackgroundColor(Color.parseColor(colorAnalysis.palette[11]))
                     ivInspo.loadImageWithCacheBusting(colorAnalysis.seasonImage)
-                    showColorPalette(colorAnalysis.palette)
                     mainLayout.visibility = View.VISIBLE
                 }
             }
@@ -124,20 +132,6 @@ class ColorAnalysisOutputFragment : Fragment() {
         binding.apply {
 
         }
-    }
-
-    private fun setupRecyclerView() {
-        colorAdapter = ColorPaletteAdapter(emptyList())
-        binding.rvListColorPalette.adapter = colorAdapter
-        binding.rvListColorPalette.setHasFixedSize(true)
-        binding.rvListColorPalette.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        // Set up RecyclerView layout manager and other properties if needed
-    }
-
-
-    private fun showColorPalette(palette: List<String>) {
-        Log.d("ColorAnalysisOutputFragment", "Received color palette: $palette")
-        colorAdapter.updateData(palette)
     }
 
     private fun replaceFragment(fragment: Fragment) {

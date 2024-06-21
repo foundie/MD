@@ -73,12 +73,22 @@ class LoginActivity : ThemeActivity() {
         // Gambar slider
         list.add(
             ImageDataResponse(
-                "https://storage.googleapis.com/storage-foundie/data/images/slider-home/3.png"
+                "https://storage.googleapis.com/storage-foundie/data/images/slider-login/login1.png"
             )
         )
         list.add(
             ImageDataResponse(
-                "https://storage.googleapis.com/storage-foundie/data/images/slider-home/4.png"
+                "https://storage.googleapis.com/storage-foundie/data/images/slider-login/login2.png"
+            )
+        )
+        list.add(
+            ImageDataResponse(
+                "https://storage.googleapis.com/storage-foundie/data/images/slider-login/login3.png"
+            )
+        )
+        list.add(
+            ImageDataResponse(
+                "https://storage.googleapis.com/storage-foundie/data/images/slider-login/login4.png"
             )
         )
 
