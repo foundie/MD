@@ -1,14 +1,21 @@
 package com.foundie.id.ui.home.color_analysis.input
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.ImageCapture
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.foundie.id.R
@@ -17,10 +24,14 @@ import com.foundie.id.data.local.response.ImageDataResponseColor
 import com.foundie.id.databinding.FragmentColorAnalysisInputFirstBinding
 import com.foundie.id.settings.delayTimeSlider
 import com.foundie.id.settings.selectedNumbers
+import com.foundie.id.ui.community.community_post.CreatePostFragment
 import com.foundie.id.ui.home.color_analysis.result.ColorAnalysisOutputFragment
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
-import java.util.concurrent.ExecutorService
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class ColorAnalysisInputFirstFragment : Fragment() {
 
@@ -30,12 +41,25 @@ class ColorAnalysisInputFirstFragment : Fragment() {
     private lateinit var adapter: ImageSliderAdapterColorCamera
     private val list = ArrayList<ImageDataResponseColor>()
     private lateinit var runnable: Runnable
+    private var currentPostPhotoPath: String? = null
     private val handler = Handler(Looper.getMainLooper())
     private var currentPage = 0
 
-    private var imageCapture: ImageCapture? = null
-    private lateinit var outputDirectory: File
-    private lateinit var cameraExecutor: ExecutorService
+    private val postPhotoLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success) {
+                currentPostPhotoPath?.let {
+                    val file = File(it)
+                    binding.previewView.setImageURI(Uri.fromFile(file))
+                }
+            } else {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.IMAGE_SHOW_FAILED),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        }
 
 
     override fun onCreateView(
@@ -89,28 +113,42 @@ class ColorAnalysisInputFirstFragment : Fragment() {
                         else -> -1
                     }
 
-                    // Ambil list selectedNumbers dari arguments jika sudah ada, atau buat list baru jika belum ada
                     val selectedNumbers = arguments?.getIntegerArrayList("selected_numbers") ?: ArrayList()
-
-                    // Tambahkan selectedNumber ke dalam list
                     selectedNumbers.add(selectedNumber)
 
-                    // Buat bundle dan set data ke dalamnya
+                    val file = File(currentPostPhotoPath)
+                    val photoURI = Uri.fromFile(file)
+
                     val bundle = Bundle().apply {
                         putIntegerArrayList("selected_numbers", selectedNumbers)
+                        putString("photo_uri", photoURI.toString())
                     }
 
-                    // Jika sudah mencapai langkah terakhir (misalnya langkah ke-7), lanjutkan ke fragment output
                     if (selectedNumbers.size >= 7) {
                         val fragment = ColorAnalysisOutputFragment()
                         fragment.arguments = bundle
                         replaceFragment(fragment)
                     } else {
-                        // Jika belum mencapai langkah terakhir, lanjutkan ke langkah berikutnya (misalnya ke langkah ke-2)
                         val nextStepFragment = getNextStepFragment(selectedNumbers.size)
                         nextStepFragment.arguments = bundle
                         replaceFragment(nextStepFragment)
                     }
+                }
+            }
+
+            previewView.setOnClickListener{
+                if (ContextCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.CAMERA
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    dispatchTakePictureIntent(isPost = true)
+                } else {
+                    ActivityCompat.requestPermissions(
+                        requireActivity(),
+                        arrayOf(Manifest.permission.CAMERA),
+                        ColorAnalysisInputFirstFragment.REQUEST_CAMERA_PERMISSION
+                    )
                 }
             }
         }
@@ -179,9 +217,61 @@ class ColorAnalysisInputFirstFragment : Fragment() {
         binding.viewPager.adapter = adapter
     }
 
+    private fun createImageFile(isPost: Boolean): File {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
+
+        val prefix = if (isPost) "Cam_" else "Gallery_"
+        val file = File.createTempFile(
+            "${prefix}${timeStamp}_",
+            ".jpg",
+            storageDir
+        )
+
+        currentPostPhotoPath = file.absolutePath
+
+        return file
+    }
+
+    private fun dispatchTakePictureIntent(isPost: Boolean) {
+        val photoFile: File? = try {
+            createImageFile(isPost)
+        } catch (ex: IOException) {
+            null
+        }
+        photoFile?.also {
+            val photoURI: Uri =
+                FileProvider.getUriForFile(requireContext(), "com.foundie.id.fileprovider", it)
+            postPhotoLauncher.launch(photoURI)
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_CAMERA_PERMISSION -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    dispatchTakePictureIntent(isPost = true)
+                } else {
+                    Snackbar.make(binding.root, "Camera permission denied", Snackbar.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         handler.removeCallbacks(runnable)  // Remove callbacks to prevent memory leaks
         _binding = null
+    }
+
+    companion object {
+        private const val REQUEST_CAMERA_PERMISSION = 100
     }
 }

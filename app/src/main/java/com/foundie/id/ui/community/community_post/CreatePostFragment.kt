@@ -64,7 +64,7 @@ class CreatePostFragment : Fragment() {
         )[CommunityViewModel::class.java]
     }
 
-    private val profilePhotoLauncher =
+    private val postPhotoLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
             if (success) {
                 currentPostPhotoPath?.let {
@@ -80,7 +80,7 @@ class CreatePostFragment : Fragment() {
             }
         }
 
-    private val profileGalleryLauncher =
+    private val postGalleryLauncher =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
             uri?.let {
                 binding.ivImage.setImageURI(it)
@@ -225,7 +225,7 @@ class CreatePostFragment : Fragment() {
             }
 
             ivUploadPhoto.setOnClickListener {
-                profileGalleryLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                postGalleryLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
         }
     }
@@ -255,7 +255,7 @@ class CreatePostFragment : Fragment() {
         photoFile?.also {
             val photoURI: Uri =
                 FileProvider.getUriForFile(requireContext(), "com.foundie.id.fileprovider", it)
-            profilePhotoLauncher.launch(photoURI)
+            postPhotoLauncher.launch(photoURI)
         }
     }
 
@@ -288,7 +288,7 @@ class CreatePostFragment : Fragment() {
 
             REQUEST_GALLERY_PERMISSION -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    profileGalleryLauncher.launch(
+                    postGalleryLauncher.launch(
                         PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                     )
                 } else {

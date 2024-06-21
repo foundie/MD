@@ -1,5 +1,6 @@
 package com.foundie.id.ui.home.color_analysis.input
 
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.ImageCapture
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.foundie.id.R
@@ -19,8 +19,6 @@ import com.foundie.id.settings.delayTimeSlider
 import com.foundie.id.settings.selectedNumbers
 import com.foundie.id.ui.home.color_analysis.result.ColorAnalysisOutputFragment
 import com.google.android.material.snackbar.Snackbar
-import java.io.File
-import java.util.concurrent.ExecutorService
 
 class ColorAnalysisInputSecondFragment : Fragment() {
 
@@ -32,10 +30,7 @@ class ColorAnalysisInputSecondFragment : Fragment() {
     private lateinit var runnable: Runnable
     private val handler = Handler(Looper.getMainLooper())
     private var currentPage = 0
-
-    private var imageCapture: ImageCapture? = null
-    private lateinit var outputDirectory: File
-    private lateinit var cameraExecutor: ExecutorService
+    private var photoUri: Uri? = null
 
 
     override fun onCreateView(
@@ -49,6 +44,12 @@ class ColorAnalysisInputSecondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        arguments?.let { bundle ->
+            photoUri = bundle.getString("photo_uri")?.let { Uri.parse(it) }
+            photoUri?.let { uri ->
+                binding.previewView.setImageURI(uri)
+            }
+        }
         setupViewPager()
         btnClick()
 
@@ -89,24 +90,19 @@ class ColorAnalysisInputSecondFragment : Fragment() {
                         else -> -1
                     }
 
-                    // Ambil list selectedNumbers dari arguments jika sudah ada, atau buat list baru jika belum ada
                     val selectedNumbers = arguments?.getIntegerArrayList("selected_numbers") ?: ArrayList()
-
-                    // Tambahkan selectedNumber ke dalam list
                     selectedNumbers.add(selectedNumber)
 
-                    // Buat bundle dan set data ke dalamnya
                     val bundle = Bundle().apply {
                         putIntegerArrayList("selected_numbers", selectedNumbers)
+                        putString("photo_uri",photoUri.toString())
                     }
 
-                    // Jika sudah mencapai langkah terakhir (misalnya langkah ke-7), lanjutkan ke fragment output
                     if (selectedNumbers.size >= 7) {
                         val fragment = ColorAnalysisOutputFragment()
                         fragment.arguments = bundle
                         replaceFragment(fragment)
                     } else {
-                        // Jika belum mencapai langkah terakhir, lanjutkan ke langkah berikutnya (misalnya ke langkah ke-2)
                         val nextStepFragment = getNextStepFragment(selectedNumbers.size)
                         nextStepFragment.arguments = bundle
                         replaceFragment(nextStepFragment)

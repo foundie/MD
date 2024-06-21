@@ -7,6 +7,12 @@ plugins {
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
+configurations.all {
+    resolutionStrategy {
+     "com.google.guava:guava:31.0.1"
+    }
+}
+
 android {
     namespace = "com.foundie.id"
     compileSdk = 34
@@ -46,6 +52,7 @@ android {
         jvmTarget = "1.8"
     }
 
+
     buildFeatures {
         viewBinding = true
         buildConfig = true
@@ -65,13 +72,12 @@ android {
 }
 
 dependencies {
+
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.activity:activity:1.8.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
     implementation ("androidx.fragment:fragment-ktx:1.5.1")
     implementation ("androidx.navigation:navigation-fragment-ktx:2.4.0")
     implementation ("androidx.navigation:navigation-ui-ktx:2.4.0")
@@ -111,11 +117,6 @@ dependencies {
 
     // Compresor
     implementation ("id.zelory:compressor:3.0.1")
-
-    // Dagger
-    implementation("com.google.dagger:hilt-android:2.39.1")
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-    implementation("androidx.hilt:hilt-work:1.0.0")
 
     // Rx-Binding
     implementation ("io.reactivex.rxjava2:rxjava:2.2.19")
@@ -170,8 +171,5 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
 
-    //CameraX
-    implementation ("androidx.camera:camera-camera2:1.1.0-beta03")
-    implementation ("androidx.camera:camera-lifecycle:1.1.0-beta03")
-    implementation ("androidx.camera:camera-view:1.1.0-beta03")
+
 }
