@@ -105,6 +105,11 @@
     <string name="ERROR_TITLE_DESC_EMPTY">Title and Description cannot be empty</string>
     <string name="ERROR_TITLE_EMPTY">Title cannot be empty</string>
     <string name="ERROR_COLOR_EMPTY">Please choose one before click next</string>
+    <string name="LOGOUT">Log Out</string>
+    <string name="LOGOUT_CONFIRMATION_TITLE">Logout Confirmation</string>
+    <string name="LOGOUT_CONFIRMATION_MESSAGE">Are you sure you want to logout?</string>
+    <string name="LOGOUT_CONFIRMATION_YES">Yes</string>
+    <string name="LOGOUT_CONFIRMATION_CANCEL">Cancel</string>
 
     <string name="makeup">MakeUp</string>
     <string name="analysis">Analysis</string>
@@ -255,17 +260,17 @@
     <string name="season_color_percentages">Season color percentages</string>
     <string name="autumn_deep_">Autumn Deep :</string>
     <string name="_20">20%</string>
-    <string name="winter_deep">Winter Deep :</string>
-    <string name="spring_light">Spring Light :</string>
-    <string name="summer_light">Summer Light :</string>
-    <string name="autumn_soft">Autumn Soft :</string>
-    <string name="summer_soft">Summer Soft :</string>
-    <string name="spring_clear">Spring Clear :</string>
-    <string name="winter_clear">Winter Clear :</string>
-    <string name="autumn_warm">Autumn Warm :</string>
-    <string name="spring_warm">Spring Warm :</string>
-    <string name="summer_cool">Summer Cool :</string>
-    <string name="winter_cool">Winter Cool :</string>
+    <string name="winter_deep">Winter Deep:</string>
+    <string name="spring_light">Spring Light:</string>
+    <string name="summer_light">Summer Light:</string>
+    <string name="autumn_soft">Autumn Soft:</string>
+    <string name="summer_soft">Summer Soft:</string>
+    <string name="spring_clear">Spring Clear:</string>
+    <string name="winter_clear">Winter Clear:</string>
+    <string name="autumn_warm">Autumn Warm:</string>
+    <string name="spring_warm">Spring Warm:</string>
+    <string name="summer_cool">Summer Cool:</string>
+    <string name="winter_cool">Winter Cool:</string>
     <string name="upload_your_photo">Upload your photo</string>
     <string name="there_s_no_data_match_in_our_database">There\'s no data match in our database</string>
 </resources>

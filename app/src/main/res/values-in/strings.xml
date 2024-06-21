@@ -1,0 +1,275 @@
+<resources>
+    <string name="app_name">Foundie</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Fragmen Pertama</string>
+    <string name="second_fragment_label">Fragmen Kedua</string>
+    <string name="next">Berikutnya</string>
+    <string name="previous">Sebelumnya</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.\n\n
+        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
+        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
+        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
+        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
+        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
+        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
+        est.\n\n
+        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
+        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
+        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
+        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
+        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
+        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
+        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
+        convallis.\n\n
+        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
+        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
+        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
+        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
+        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
+        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    </string>
+    <string name="logo_foundie">Logo Foundie</string>
+    <string name="Home">Beranda</string>
+    <string name="Catalog">Katalog</string>
+    <string name="Community">Komunitas</string>
+    <string name="Notification">Notifikasi</string>
+    <string name="Profile">Profil</string>
+    <string name="foundie">foundie.</string>
+    <string name="welcome_gorgeous">Selamat datang, gorgeous!</string>
+    <string name="hi_gorgeous">Hai, cantik!</string>
+    <string name="email">Email</string>
+    <string name="password">Kata Sandi</string>
+    <string name="forgot_password">Lupa Kata Sandi?</string>
+    <string name="login">Masuk</string>
+    <string name="don_t_have_an_account">Tidak punya akun?</string>
+    <string name="sign_up_now">Daftar sekarang</string>
+    <string name="google">Google</string>
+    <string name="facebook">Facebook</string>
+    <string name="apple">Apple</string>
+    <string name="or_continue_with">Atau lanjutkan dengan</string>
+    <string name="create_an_account">Buat akun!</string>
+    <string name="fill_your_information_below_or_register_with_your_social_account">Isi informasi Anda di bawah ini atau daftar dengan akun sosial Anda</string>
+    <string name="name">Nama</string>
+    <string name="input_your_name">Masukkan nama Anda</string>
+    <string name="input_your_email">Masukkan email Anda</string>
+    <string name="confirm_password">Konfirmasi kata sandi</string>
+    <string name="sign_in_with_google">Masuk dengan Google</string>
+    <string name="fill_password">Silakan isi kata sandi Anda</string>
+    <string name="create_a_password">Buat kata sandi</string>
+    <string name="i_ve_read_and_agree_with_the">Saya telah membaca dan setuju dengan</string>
+    <string name="terms_and_conditions">Syarat dan Ketentuan</string>
+    <string name="and_the"> dan </string>
+    <string name="privacy_policy">Kebijakan Privasi</string>
+    <string name="sign_up">Daftar</string>
+    <string name="already_have_an_account">Sudah punya akun?</string>
+    <string name="login_now">Masuk sekarang</string>
+    <string name="ERROR_EMAIL_INVALID_FORMAT">Format email yang dimasukkan tidak valid</string>
+    <string name="ERROR_EMAIL_ALREADY_REGISTERED">Email ini sudah terdaftar</string>
+    <string name="ERROR_EMAIL_EMPTY">Email tidak boleh kosong</string>
+    <string name="ERROR_NAME_EMPTY">Nama tidak boleh kosong</string>
+    <string name="ERROR_PASSWORD_EMPTY">Kata sandi tidak boleh kosong</string>
+    <string name="ERROR_PASSWORD_LENGTH">Kata sandi harus terdiri dari minimal 8 karakter</string>
+    <string name="ERROR_PASSWORD_MISMATCH">Kata sandi dan konfirmasi kata sandi tidak cocok</string>
+    <string name="ERROR_PASSWORD_NOTSAME">Kata sandi atau email yang Anda masukkan salah</string>
+    <string name="ERROR_NAME_TOOLONG">Nama tidak boleh lebih dari 25 karakter</string>
+    <string name="ERROR_EDITEXT_EMPTY">Silakan isi semua kolom dengan benar</string>
+    <string name="ERROR_LOGIN_GOOGLE">Terjadi kesalahan saat mencoba masuk. Silakan coba lagi</string>
+    <string name="ERROR_AGREEMENT_NOT_CHECKED">Anda harus menyetujui syarat dan ketentuan sebelum mendaftar</string>
+    <string name="ERROR_UNAUTHORIZED">Maaf Akun Anda Tidak Berwenang</string>
+    <string name="SUCCESS_LOGIN_GOOGLE">Berhasil masuk dengan Google</string>
+    <string name="IMAGE_SHOW_FAILED">Gagal menampilkan gambar. Lihat log kesalahan untuk detail</string>
+    <string name="IMAGE_CAPTURE_FAILED">Gagal menangkap gambar. Lihat log kesalahan untuk detail</string>
+    <string name="BIODATA_UPLOAD_SUCCESS">Biodata berhasil diperbarui</string>
+    <string name="POST_UPLOAD_SUCCESS">Postingan berhasil dibuat</string>
+    <string name="COMMUNITY_CREATE_SUCCESS">Postingan berhasil dibuat</string>
+    <string name="PREDICT_UPLOAD_SUCCESS">Tunggu Hasil....</string>
+    <string name="ERROR_LOAD_IMAGES">Gagal memuat gambar</string>
+    <string name="ERROR_UPLOAD_DATA">Kesalahan saat mengunggah data</string>
+    <string name="ERROR_COMPRESSING_DATA">Kesalahan saat mengompres file</string>
+    <string name="ERROR_IMAGE_EMPTY">Gambar tidak boleh kosong</string>
+    <string name="ERROR_TITLE_DESC_EMPTY">Judul dan Deskripsi tidak boleh kosong</string>
+    <string name="ERROR_TITLE_EMPTY">Judul tidak boleh kosong</string>
+    <string name="ERROR_COLOR_EMPTY">Silakan pilih satu sebelum klik berikutnya</string>
+    <string name="LOGOUT">Keluar</string>
+    <string name="LOGOUT_CONFIRMATION_TITLE">Konfirmasi Keluar</string>
+    <string name="LOGOUT_CONFIRMATION_MESSAGE">Apakah Anda yakin ingin keluar?</string>
+    <string name="LOGOUT_CONFIRMATION_YES">Ya</string>
+    <string name="LOGOUT_CONFIRMATION_CANCEL">Batal</string>
+    <string name="makeup">Riasan</string>
+    <string name="analysis">Analisis</string>
+    <string name="color">Warna</string>
+    <string name="compare">Bandingkan</string>
+    <string name="product">Produk</string>
+    <string name="hot_products">Produk Populer</string>
+    <string name="view_all">Lihat Semua</string>
+    <string name="top_communities">Komunitas Teratas</string>
+    <string name="join">Bergabung</string>
+    <string name="favorites">Favorit</string>
+    <string name="follow">Ikuti</string>
+    <string name="search">Cari</string>
+    <string name="create_community">Buat Komunitas</string>
+    <string name="Create_Community">Buat Komunitas</string>
+    <string name="Create_New_Community">Buat Komunitas Baru</string>
+    <string name="bookmarks">Penanda</string>
+    <string name="notification">Notifikasi</string>
+    <string name="settings">Pengaturan</string>
+    <string name="Settings">Pengaturan</string>
+    <string name="total_members">Total Anggota</string>
+    <string name="community_name">Nama Komunitas</string>
+    <string name="season">#Musim</string>
+    <string name="product_category">Kategori Produk</string>
+    <string name="product_name">Nama Produk</string>
+    <string name="title">Judul</string>
+    <string name="description">Deskripsi</string>
+
+    <string name="all">Semua</string>
+    <string name="all_community">Semua Komunitas</string>
+    <string name="joined">Bergabung</string>
+    <string name="popular">Populer</string>
+    <string name="you_have_not_joined_any_communities_yet">Anda belum bergabung dengan komunitas mana pun</string>
+    <string name="hello_blank_fragment">Halo fragmen kosong</string>
+    <string name="post_title">Judul Postingan</string>
+    <string name="post_description">Deskripsi Postingan</string>
+    <string name="username">Nama Pengguna</string>
+
+    <string name="catalog">Katalog</string>
+    <string name="community">Komunitas</string>
+
+    <string name="search_hint">Cari...</string>
+    <string name="Location">Lokasi</string>
+    <string name="input_your_community_name">Masukkan nama komunitas Anda</string>
+    <string name="input_your_community_s_description">Masukkan deskripsi komunitas Anda</string>
+    <string name="community_s_description">Deskripsi Komunitas</string>
+    <string name="community_s_topic">Topik Komunitas</string>
+    <string name="input_your_community_s_topic">Masukkan topik komunitas Anda</string>
+    <string name="edit_profile">Edit Profil</string>
+    <string name="followers">Pengikut :</string>
+    <string name="total_followers">Total Pengikut</string>
+    <string name="total_following">Total Mengikuti</string>
+    <string name="following">Mengikuti :</string>
+    <string name="make_up_style_result">Hasil Gaya Riasan</string>
+    <string name="skin_tone_result">Hasil Warna Kulit</string>
+    <string name="color_analysis_result">Hasil Analisis Warna</string>
+
+    <string name="post">Postingan</string>
+    <string name="review">Ulasan</string>
+    <string name="you_have_not_write_any_post_yet">Anda belum menulis postingan apa pun</string>
+    <string name="you_have_not_write_any_review_yet">Anda belum menulis ulasan apa pun</string>
+    <string name="update">Perbarui...</string>
+    <string name="save">Simpan</string>
+    <string name="gender">Jenis Kelamin</string>
+    <string name="Gender">Jenis Kelamin</string>
+    <string name="select_item">Pilih Item</string>
+    <string name="posts_saved">Postingan Tersimpan</string>
+    <string name="products_liked">Produk yang Disukai</string>
+    <string name="privacy">Privasi</string>
+    <string name="account">Akun</string>
+    <string name="language">Bahasa</string>
+    <string name="theme">Tema</string>
+    <string name="help">Bantuan</string>
+    <string name="about">Tentang</string>
+    <string name="log_out">Keluar</string>
+
+    <string name="item_label">Item</string>
+    <string name="todo">TODO</string>
+    <string name="phone_number">Nomor Telepon</string>
+    <string name="privacy_statement">Pernyataan Privasi</string>
+    <string name="_14_june_2024">14 Juni 2024</string>
+    <string name="policy_description">
+    Selamat datang di Foundie. Privasi Anda penting bagi kami, dan kami berkomitmen untuk melindungi informasi pribadi Anda. Kami mengumpulkan data pribadi seperti nama, email, nomor telepon, dan lokasi Anda saat Anda mendaftar atau memperbarui profil Anda, serta foto, deskripsi, dan ulasan yang Anda unggah. Data yang dikumpulkan secara otomatis mencakup alamat IP, jenis perangkat, OS, data log, dan lokasi (dengan izin). Informasi ini digunakan untuk menyediakan dan meningkatkan layanan kami, menyesuaikan pengalaman pengguna, mengelola akun, mengirim pembaruan, dan menganalisis tren. Kami tidak membagikan informasi pribadi Anda dengan pihak ketiga kecuali Anda menyetujui, dengan penyedia layanan kami, atau diharuskan oleh hukum. Kami menerapkan berbagai langkah keamanan untuk melindungi data Anda tetapi tidak dapat menjamin keamanan mutlak. Anda memiliki hak untuk mengakses, memperbarui, atau menghapus informasi Anda kapan saja dengan menghubungi kami. Kebijakan Privasi kami dapat diperbarui secara berkala, dan kami akan memberi tahu Anda tentang perubahan apa pun. Untuk pertanyaan, hubungi kami di support@foundie.com atau Jl. Contoh No.123, Kota Contoh, Indonesia. Terima kasih telah mempercayai Foundie.
+    </string>
+    <string name="statement_one">Selamat datang di Foundie. Privasi Anda penting bagi kami, dan kami berkomitmen untuk melindungi informasi pribadi Anda dengan sangat hati-hati dan cermat. Kami memahami sensitifitas data Anda dan mengambil tanggung jawab ini dengan serius.</string>
+    <string name="statement_two">Kami mengumpulkan berbagai jenis data pribadi, termasuk nama, alamat email, nomor telepon, dan lokasi Anda, terutama saat Anda mendaftar atau memperbarui profil Anda di platform kami. Selain itu, kami mengumpulkan foto, deskripsi, dan ulasan yang Anda unggah. Data pribadi ini membantu kami mengidentifikasi dan berkomunikasi dengan Anda secara efektif. Data yang dikumpulkan secara otomatis mencakup alamat IP, jenis perangkat, sistem operasi, data log, dan informasi lokasi, dengan syarat Anda memberikan izin untuk akses lokasi. Data yang dikumpulkan secara otomatis ini membantu kami memahami cara aplikasi kami digunakan dan meningkatkan kinerja serta fungsionalitasnya.</string>
+    <string name="statement_three">Informasi yang kami kumpulkan digunakan untuk menyediakan, memelihara, dan meningkatkan layanan kami. Kami menggunakannya untuk menyesuaikan pengalaman pengguna Anda, memastikan bahwa konten dan fitur yang Anda temui disesuaikan dengan preferensi Anda. Data Anda memungkinkan kami mengelola akun Anda secara efisien, menawarkan dukungan pelanggan, mengirim pembaruan penting, konten promosi, dan informasi lainnya yang terkait dengan layanan kami. Selain itu, kami menganalisis tren, pola penggunaan, dan aktivitas dalam aplikasi kami untuk membuat keputusan yang terinformasi tentang pengembangan dan perbaikan lebih lanjut.</string>
+    <string name="statement_four">Informasi pribadi Anda tidak dibagikan dengan pihak ketiga kecuali Anda memberikan persetujuan eksplisit. Kami mungkin membagikan data Anda dengan penyedia layanan tepercaya kami yang membantu kami dalam menyediakan layanan kami atau sebagaimana diharuskan oleh hukum untuk mematuhi kewajiban hukum, melindungi hak kami, properti, atau memastikan keselamatan pengguna kami dan publik. Kami telah menerapkan langkah-langkah keamanan yang kuat untuk melindungi data Anda dari akses, penggunaan, atau pengungkapan yang tidak sah. Meskipun kami berusaha sebaik mungkin, tidak ada metode transmisi internet atau penyimpanan elektronik yang sepenuhnya aman, dan kami tidak dapat menjamin keamanan mutlak.</string>
+    <string name="statement_five">Anda memiliki hak untuk mengakses, memperbarui, atau menghapus informasi pribadi Anda kapan saja. Jika Anda ingin menggunakan hak-hak ini, silakan hubungi kami kapan saja. Kami berusaha merespons dengan cepat dan memastikan data Anda tetap akurat dan terkini. Kebijakan Privasi kami dapat diperbarui secara berkala untuk mencerminkan perubahan dalam praktik kami atau karena alasan operasional, hukum, atau regulasi lainnya. Kami akan memberi tahu Anda tentang perubahan signifikan melalui aplikasi kami dan melalui email. Anda dianjurkan untuk meninjau kebijakan ini secara berkala untuk tetap mengetahui bagaimana kami melindungi informasi Anda.</string>
+    <string name="statement_six">Untuk pertanyaan atau kekhawatiran tentang Kebijakan Privasi ini atau praktik data kami, jangan ragu untuk menghubungi kami di support@foundie.com. Sebagai alternatif, Anda dapat menghubungi kami di alamat fisik kami: Jl. Contoh No.123, Kota Contoh, Indonesia. Kami menghargai kepercayaan Anda dan berkomitmen untuk menjaga standar privasi dan keamanan tertinggi. Terima kasih telah memilih Foundie dan mempercayakan kami dengan informasi pribadi Anda. Kami berdedikasi untuk memberikan Anda pengalaman yang aman dan menyenangkan di platform kami.</string>
+    <string name="back">Kembali</string>
+    <string name="image_post">Posting Gambar</string>
+    <string name="what_s_new">Apa yang baru?</string>
+    <string name="audience_type">Jenis Audiens</string>
+    <string name="input_your_title">Masukkan judul Anda</string>
+    <string name="find_out_your_makeup_style">Temukan gaya riasan Anda</string>
+    <string name="know_your_skin_type_and_choose_make_up_style_that_are_suitable_for_you">Ketahui jenis kulit Anda dan pilih gaya riasan yang sesuai untuk Anda</string>
+    <string name="analyze">Analisis</string>
+    <string name="image">Gambar</string>
+    <string name="result">Hasil</string>
+
+    <string name="makeup_result">Hasil Riasan</string>
+    <string name="makeup_style_analysis">Analisis Gaya Riasan</string>
+    <string name="compare_and_shine_find_your_perfect_product">Bandingkan dan Bersinar: Temukan Produk Sempurna Anda</string>
+    <string name="know_your_perfect_shade_in_another_brand">Ketahui warna sempurna Anda di merek lain</string>
+    <string name="compare_product">Bandingkan Produk</string>
+    <string name="brand_name">Nama Merek</string>
+    <string name="input_your_product_brand_s_name">Masukkan nama merek produk Anda</string>
+    <string name="input_your_brand_name_product">Masukkan produk nama merek Anda...</string>
+    <string name="product_type">Jenis Produk</string>
+    <string name="input_your_product_title">Masukkan Judul Produk Anda...</string>
+    <string name="product_title">Judul Produk</string>
+    <string name="likes_total">Total Suka</string>
+    <string name="_90_8k">90.8K</string>
+    <string name="likes">Suka</string>
+    <string name="replies">Balasan</string>
+    <string name="icon">Ikon</string>
+    <string name="example_input_skintific">Contoh input: Skintific</string>
+    <string name="example_input_cushion">Contoh input: Cushion</string>
+    <string name="product_variant">Varian Produk</string>
+    <string name="input_your_product_variant">Masukkan varian produk Anda...</string>
+    <string name="example_input_wardah">Contoh Input: Wardah</string>
+    <string name="example_input_08">Contoh Input: 08</string>
+    <string name="input_example_pink_me">Contoh Input: Pink Me</string>
+    <string name="is_this_what_you_re_looking_for">Apakah ini yang Anda cari...</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="analyze_your_season_color">Analisis Warna Musim Anda</string>
+    <string name="find_your_perfect_color">Temukan warna sempurna Anda</string>
+    <string name="choose_the_perfect_brightness">Pilih kecerahan yang sempurna</string>
+    <string name="option_1">Opsi 1</string>
+
+    <string name="explore">Jelajahi</string>
+    <string name="product_didn_t_found">Produk tidak ditemukan</string>
+    <string name="topics">Topik</string>
+    <string name="please_click_the_right_products_that_you_are_looking_for">Silakan klik produk yang Anda cari</string>
+    <string name="choose_the_perfect_clarity">Pilih kejernihan yang sempurna</string>
+    <string name="warm_or_cool_preferences">Preferensi hangat atau dingin</string>
+    <string name="select_a_color_that_complements_your_skin_tone_and_contains_no_stains">Pilih warna yang melengkapi warna kulit Anda dan tidak mengandung noda</string>
+    <string name="select_a_color_that_enhances_the_natural_brightness_of_the_eyes_and_features">Pilih warna yang meningkatkan kecerahan alami mata dan fitur</string>
+    <string name="select_a_color_that_compliment_your_lips_and_minimize_the_appearance_of_dark_circles">Pilih warna yang melengkapi bibir Anda dan meminimalkan penampilan lingkaran hitam</string>
+    <string name="season_color_result">Hasil Warna Musim</string>
+    <string name="autumn_deep">Musim Gugur Mendalam</string>
+    <string name="inspo">Inspo 🔥</string>
+    <string name="your_personal_color_features">Fitur Warna Pribadi Anda</string>
+    <string name="color_pallete">Palet Warna</string>
+    <string name="color_palette">Palet Warna</string>
+    <string name="season_color_percentages">Persentase Warna Musim</string>
+    <string name="autumn_deep_">Musim Gugur Mendalam :</string>
+    <string name="_20">20%</string>
+    <string name="winter_deep">Musim Dingin Mendalam:</string>
+    <string name="spring_light">Musim Semi Terang:</string>
+    <string name="summer_light">Musim Panas Terang:</string>
+    <string name="autumn_soft">Musim Gugur Lembut:</string>
+    <string name="summer_soft">Musim Panas Lembut:</string>
+    <string name="spring_clear">Musim Semi Jernih:</string>
+    <string name="winter_clear">Musim Dingin Jernih:</string>
+    <string name="autumn_warm">Musim Gugur Hangat:</string>
+    <string name="spring_warm">Musim Semi Hangat:</string>
+    <string name="summer_cool">Musim Panas Dingin:</string>
+    <string name="winter_cool">Musim Dingin Dingin:</string>
+    <string name="upload_your_photo">Unggah foto Anda</string>
+    <string name="there_s_no_data_match_in_our_database">Tidak ada data yang cocok di basis data kami</string>
+</resources>
