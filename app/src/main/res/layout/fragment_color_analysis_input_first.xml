@@ -48,7 +48,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/preview_view"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
@@ -56,7 +56,21 @@
                 app:layout_constraintBottom_toBottomOf="@+id/view_pager"
                 app:layout_constraintEnd_toEndOf="@+id/view_pager"
                 app:layout_constraintStart_toStartOf="@+id/view_pager"
-                app:layout_constraintTop_toTopOf="@+id/view_pager" />
+                app:layout_constraintTop_toTopOf="@+id/view_pager"
+                tools:src="@tools:sample/avatars"/>
+
+            <ImageView
+                android:id="@+id/iv_upload_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:contentDescription="@string/image_post"
+                android:src="@drawable/ic_b_camera"
+
+                app:layout_constraintEnd_toEndOf="@+id/view_pager"
+                app:layout_constraintStart_toStartOf="@+id/view_pager"
+                app:layout_constraintTop_toBottomOf="@+id/preview_view"
+                tools:text="@string/description" />
 
             <LinearLayout
                 android:id="@+id/LL_radioButton"
