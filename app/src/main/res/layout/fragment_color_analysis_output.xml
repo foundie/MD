@@ -2,9 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/mainLayout"
     tools:context=".ui.home.color_analysis.result.ColorAnalysisOutputFragment">
 
     <ProgressBar
@@ -23,7 +23,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -83,13 +83,13 @@
             <ImageView
                 android:id="@+id/iv_inspo"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
-
                 android:contentDescription="@string/image"
-                android:scaleType="centerCrop"
+
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_inspo"
@@ -125,15 +125,13 @@
                 android:layout_height="wrap_content"
 
                 android:layout_margin="24dp"
-
-
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
+                android:orientation="horizontal"
 
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_inspo_color_palette" >
+                app:layout_constraintTop_toBottomOf="@id/tv_inspo_color_palette">
 
                 <ImageView
                     android:id="@+id/iv_color_one"
@@ -147,7 +145,7 @@
                     android:id="@+id/iv_color_two"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
 
                     android:contentDescription="@string/image"
                     tools:background="?attr/colorAccent" />
@@ -156,7 +154,7 @@
                     android:id="@+id/iv_color_three"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
 
                     android:contentDescription="@string/image"
                     tools:background="?attr/colorAccent" />
@@ -165,7 +163,7 @@
                     android:id="@+id/iv_color_four"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
 
                     android:contentDescription="@string/image"
                     tools:background="?attr/colorAccent" />
@@ -174,7 +172,7 @@
                     android:id="@+id/iv_color_five"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
 
                     android:contentDescription="@string/image"
                     tools:background="?attr/colorAccent" />
@@ -183,7 +181,7 @@
                     android:id="@+id/iv_color_six"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
 
                     android:contentDescription="@string/image"
                     tools:background="?attr/colorAccent" />
@@ -193,12 +191,12 @@
                 android:id="@+id/LL_palette_two"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
+                android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/LL_palette_one" >
+                app:layout_constraintTop_toBottomOf="@id/LL_palette_one">
 
                 <ImageView
                     android:id="@+id/iv_color_seven"
@@ -212,7 +210,7 @@
                     android:id="@+id/iv_color_eight"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
 
                     android:contentDescription="@string/image"
                     tools:background="?attr/colorAccent" />
@@ -221,7 +219,7 @@
                     android:id="@+id/iv_color_nine"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
 
                     android:contentDescription="@string/image"
                     tools:background="?attr/colorAccent" />
@@ -230,7 +228,7 @@
                     android:id="@+id/iv_color_ten"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
 
                     android:contentDescription="@string/image"
                     tools:background="?attr/colorAccent" />
@@ -239,7 +237,7 @@
                     android:id="@+id/iv_color_eleven"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
 
                     android:contentDescription="@string/image"
                     tools:background="?attr/colorAccent" />
@@ -248,7 +246,7 @@
                     android:id="@+id/iv_color_twelve"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
 
                     android:contentDescription="@string/image"
                     tools:background="?attr/colorAccent" />
@@ -373,17 +371,17 @@
             <TextView
                 android:id="@+id/tv_season_title_seven"
                 style="@style/TextContent.BodyS"
-                android:text="@string/spring_clear"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="4dp"
+                android:text="@string/spring_clear"
                 app:layout_constraintEnd_toStartOf="@+id/tv_season_persentage_seven"
                 app:layout_constraintTop_toBottomOf="@id/tv_inspo_persentage" />
 
             <TextView
                 android:id="@+id/tv_season_persentage_seven"
                 style="@style/TextContent.BodyS"
-                android:layout_marginEnd="24dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_inspo_persentage"
                 tools:text="@string/_20" />
@@ -391,17 +389,17 @@
             <TextView
                 android:id="@+id/tv_season_title_eight"
                 style="@style/TextContent.BodyS"
-                android:text="@string/winter_clear"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
+                android:text="@string/winter_clear"
                 app:layout_constraintEnd_toStartOf="@+id/tv_season_persentage_eight"
                 app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_seven" />
 
             <TextView
                 android:id="@+id/tv_season_persentage_eight"
                 style="@style/TextContent.BodyS"
-                android:layout_marginEnd="24dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_seven"
                 tools:text="@string/_20" />
@@ -409,17 +407,17 @@
             <TextView
                 android:id="@+id/tv_season_title_nine"
                 style="@style/TextContent.BodyS"
-                android:text="@string/autumn_warm"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
+                android:text="@string/autumn_warm"
                 app:layout_constraintEnd_toStartOf="@+id/tv_season_persentage_nine"
                 app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_eight" />
 
             <TextView
                 android:id="@+id/tv_season_persentage_nine"
                 style="@style/TextContent.BodyS"
-                android:layout_marginEnd="24dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_eight"
                 tools:text="@string/_20" />
@@ -427,17 +425,17 @@
             <TextView
                 android:id="@+id/tv_season_title_ten"
                 style="@style/TextContent.BodyS"
-                android:text="@string/spring_warm"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
+                android:text="@string/spring_warm"
                 app:layout_constraintEnd_toStartOf="@+id/tv_season_persentage_ten"
                 app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_nine" />
 
             <TextView
                 android:id="@+id/tv_season_persentage_ten"
                 style="@style/TextContent.BodyS"
-                android:layout_marginEnd="24dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_nine"
                 tools:text="@string/_20" />
@@ -445,17 +443,17 @@
             <TextView
                 android:id="@+id/tv_season_title_eleven"
                 style="@style/TextContent.BodyS"
-                android:text="@string/summer_cool"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
+                android:text="@string/summer_cool"
                 app:layout_constraintEnd_toStartOf="@+id/tv_season_persentage_eleven"
                 app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_ten" />
 
             <TextView
                 android:id="@+id/tv_season_persentage_eleven"
                 style="@style/TextContent.BodyS"
-                android:layout_marginEnd="24dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_ten"
                 tools:text="@string/_20" />
@@ -463,17 +461,17 @@
             <TextView
                 android:id="@+id/tv_season_title_twelve"
                 style="@style/TextContent.BodyS"
-                android:text="@string/winter_cool"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
+                android:text="@string/winter_cool"
                 app:layout_constraintEnd_toStartOf="@+id/tv_season_persentage_twelve"
                 app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_eleven" />
 
             <TextView
                 android:id="@+id/tv_season_persentage_twelve"
                 style="@style/TextContent.BodyS"
-                android:layout_marginEnd="24dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_season_persentage_eleven"
                 tools:text="@string/_20" />
